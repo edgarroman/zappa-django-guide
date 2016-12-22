@@ -1,0 +1,7 @@
+ve
+output
+*.pyc
+db.sqlite3
+zappa_settings.json
+manage.py
+frankie
