@@ -1,1 +1,3 @@
-site_name: My Docs
+site_name: Zappa Django Example Walkthroughs
+markdown_extensions:
+  - pymdownx.superfences

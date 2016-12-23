@@ -34,24 +34,25 @@ Now we need to allow scripts and local programs to get the credentials created a
 
 1. Set [environment variables](https://github.com/Miserlou/Zappa/issues/244)
 
-   This is very easy but must be done for each bash console you are using.
+    This is very easy but must be done for each bash console you are using.
    
-   ```
-   export AWS_ACCESS_KEY_ID=<your key here>
-   export AWS_SECRET_ACCESS_KEY=<your secret access key here>
-   ```
+    ```
+    export AWS_ACCESS_KEY_ID=<your key here>
+    export AWS_SECRET_ACCESS_KEY=<your secret access key here>
+    ```
+   
 2. Create a local credentials file (`~/.aws/credentials` on Linux, or OS X)
 
-	Probably a better long term solution since you can store multiple 
-	sets of keys for different environments using profiles.
+	 Probably a better long term solution since you can store multiple 
+	 sets of keys for different environments using profiles.
 
-   ```
-   [default]
-   aws_access_key_id = your_access_key_id
-   aws_secret_access_key = your_secret_access_key
-   ```
+    ```
+    [default]
+    aws_access_key_id = your_access_key_id
+    aws_secret_access_key = your_secret_access_key
+    ```
 
-Useful links for Windows or more information:
+#### Useful links for Windows or more information:
 
 * http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html
 * http://boto3.readthedocs.io/en/latest/guide/configuration.html#configuring-credentials
@@ -199,36 +200,38 @@ You have options:
 
 1. Specify a default region using environment variables
  
-   Again, the drawback here is this must be set for every console
+    Again, the drawback here is this must be set for every console
    
-   ```
-   export AWS_DEFAULT_REGION=us-east-1
-   ```
+    ```
+    export AWS_DEFAULT_REGION=us-east-1
+    ```
+   
 2. Add default region in your `~/.awd/credentials` file
 
-	Better but this will affect all AWS scripts and programs on your machine.
+	 Better but this will affect all AWS scripts and programs on your machine.
 	
-   ```
-   [default]
-   aws_access_key_id = your_access_key_id
-   aws_secret_access_key = your_secret_access_key
-   region=us-east-1
-   ```
+	 ```
+	 [default]
+	 aws_access_key_id = your_access_key_id
+	 aws_secret_access_key = your_secret_access_key
+	 region=us-east-1
+	 ```
 
 2. Edit the `zappa_settings.json` file to have an AWS region.
 
-   Probably best option because now the zappa configuration has minimal dependencies on external user environment.
+    Probably best option because now the zappa configuration has minimal dependencies on external user environment.
    
-   ```
-   {
-    "dev": {
-        "aws_region": "us-east-1",
-        "django_settings": "frankie.settings",
-        "s3_bucket": "zappatest-code"
-   		}
-	}
-   ```
-	Don't forget to put commas in the proper place - JSON is fiddly!
+    ```
+    {
+     "dev": {
+         "aws_region": "us-east-1",
+         "django_settings": "frankie.settings",
+         "s3_bucket": "zappatest-code"
+    		} 
+    }
+    ```
+   
+    Don't forget to put commas in the proper place - JSON is fiddly!
 
 ### Deploy your project using Zappa
 
