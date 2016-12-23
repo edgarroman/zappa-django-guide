@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Core django setup - My Docs</title>
+        <title>Core django setup - Zappa Django Example Walkthroughs</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -38,7 +38,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="..">My Docs</a>
+            <a class="navbar-brand" href="..">Zappa Django Example Walkthroughs</a>
         </div>
 
         <!-- Expanded navigation -->
@@ -118,19 +118,26 @@
 </ul>
 <p>Now we need to allow scripts and local programs to get the credentials created above.  You have some options for this:</p>
 <ol>
-<li>Set <a href="https://github.com/Miserlou/Zappa/issues/244">environment variables</a></li>
-</ol>
+<li>
+<p>Set <a href="https://github.com/Miserlou/Zappa/issues/244">environment variables</a></p>
 <p>This is very easy but must be done for each bash console you are using.</p>
-<p><code>export AWS_ACCESS_KEY_ID=&lt;your key here&gt;
-   export AWS_SECRET_ACCESS_KEY=&lt;your secret access key here&gt;</code>
-2. Create a local credentials file (<code>~/.aws/credentials</code> on Linux, or OS X)</p>
-<pre><code>Probably a better long term solution since you can store multiple 
-sets of keys for different environments using profiles.
+<pre><code>export AWS_ACCESS_KEY_ID=&lt;your key here&gt;
+export AWS_SECRET_ACCESS_KEY=&lt;your secret access key here&gt;
 </code></pre>
-<p><code>[default]
-   aws_access_key_id = your_access_key_id
-   aws_secret_access_key = your_secret_access_key</code></p>
-<p>Useful links for Windows or more information:</p>
+
+</li>
+<li>
+<p>Create a local credentials file (<code>~/.aws/credentials</code> on Linux, or OS X)</p>
+<p>Probably a better long term solution since you can store multiple 
+ sets of keys for different environments using profiles.</p>
+<pre><code>[default]
+aws_access_key_id = your_access_key_id
+aws_secret_access_key = your_secret_access_key
+</code></pre>
+
+</li>
+</ol>
+<h4 id="useful-links-for-windows-or-more-information">Useful links for Windows or more information:</h4>
 <ul>
 <li>http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html</li>
 <li>http://boto3.readthedocs.io/en/latest/guide/configuration.html#configuring-credentials</li>
@@ -150,17 +157,15 @@ pip install django zappa
 </code></pre>
 
 <h4 id="testing-the-basic-django-project">Testing the basic Django project</h4>
-<p>At this point if you run </p>
+<p>At this point if you run 
 <pre><code>python manage.py runserver
-</code></pre>
-
+</code></pre></p>
 <p>And visit http://127.0.0.1:8000 with your browser you should see the standard Django 'It Worked!' page</p>
 <p>Now quit the server using Control-C.  You should be back at the console prompt</p>
 <h3 id="setup-zappa">Setup Zappa</h3>
-<pre><code>zappa init
+<p><pre><code>zappa init
 </code></pre>
-
-<p>You will encounter a series of prompts:</p>
+You will encounter a series of prompts:</p>
 <ul>
 <li>Name of environment - just accept the default 'dev'</li>
 <li>S3 bucket for deployments.  Use the value of the S3 bucket you created above.  If you follow the walkthrough then use <code>zappatest-code</code></li>
@@ -233,7 +238,7 @@ Enjoy!,
 </code></pre>
 
 <p>But unfortunately we encounter an error: </p>
-<pre><code>(ve) $ zappa deploy dev
+<p><pre><code>(ve) $ zappa deploy dev
 Calling deploy for environment dev..
 Warning! AWS Lambda may not be available in this AWS Region!
 Warning! AWS API Gateway may not be available in this AWS Region!
@@ -254,33 +259,41 @@ Love!,
  ~ Team Zappa!
 (ve) $
 </code></pre>
-
-<p>Aw man, the error <strong>NoRegionError: You must specify a region.</strong> is holding us back.  Zappa is complaining that no AWS region is specified.  So we need to specify a region.  In this walkthrough we are leveraging <code>us-east-1</code> which corresponds to the same region we used above for the S3 bucket.</p>
+Aw man, the error <strong>NoRegionError: You must specify a region.</strong> is holding us back.  Zappa is complaining that no AWS region is specified.  So we need to specify a region.  In this walkthrough we are leveraging <code>us-east-1</code> which corresponds to the same region we used above for the S3 bucket.</p>
 <p>You have options:</p>
 <ol>
-<li>Specify a default region using environment variables</li>
-</ol>
+<li>
+<p>Specify a default region using environment variables</p>
 <p>Again, the drawback here is this must be set for every console</p>
-<p><code>export AWS_DEFAULT_REGION=us-east-1</code>
-2. Add default region in your <code>~/.awd/credentials</code> file</p>
-<pre><code>Better but this will affect all AWS scripts and programs on your machine.
+<pre><code>export AWS_DEFAULT_REGION=us-east-1
 </code></pre>
-<p><code>[default]
-   aws_access_key_id = your_access_key_id
-   aws_secret_access_key = your_secret_access_key
-   region=us-east-1</code></p>
-<ol>
-<li>Edit the <code>zappa_settings.json</code> file to have an AWS region.</li>
-</ol>
+
+</li>
+<li>
+<p>Add default region in your <code>~/.awd/credentials</code> file</p>
+<p>Better but this will affect all AWS scripts and programs on your machine.</p>
+<pre><code>[default]
+aws_access_key_id = your_access_key_id
+aws_secret_access_key = your_secret_access_key
+region=us-east-1
+</code></pre>
+
+</li>
+<li>
+<p>Edit the <code>zappa_settings.json</code> file to have an AWS region.</p>
 <p>Probably best option because now the zappa configuration has minimal dependencies on external user environment.</p>
-<p><code>{
-    "dev": {
-        "aws_region": "us-east-1",
-        "django_settings": "frankie.settings",
-        "s3_bucket": "zappatest-code"
-        }
-    }</code>
-    Don't forget to put commas in the proper place - JSON is fiddly!</p>
+<pre><code>{
+ &quot;dev&quot;: {
+     &quot;aws_region&quot;: &quot;us-east-1&quot;,
+     &quot;django_settings&quot;: &quot;frankie.settings&quot;,
+     &quot;s3_bucket&quot;: &quot;zappatest-code&quot;
+        } 
+}
+</code></pre>
+
+<p>Don't forget to put commas in the proper place - JSON is fiddly!</p>
+</li>
+</ol>
 <h3 id="deploy-your-project-using-zappa">Deploy your project using Zappa</h3>
 <p>Now it's easy to do the initial deployment</p>
 <pre><code>zappa deploy dev
