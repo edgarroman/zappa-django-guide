@@ -4,23 +4,31 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2016-12-23</lastmod>
+     <lastmod>2016-12-27</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
+        
     <url>
      <loc>/core_django_setup/</loc>
-     <lastmod>2016-12-23</lastmod>
+     <lastmod>2016-12-27</lastmod>
      <changefreq>daily</changefreq>
     </url>
+        
+    <url>
+     <loc>/static_files/</loc>
+     <lastmod>2016-12-27</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
     
     <url>
-     <loc>/static_files/</loc>
-     <lastmod>2016-12-23</lastmod>
+     <loc>/additional/</loc>
+     <lastmod>2016-12-27</lastmod>
      <changefreq>daily</changefreq>
     </url>
     

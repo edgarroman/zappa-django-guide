@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Core django setup - Zappa Django Example Walkthroughs</title>
+        <title>Core Django Setup - Zappa Django Example Walkthroughs</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -48,11 +48,21 @@
                     <li >
                         <a href="..">Home</a>
                     </li>
-                    <li class="active">
-                        <a href="./">Core django setup</a>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Walkthroughs <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li class="active">
+    <a href="./">Core Django Setup</a>
+</li>
+                            
+<li >
+    <a href="../static_files/">Hosting Static Files</a>
+</li>
+                        </ul>
                     </li>
                     <li >
-                        <a href="../static_files/">Static files</a>
+                        <a href="../additional/">Additional</a>
                     </li>
                 </ul>
 
@@ -81,22 +91,29 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#core-django-setup">Core Django Setup</a></li>
+            <li><a href="#expectations-and-goals">Expectations and Goals</a></li>
             <li><a href="#setup-and-prerequisites">Setup and Prerequisites</a></li>
-            <li><a href="#walkthrough">Walkthrough</a></li>
+            <li><a href="#setup-aws-account-credentials">Setup AWS Account Credentials</a></li>
+            <li><a href="#create-local-environment">Create local environment</a></li>
+            <li><a href="#create-very-basic-django-project">Create very basic Django project</a></li>
+            <li><a href="#setup-zappa">Setup Zappa</a></li>
+            <li><a href="#deploy-your-project-using-zappa">Deploy your project using Zappa</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
 <h1 id="core-django-setup">Core Django Setup</h1>
-<p>This section documents setting up a Django project with only core Python functionality responding to HTTP calls.  After this section the following will work:</p>
+<p>This section documents setting up a Django project with only core Python functionality responding to HTTP calls.  The value of this core walkthrough could be to power an API driven compute engine or a event-driven data processing tool without the need to provide a UI.</p>
+<h3 id="expectations-and-goals">Expectations and Goals</h3>
+<p>After going through this section the following will work:</p>
 <ul>
-<li>URL Routes</li>
-<li>Views (but no static file serving)</li>
+<li>URL Routes in your Django projects</li>
+<li>Views can produce html / json / data output</li>
 <li>Management Commands</li>
 </ul>
-<p>What will not work:</p>
+<p>What will not work (yet - see other walkthroughs for this functionality)</p>
 <ul>
-<li>Static Files not being served</li>
+<li>Static Files will not be served (More on that <a href="../static_files/">here</a>)</li>
 <li>There is no database connection available (not even SQLite)</li>
 <li>No HTTPS support</li>
 </ul>
@@ -106,8 +123,7 @@
 <li>Django 1.10.4</li>
 <li><a href="https://pypi.python.org/pypi/zappa">zappa 0.32.1</a></li>
 </ul>
-<h2 id="walkthrough">Walkthrough</h2>
-<h3 id="setup-aws-account-credentials">Setup AWS Account Credentials</h3>
+<h2 id="setup-aws-account-credentials">Setup AWS Account Credentials</h2>
 <p>Details in this section are light because this information is documented well elsewhere on the web.</p>
 <ul>
 <li>Create AWS Account if you haven't already</li>
@@ -137,12 +153,12 @@ aws_secret_access_key = your_secret_access_key
 
 </li>
 </ol>
-<h4 id="useful-links-for-windows-or-more-information">Useful links for Windows or more information:</h4>
+<h3 id="useful-links-for-windows-or-more-information">Useful links for Windows or more information:</h3>
 <ul>
 <li>http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html</li>
 <li>http://boto3.readthedocs.io/en/latest/guide/configuration.html#configuring-credentials</li>
 </ul>
-<h3 id="create-local-environment">Create local environment</h3>
+<h2 id="create-local-environment">Create local environment</h2>
 <p>It is highly recommended that you leverage virtual environments for this test project.</p>
 <pre><code>mkdir zappatest
 cd zappatest
@@ -151,18 +167,18 @@ source ve/bin/activate
 pip install django zappa
 </code></pre>
 
-<h3 id="create-very-basic-django-project">Create very basic Django project</h3>
+<h2 id="create-very-basic-django-project">Create very basic Django project</h2>
 <p>For the purposes of this walkthrough we are taking the most basic Django project.</p>
 <pre><code>django-admin startproject frankie .
 </code></pre>
 
-<h4 id="testing-the-basic-django-project">Testing the basic Django project</h4>
+<h3 id="testing-the-basic-django-project">Testing the basic Django project</h3>
 <p>At this point if you run 
 <pre><code>python manage.py runserver
 </code></pre></p>
 <p>And visit http://127.0.0.1:8000 with your browser you should see the standard Django 'It Worked!' page</p>
 <p>Now quit the server using Control-C.  You should be back at the console prompt</p>
-<h3 id="setup-zappa">Setup Zappa</h3>
+<h2 id="setup-zappa">Setup Zappa</h2>
 <p><pre><code>zappa init
 </code></pre>
 You will encounter a series of prompts:</p>
@@ -232,7 +248,7 @@ Enjoy!,
 (ve) $
 </code></pre>
 
-<h4 id="testing-the-zappa-setup">Testing the Zappa Setup</h4>
+<h3 id="testing-the-zappa-setup">Testing the Zappa Setup</h3>
 <p>So now if we run</p>
 <pre><code>zappa deploy dev
 </code></pre>
@@ -294,7 +310,7 @@ region=us-east-1
 <p>Don't forget to put commas in the proper place - JSON is fiddly!</p>
 </li>
 </ol>
-<h3 id="deploy-your-project-using-zappa">Deploy your project using Zappa</h3>
+<h2 id="deploy-your-project-using-zappa">Deploy your project using Zappa</h2>
 <p>Now it's easy to do the initial deployment</p>
 <pre><code>zappa deploy dev
 </code></pre>
