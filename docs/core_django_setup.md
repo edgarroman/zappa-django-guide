@@ -1,14 +1,19 @@
 # Core Django Setup
 
-This section documents setting up a Django project with only core Python functionality responding to HTTP calls.  After this section the following will work:
+This section documents setting up a Django project with only core Python functionality responding to HTTP calls.  The value of this core walkthrough could be to power an API driven compute engine or a event-driven data processing tool without the need to provide a UI.
 
-* URL Routes
-* Views (but no static file serving)
+
+### Expectations and Goals
+
+After going through this section the following will work:
+
+* URL Routes in your Django projects
+* Views can produce html / json / data output
 * Management Commands
 
-What will not work:
+What will not work (yet - see other walkthroughs for this functionality)
 
-* Static Files not being served
+* Static Files will not be served (More on that [here](static_files.md))
 * There is no database connection available (not even SQLite)
 * No HTTPS support
 
@@ -18,9 +23,8 @@ What will not work:
 * Django 1.10.4
 * [zappa 0.32.1](https://pypi.python.org/pypi/zappa)
 
-## Walkthrough
 
-### Setup AWS Account Credentials
+## Setup AWS Account Credentials
 
 Details in this section are light because this information is documented well elsewhere on the web.
 
@@ -52,12 +56,12 @@ Now we need to allow scripts and local programs to get the credentials created a
     aws_secret_access_key = your_secret_access_key
     ```
 
-#### Useful links for Windows or more information:
+### Useful links for Windows or more information:
 
 * http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html
 * http://boto3.readthedocs.io/en/latest/guide/configuration.html#configuring-credentials
 
-### Create local environment
+## Create local environment
 
 It is highly recommended that you leverage virtual environments for this test project.
 
@@ -69,7 +73,7 @@ source ve/bin/activate
 pip install django zappa
 ```
 
-### Create very basic Django project
+## Create very basic Django project
 
 For the purposes of this walkthrough we are taking the most basic Django project.
 
@@ -77,7 +81,7 @@ For the purposes of this walkthrough we are taking the most basic Django project
 django-admin startproject frankie .
 ```
 
-#### Testing the basic Django project
+### Testing the basic Django project
 At this point if you run 
 ```
 python manage.py runserver
@@ -87,7 +91,7 @@ And visit http://127.0.0.1:8000 with your browser you should see the standard Dj
 
 Now quit the server using Control-C.  You should be back at the console prompt
 
-### Setup Zappa
+## Setup Zappa
 
 ```
 zappa init
@@ -161,7 +165,7 @@ Enjoy!,
 (ve) $
 ```
 
-#### Testing the Zappa Setup
+### Testing the Zappa Setup
 
 So now if we run
 
@@ -233,7 +237,7 @@ You have options:
    
     Don't forget to put commas in the proper place - JSON is fiddly!
 
-### Deploy your project using Zappa
+## Deploy your project using Zappa
 
 Now it's easy to do the initial deployment
 

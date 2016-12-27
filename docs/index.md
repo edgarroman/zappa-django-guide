@@ -1,9 +1,11 @@
-# Zappa Django example
+# Zappa Django Example Walkthroughs
 
 This repo exists to document the process of getting a standard Django project running live in AWS Lambda using the 
-[zappa project](https://github.com/Miserlou/Zappa)
+[zappa project](https://github.com/Miserlou/Zappa).  We will explore various configurations in a building-block fashion in the hopes that folks can leverage only the relevant parts for their needs.
 
 ## Setup and Prerequisites 
+
+To ensure baseline expectations are set, all walkthroughs will assume the following criteria:
 
 * Python 2.7 (due to [AWS lambda only supporting 2.7](http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html)) 
 * Django 1.10.4
@@ -13,17 +15,7 @@ This repo exists to document the process of getting a standard Django project ru
 
 ### [Core Django Setup](core_django_setup.md)
 
-This section documents setting up a Django project with only core Python functionality responding to HTTP calls.  After this section the following will work:
-
-* URL Routes
-* Views (but no static file serving)
-* Management Commands
-
-What will not work:
-
-* Static Files not being served
-* There is no database connection available (not even SQLite)
-* No HTTPS support
+This section documents setting up a Django project with only core Python functionality responding to HTTP calls.  The value of this core walkthrough could be to power an API driven compute engine or a event-driven data processing tool without the need to provide a UI.
 
 ### [Support for Static Files](static_files.md)
 

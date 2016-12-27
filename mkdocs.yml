@@ -1,3 +1,10 @@
 site_name: Zappa Django Example Walkthroughs
+pages:
+  - Home: 'index.md'
+  - Walkthroughs:
+    - 'Core Django Setup' : 'core_django_setup.md'
+    - 'Hosting Static Files' : 'static_files.md'
+  - Additional: 'additional.md'
 markdown_extensions:
   - pymdownx.superfences
+# - pymdownx.github
