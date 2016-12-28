@@ -91,6 +91,10 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#static-files-setup">Static Files Setup</a></li>
+            <li><a href="#static-files-and-code-on-a-single-server">Static files and Code on a Single Server</a></li>
+            <li><a href="#leveraging-wsgi-app-to-serve-files">Leveraging WSGI app to serve files</a></li>
+            <li><a href="#using-external-services-to-serve-files">Using external services to serve files</a></li>
+            <li><a href="#using-a-cdn-for-the-entire-project">Using a CDN for the entire project</a></li>
             <li><a href="#setup-and-prerequisites">Setup and Prerequisites</a></li>
             <li><a href="#walkthrough">Walkthrough</a></li>
     </ul>
@@ -98,7 +102,19 @@
                 <div class="col-md-9" role="main">
 
 <h1 id="static-files-setup">Static Files Setup</h1>
-<p>This section documents setting up a Django project with static files hosted.</p>
+<p>Generally if you'd like to use your Django project to present a User Interface (UI) then you'll need to display Images and CSS and serve Javascript files.  These are known as <a href="https://docs.djangoproject.com/en/1.10/howto/static-files/deployment/">static files</a> and to deliver them using Zappa is unlike the traditional method of hosting the static files on a Linux or Windows box.  </p>
+<h3 id="static-files-and-code-on-a-single-server">Static files and Code on a Single Server</h3>
+<p>A very common configuration you may see recommended is to have your Django project <a href="https://docs.djangoproject.com/en/1.10/howto/static-files/deployment/#serving-the-site-and-your-static-files-from-the-same-server">deployed on a server with your static files</a>.  Then the advice is to have your web server software (apache, nginx, or other) have special mechanisms to directly serve the static files.  The idea is to have the fast web server software handle delivering the static images to clients and the comparatively slow Django/python code process the more complex views and page content.  </p>
+<p>Because Zappa runs in the serverless lambda environment, this approach is not feasible since you cannot configure the web server to handle various url paths differently.  Thus another approach must be taken.</p>
+<h3 id="leveraging-wsgi-app-to-serve-files">Leveraging WSGI app to serve files</h3>
+<p>The situation where one does not have access to the web server software configuration is more common than one may think.  Hosting in a shared environment, or on Platform as a Service (PaaS) like OpenShift may prevent full configuration of the web server to effectively serve static files.  </p>
+<p>There are ways to leverage the WSGI application (Django for us) and instruct it to serve static files.  Normally, Django treats URL requests as an opportunity to run python code.  And the python code may have complex logic.  But there is a model called [WhiteNoise] (https://github.com/evansd/whitenoise).  It is an app that will minimize the python code processing to more efficiently serve static files.  Thus no external web server software configuration is required.  While perhaps not as optimal as having the web server hosting the files, this method has been used in production effectively.  </p>
+<h3 id="using-external-services-to-serve-files">Using external services to serve files</h3>
+<p>Finally, there is an option to use an <a href="https://docs.djangoproject.com/en/1.10/howto/static-files/deployment/#serving-static-files-from-a-cloud-service-or-cdn">external service to serve static files</a>.  This is the option that is the subject of this walkthrough.</p>
+<p>While any external service that serves files over HTTP could work, the focus for us will be to leverage the AWS service of S3 and the Content Delivery Network (CDN) of CloudFront to meet our needs.  </p>
+<p>The S3 service will contain our files and provide the fundamental HTTP/HTTPS service.  This alone will suffice for many recreational projects, but more professional project will want to leverage CloudFront to provide caching, faster delivery, and better protection of assets.</p>
+<h3 id="using-a-cdn-for-the-entire-project">Using a CDN for the entire project</h3>
+<p>There are also advantages to serving the entire Django project (Lambda functions and S3 Static files) via the CloudFront CDN.  This option will not be covered in this Walkthrough.</p>
 <h2 id="setup-and-prerequisites">Setup and Prerequisites</h2>
 <ul>
 <li>Python 2.7 (due to <a href="http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html">AWS lambda only supporting 2.7</a>) </li>
