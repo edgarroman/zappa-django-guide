@@ -19,4 +19,4 @@ This section documents setting up a Django project with only core Python functio
 
 ### [Support for Static Files](static_files.md)
 
-Now how to get static files hosted
+Generally if you'd like to use your Django project to present a User Interface (UI) then you'll need to display Images and CSS and serve Javascript files.  These are known as static files and to deliver them using Zappa is unlike the traditional method of hosting the static files on a Linux or Windows box.  This walkthrough documents one way of hosting the files on AWS S3.
