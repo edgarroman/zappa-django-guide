@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Zappa Django Example Walkthroughs\n\n\nThis repo exists to document the process of getting a standard Django project running live in AWS Lambda using the \n\nzappa project\n.  We will explore various configurations in a building-block fashion in the hopes that folks can leverage only the relevant parts for their needs.\n\n\nSetup and Prerequisites\n\n\nTo ensure baseline expectations are set, all walkthroughs will assume the following criteria:\n\n\n\n\nPython 2.7 (due to \nAWS lambda only supporting 2.7\n) \n\n\nDjango 1.10.4\n\n\nzappa 0.32.1\n\n\n\n\nWalkthroughs\n\n\nCore Django Setup\n\n\nThis section documents setting up a Django project with only core Python functionality responding to HTTP calls.  The value of this core walkthrough could be to power an API driven compute engine or a event-driven data processing tool without the need to provide a UI.\n\n\nSupport for Static Files\n\n\nNow how to get static files hosted", 
+            "text": "Zappa Django Example Walkthroughs\n\n\nThis repo exists to document the process of getting a standard Django project running live in AWS Lambda using the \n\nzappa project\n.  We will explore various configurations in a building-block fashion in the hopes that folks can leverage only the relevant parts for their needs.\n\n\nSetup and Prerequisites\n\n\nTo ensure baseline expectations are set, all walkthroughs will assume the following criteria:\n\n\n\n\nPython 2.7 (due to \nAWS lambda only supporting 2.7\n) \n\n\nDjango 1.10.4\n\n\nzappa 0.32.1\n\n\n\n\nWalkthroughs\n\n\nCore Django Setup\n\n\nThis section documents setting up a Django project with only core Python functionality responding to HTTP calls.  The value of this core walkthrough could be to power an API driven compute engine or a event-driven data processing tool without the need to provide a UI.\n\n\nSupport for Static Files\n\n\nGenerally if you'd like to use your Django project to present a User Interface (UI) then you'll need to display Images and CSS and serve Javascript files.  These are known as static files and to deliver them using Zappa is unlike the traditional method of hosting the static files on a Linux or Windows box.  This walkthrough documents one way of hosting the files on AWS S3.", 
             "title": "Home"
         }, 
         {
@@ -27,7 +27,7 @@
         }, 
         {
             "location": "/#support-for-static-files", 
-            "text": "Now how to get static files hosted", 
+            "text": "Generally if you'd like to use your Django project to present a User Interface (UI) then you'll need to display Images and CSS and serve Javascript files.  These are known as static files and to deliver them using Zappa is unlike the traditional method of hosting the static files on a Linux or Windows box.  This walkthrough documents one way of hosting the files on AWS S3.", 
             "title": "Support for Static Files"
         }, 
         {
