@@ -22,6 +22,8 @@ While any external service that serves files over HTTP could work, the focus for
 
 The S3 service will contain our files and provide the fundamental HTTP/HTTPS service.  This alone will suffice for many recreational projects, but more professional project will want to leverage CloudFront to provide caching, faster delivery, and better protection of assets.
 
+Note that much of this information was pulled from [https://www.caktusgroup.com/blog/2014/11/10/Using-Amazon-S3-to-store-your-Django-sites-static-and-media-files/](https://www.caktusgroup.com/blog/2014/11/10/Using-Amazon-S3-to-store-your-Django-sites-static-and-media-files/)
+
 ### Using a CDN for the entire project
 
 There are also advantages to serving the entire Django project (Lambda functions and S3 Static files) via the CloudFront CDN.  This option will not be covered in this Walkthrough.
@@ -29,9 +31,115 @@ There are also advantages to serving the entire Django project (Lambda functions
 
 ## Setup and Prerequisites 
 
-* Python 2.7 (due to [AWS lambda only supporting 2.7](http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html)) 
-* Django 1.10.4
-* [zappa 0.32.1](https://pypi.python.org/pypi/zappa)
+Make sure you understand and execute the [Core Django Walkthrough](core_django_setup.md) first.  This Walkthrough builds upon that.
 
-## Walkthrough
+## Setup Amazon Account
 
+You will need an AWS S3 bucket to host your static files.  This should not be the same as your S3 bucket used by zappa to upload your code.  The reason is that you will be making some modifications to the S3 bucket to properly use HTTP to serve files.
+
+Create an S3 bucket and name it something like `zappa-static`.  You may name it anything you like but for the purposes of this walkthrough we will use `zappa-static`.  Replace all occurrences of this string with your chosen bucket name.
+
+### Configure CORS
+
+[CORS](https://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html) is an HTTP standard that enables browsers to pull content from different sources on a single web page.  Because our Django Lambda views are hosted on a different URL, we must enable the CORS setting on the S3 bucket holding our static assets to allow the files to be pulled.  
+
+Go to your S3 bucket properties, and under "Permissions", click on "Add CORS Configuration". Paste this in:
+
+```
+ <CORSConfiguration>
+        <CORSRule>
+            <AllowedOrigin>*</AllowedOrigin>
+            <AllowedMethod>GET</AllowedMethod>
+            <MaxAgeSeconds>3000</MaxAgeSeconds>
+            <AllowedHeader>Authorization</AllowedHeader>
+        </CORSRule>
+    </CORSConfiguration>
+```
+**Note that this CORS policy is very open and simple.  If you have a production site, you will probably want to narrow the scope of CORS or leverage a CDN.**
+
+
+## Configure Django Project
+
+### Install modules
+
+In order to re-use existing modules freely available, we will use the django-storages module to handle the management of files to and from AWS S3.  So first you must install it.  *Don't forget to activate your virtual environment* 
+
+```
+pip install django-storages boto
+```
+
+And thus you should take the corresponding package versions reported by `pip freeze` into the requirements.txt file.  At the time of this writing, the additional lines would be:
+
+```
+...
+boto==2.45.0
+django-storages==1.5.1
+...
+```
+
+### Add Django-Storages to the INSTALLED_APPS in settings.py
+
+Edit your settings.py file to include django-storages.  Note it's just called 'storages' as an app.
+
+```
+INSTALLED_APPS = (
+          ...,
+          'storages',
+     )
+```
+
+### Configure Django-Storages in settings.py
+
+Add these lines anywhere in your settings.py.  These values instruct Django-Storages to properly configure a basic setup for leveraging S3.  More information about these values can be found here: [http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html](http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html)
+
+```
+AWS_STORAGE_BUCKET_NAME = 'zappa-static'
+
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+```
+
+## Push your static files to the cloud
+
+The funny thing about zappa is that generally you have a working local environment and a working lambda environment.  In theory either location can push the static files to the cloud.  
+
+Using your local environment:
+
+```
+python manage.py collectstatic --noinput
+```
+
+Or to instruct your zappa-powered AWS lambda environment to do it for you:
+
+```
+zappa manage dev "collectstatic --noinput"
+```
+
+### Test with the admin
+
+Once you have pushed your static files to S3, you can visit the admin site for your Django project to test if it worked.  Appending /admin/ to your zappa project you can now browse to the admin site and watch the css being loaded just fine.
+
+## Additional HTTP Settings
+
+As mentioned above you probably want to ensure a valid CORS policy is in place for anything resembling production.
+
+In addition there are many default HTTP headers that can be served with your static files to ensure proper caching and so forth.  The example format in your settings.py file is:
+
+```
+    AWS_HEADERS = {  
+        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+        'Cache-Control': 'max-age=94608000',
+    }
+```
+
+
+## Helpful Links
+
+These two articles were extremely helpful when writing this page:
+
+* [https://www.caktusgroup.com/blog/2014/11/10/Using-Amazon-S3-to-store-your-Django-sites-static-and-media-files/](https://www.caktusgroup.com/blog/2014/11/10/Using-Amazon-S3-to-store-your-Django-sites-static-and-media-files/)
+* [http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html](http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html)
