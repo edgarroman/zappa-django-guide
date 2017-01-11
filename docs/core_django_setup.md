@@ -291,3 +291,16 @@ zappa update dev
 
 After this completes, you should be able to see your Django site in action.  Note that you will actually get a Page not found (404) response.  This indicates that your Django site is functional and working.   
 
+![404](images/core_404.png)
+
+## How is this functional?
+
+Wait, what?  A 404 page is functional?  Well yes, it is.  The Lambda function is working fine.  A whole series of AWS systems are working in concert to load your python Django code and running the view.  Because we've cut to the bare minimum Django project, there is no application ready to handle the url paths.  The only thing we see is the admin application.
+
+So from here we are ready to start working on views and providing data.  However, if you wish to host a website with static files and databases, continue onward to the subsequent walkthroughs.
+
+### Why is the URL path appended with 'dev'?
+
+Astute readers will notice that the url in the image shown above indeed has the root domain with the suffix of 'dev' which happens to be the name of the zappa environment.  
+
+At this time, having the environment appended to the url is embedded into zappa.  However, if you place the lambda function behind a CDN such as cloudfront, this preference may be changed.

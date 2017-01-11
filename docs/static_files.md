@@ -123,6 +123,12 @@ zappa manage dev "collectstatic --noinput"
 
 Once you have pushed your static files to S3, you can visit the admin site for your Django project to test if it worked.  Appending /admin/ to your zappa project you can now browse to the admin site and watch the css being loaded just fine.
 
+![success](images/static_django.png)
+
+## Next Steps
+
+Well great, now you have a working Django site that processes views and can serve static files.  But you can't login because there is no database.  Continue through the walkthroughs to complete a fully functional website.
+
 ## Additional HTTP Settings
 
 As mentioned above you probably want to ensure a valid CORS policy is in place for anything resembling production.
