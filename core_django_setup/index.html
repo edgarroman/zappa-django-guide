@@ -59,6 +59,10 @@
 <li >
     <a href="../static_files/">Hosting Static Files</a>
 </li>
+                            
+<li >
+    <a href="../aws_setup/">A Brief Interlude: AWS Setup</a>
+</li>
                         </ul>
                     </li>
                     <li >
@@ -98,6 +102,7 @@
             <li><a href="#create-very-basic-django-project">Create very basic Django project</a></li>
             <li><a href="#setup-zappa">Setup Zappa</a></li>
             <li><a href="#deploy-your-project-using-zappa">Deploy your project using Zappa</a></li>
+            <li><a href="#how-is-this-functional">How is this functional?</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -349,7 +354,14 @@ You may need to add x6kb437rh.execute-api.us-east-1.amazonaws.com' to ALLOWED_HO
 <pre><code>zappa update dev
 </code></pre>
 
-<p>After this completes, you should be able to see your Django site in action.  Note that you will actually get a Page not found (404) response.  This indicates that your Django site is functional and working.   </p></div>
+<p>After this completes, you should be able to see your Django site in action.  Note that you will actually get a Page not found (404) response.  This indicates that your Django site is functional and working.   </p>
+<p><img alt="404" src="../images/core_404.png" /></p>
+<h2 id="how-is-this-functional">How is this functional?</h2>
+<p>Wait, what?  A 404 page is functional?  Well yes, it is.  The Lambda function is working fine.  A whole series of AWS systems are working in concert to load your python Django code and running the view.  Because we've cut to the bare minimum Django project, there is no application ready to handle the url paths.  The only thing we see is the admin application.</p>
+<p>So from here we are ready to start working on views and providing data.  However, if you wish to host a website with static files and databases, continue onward to the subsequent walkthroughs.</p>
+<h3 id="why-is-the-url-path-appended-with-dev">Why is the URL path appended with 'dev'?</h3>
+<p>Astute readers will notice that the url in the image shown above indeed has the root domain with the suffix of 'dev' which happens to be the name of the zappa environment.  </p>
+<p>At this time, having the environment appended to the url is embedded into zappa.  However, if you place the lambda function behind a CDN such as cloudfront, this preference may be changed.</p></div>
         </div>
 
         <footer class="col-md-12">

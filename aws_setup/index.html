@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>A Brief Interlude: AWS Setup - Zappa Django Example Walkthroughs</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="..">Zappa Django Example Walkthroughs</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Walkthroughs <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../core_django_setup/">Core Django Setup</a>
+</li>
+                            
+<li >
+    <a href="../static_files/">Hosting Static Files</a>
+</li>
+                            
+<li class="active">
+    <a href="./">A Brief Interlude: AWS Setup</a>
+</li>
+                        </ul>
+                    </li>
+                    <li >
+                        <a href="../additional/">Additional</a>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../static_files/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../additional/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#a-brief-interlude-regarding-aws-setup">A Brief Interlude Regarding AWS Setup</a></li>
+            <li><a href="#a-simple-but-naive-approach">A simple, but naive approach</a></li>
+            <li><a href="#thats-why-amazon-has-vpc">That's why Amazon has VPC</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="a-brief-interlude-regarding-aws-setup">A Brief Interlude Regarding AWS Setup</h1>
+<p>Presumably, since you've read this far, you're interested in more than a simple Django powered API serving static images.  You probably want something that is more interactive with users and have have advanced capabilities.  So this will require interacting with additional AWS services like RDS or DynamoDB for database services, SNS or SQS for task processing, and many more...</p>
+<p>Well, there is an important aspect about interacting with additional AWS services.  With pure AWS lambda, we have a fairly low attack surface, but when we introduce additional interactions over the network, we must consider information security risks.</p>
+<h2 id="a-simple-but-naive-approach">A simple, but naive approach</h2>
+<p>A simple approach would be to create an AWS RDS instance that is open to the Internet and have your lambda Django project login directly.  While this may work, this approach is fraught with peril.  Numerous vulnerabilities could exist and credentials could be brute forces.  Even without access to your RDS, it is trivial to launch a denial-of-service attack to ensure your Django project has no database services.</p>
+<p>Basically, do not do this.</p>
+<h2 id="thats-why-amazon-has-vpc">That's why Amazon has VPC</h2>
+<p>Introduce Amazon Virtual Private Cloud (VPC).  This provides a way of segmenting Internet traffic from your AWS services.  This feature is incredibly valuable to securing our project.  So that bad guys have the smallest attack surface possible.  It's easy to setup a VPC - there are many webpages that will assist you.  But basically you pick an IP range and let it fly.</p>
+<p>Once a VPC is established, you can then subdivide the VPC into subnets.  Which are little non-overlapping IP chunks of the overall VPC.  Like dividing a pie into slices.  </p>
+<p>It is important to realize that you have almost entire control of your IP space when you define your VPC and associated subnets.  You are creating a Software Defined Network (SDN) and you have a lot of leeway.  With this freedom comes choices and important considerations on how you design your network.</p>
+<p>For a full list of options and other valuable information about VPCs, see this link: <a href="https://aws.amazon.com/answers/networking/aws-single-vpc-design/">https://aws.amazon.com/answers/networking/aws-single-vpc-design/</a></p>
+<p>The options are summarized here:</p>
+<ul>
+<li>
+<p>Internet-Accessible VPC</p>
+<p>One could serious consider this configuration.  If you put your lambda functions, your RDS, and additional SNS/SQS services in a single subnet in an Internet Accessible VPC it could work.  In theory you could configure your security groups to ensure only lambda functions can hit your RDS.  </p>
+<p>One advantage of this setup is that you can setup your local machine to connect to your RDS without a <a href="http://serverfault.com/a/648116/60094">bastion host</a>.  Just restrict access based on IP.  </p>
+<p><strong>This scenario could be very viable based on your needs</strong></p>
+</li>
+<li>
+<p>Public and Privately Routed VPC</p>
+<p>Arguably the most secure of all web application setups.  You have two subnets: one public and one private.  Your RDS and lambda functions reside in the private subnet, far away from bad guys, but also far away from your local machine.  In order to access the database from your system you will need a <a href="http://serverfault.com/a/648116/60094">bastion host</a> in the public subnet.  </p>
+<p>Another advantage of this setup is that if you ever want to add additional EC2-based services that need to interact with the Internet you can do this very easily without compromising security.  </p>
+<p><strong>The upshot is this configuration is the most secure and most flexible for your growth needs with minimal additional complexity.</strong></p>
+</li>
+<li>
+<p>On-Premises and Internet-Accessible VPC</p>
+<p>Same as the last configuration, but if you have an internal corporate network to connect, you can easily establish a connection to the private subnet without compromising security.</p>
+<p><strong>A good solution if you need to connect an internal corporate network</strong></p>
+</li>
+<li>
+<p>Internal-Only VPC</p>
+<p>Obviously a very special case of creating a Django app for internal use only with no desire to have it accessible by the Internet.</p>
+<p><strong>Useful for special cases</strong></p>
+</li>
+</ul></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '..';</script>
+        <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+        <script src="../js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

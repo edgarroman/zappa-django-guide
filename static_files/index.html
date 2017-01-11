@@ -59,6 +59,10 @@
 <li class="active">
     <a href="./">Hosting Static Files</a>
 </li>
+                            
+<li >
+    <a href="../aws_setup/">A Brief Interlude: AWS Setup</a>
+</li>
                         </ul>
                     </li>
                     <li >
@@ -78,7 +82,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../additional/">
+                        <a rel="prev" href="../aws_setup/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -99,6 +103,7 @@
             <li><a href="#setup-amazon-account">Setup Amazon Account</a></li>
             <li><a href="#configure-django-project">Configure Django Project</a></li>
             <li><a href="#push-your-static-files-to-the-cloud">Push your static files to the cloud</a></li>
+            <li><a href="#next-steps">Next Steps</a></li>
             <li><a href="#additional-http-settings">Additional HTTP Settings</a></li>
             <li><a href="#helpful-links">Helpful Links</a></li>
     </ul>
@@ -183,6 +188,9 @@ STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 <h3 id="test-with-the-admin">Test with the admin</h3>
 <p>Once you have pushed your static files to S3, you can visit the admin site for your Django project to test if it worked.  Appending /admin/ to your zappa project you can now browse to the admin site and watch the css being loaded just fine.</p>
+<p><img alt="success" src="../images/static_django.png" /></p>
+<h2 id="next-steps">Next Steps</h2>
+<p>Well great, now you have a working Django site that processes views and can serve static files.  But you can't login because there is no database.  Continue through the walkthroughs to complete a fully functional website.</p>
 <h2 id="additional-http-settings">Additional HTTP Settings</h2>
 <p>As mentioned above you probably want to ensure a valid CORS policy is in place for anything resembling production.</p>
 <p>In addition there are many default HTTP headers that can be served with your static files to ensure proper caching and so forth.  The example format in your settings.py file is:</p>
