@@ -1,10 +1,18 @@
-site_name: Zappa Django Example Walkthroughs
+site_name: Guide to using Django with Zappa
 pages:
   - Home: 'index.md'
   - Walkthroughs:
-    - 'Core Django Setup' : 'core_django_setup.md'
-    - 'Hosting Static Files' : 'static_files.md'
-    - 'A Brief Interlude: AWS Setup' : 'aws_setup.md'
+    - 'Core Django Setup' : 'walk_core.md'
+    - 'Hosting Static Files' : 'walk_static.md'
+    - 'Using a Database' : 'walk_database.md'
+    - 'You need a CDN' : 'walk_cdn.md'
+    - 'Secure HTTPS' : 'walk_https.md'
+    - 'Wrangling Media Files' : 'walk_media.md'
+    - 'Tasks and Events' : 'walk_scheduling.md'
+    - 'Debugging' : 'walk_debug.md'
+  - AWS Setup:
+    - 'Managing Credentials' : 'aws_credentials.md'
+    - 'Adventures in Networking' : 'aws_network.md'
   - Additional: 'additional.md'
 markdown_extensions:
   - pymdownx.superfences

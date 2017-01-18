@@ -31,7 +31,7 @@ There are also advantages to serving the entire Django project (Lambda functions
 
 ## Setup and Prerequisites 
 
-Make sure you understand and execute the [Core Django Walkthrough](core_django_setup.md) first.  This Walkthrough builds upon that.
+Make sure you understand and execute the [Core Django Walkthrough](walk_core.md) first.  This Walkthrough builds upon that.
 
 ## Setup Amazon Account
 
