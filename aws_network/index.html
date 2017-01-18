@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>A Brief Interlude: AWS Setup - Zappa Django Example Walkthroughs</title>
+        <title>Adventures in Networking - Guide to using Django with Zappa</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -38,7 +38,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="..">Zappa Django Example Walkthroughs</a>
+            <a class="navbar-brand" href="..">Guide to using Django with Zappa</a>
         </div>
 
         <!-- Expanded navigation -->
@@ -48,20 +48,53 @@
                     <li >
                         <a href="..">Home</a>
                     </li>
-                    <li class="dropdown active">
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Walkthroughs <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             
 <li >
-    <a href="../core_django_setup/">Core Django Setup</a>
+    <a href="../walk_core/">Core Django Setup</a>
 </li>
                             
 <li >
-    <a href="../static_files/">Hosting Static Files</a>
+    <a href="../walk_static/">Hosting Static Files</a>
+</li>
+                            
+<li >
+    <a href="../walk_database/">Using a Database</a>
+</li>
+                            
+<li >
+    <a href="../walk_cdn/">You need a CDN</a>
+</li>
+                            
+<li >
+    <a href="../walk_https/">Secure HTTPS</a>
+</li>
+                            
+<li >
+    <a href="../walk_media/">Wrangling Media Files</a>
+</li>
+                            
+<li >
+    <a href="../walk_scheduling/">Tasks and Events</a>
+</li>
+                            
+<li >
+    <a href="../walk_debug/">Debugging</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">AWS Setup <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../aws_credentials/">Managing Credentials</a>
 </li>
                             
 <li class="active">
-    <a href="./">A Brief Interlude: AWS Setup</a>
+    <a href="./">Adventures in Networking</a>
 </li>
                         </ul>
                     </li>
@@ -77,7 +110,7 @@
                     </a>
                 </li>
                     <li >
-                        <a rel="next" href="../static_files/">
+                        <a rel="next" href="../aws_credentials/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -94,16 +127,22 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#a-brief-interlude-regarding-aws-setup">A Brief Interlude Regarding AWS Setup</a></li>
+        <li class="main active"><a href="#adventures-in-networking">Adventures in Networking</a></li>
             <li><a href="#a-simple-but-naive-approach">A simple, but naive approach</a></li>
             <li><a href="#thats-why-amazon-has-vpc">That's why Amazon has VPC</a></li>
+            <li><a href="#the-essential-vpc-and-subnet-configuration">The Essential VPC and Subnet Configuration</a></li>
+            <li><a href="#extending-the-vpc">Extending the VPC</a></li>
+            <li><a href="#vpc-patterns">VPC Patterns</a></li>
+            <li><a href="#subdividing-the-vpc">Subdividing the VPC</a></li>
+            <li><a href="#examples-for-walkthroughs">Examples for Walkthroughs</a></li>
+            <li><a href="#note-on-redundancy">Note on Redundancy</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="a-brief-interlude-regarding-aws-setup">A Brief Interlude Regarding AWS Setup</h1>
+<h1 id="adventures-in-networking">Adventures in Networking</h1>
 <p>Presumably, since you've read this far, you're interested in more than a simple Django powered API serving static images.  You probably want something that is more interactive with users and have have advanced capabilities.  So this will require interacting with additional AWS services like RDS or DynamoDB for database services, SNS or SQS for task processing, and many more...</p>
-<p>Well, there is an important aspect about interacting with additional AWS services.  With pure AWS lambda, we have a fairly low attack surface, but when we introduce additional interactions over the network, we must consider information security risks.</p>
+<p>Well, there is an important aspect about interacting with additional AWS services.  With pure AWS lambda, we have a fairly low attack surface, but when we introduce additional interactions over the network, we must consider information security risks and our network architecture.</p>
 <h2 id="a-simple-but-naive-approach">A simple, but naive approach</h2>
 <p>A simple approach would be to create an AWS RDS instance that is open to the Internet and have your lambda Django project login directly.  While this may work, this approach is fraught with peril.  Numerous vulnerabilities could exist and credentials could be brute forces.  Even without access to your RDS, it is trivial to launch a denial-of-service attack to ensure your Django project has no database services.</p>
 <p>Basically, do not do this.</p>
@@ -111,32 +150,76 @@
 <p>Introduce Amazon Virtual Private Cloud (VPC).  This provides a way of segmenting Internet traffic from your AWS services.  This feature is incredibly valuable to securing our project.  So that bad guys have the smallest attack surface possible.  It's easy to setup a VPC - there are many webpages that will assist you.  But basically you pick an IP range and let it fly.</p>
 <p>Once a VPC is established, you can then subdivide the VPC into subnets.  Which are little non-overlapping IP chunks of the overall VPC.  Like dividing a pie into slices.  </p>
 <p>It is important to realize that you have almost entire control of your IP space when you define your VPC and associated subnets.  You are creating a Software Defined Network (SDN) and you have a lot of leeway.  With this freedom comes choices and important considerations on how you design your network.</p>
+<h2 id="the-essential-vpc-and-subnet-configuration">The Essential VPC and Subnet Configuration</h2>
+<p>Here is the absolute minimum you must have to have a working Django site within a VPC:</p>
+<ul>
+<li>A VPC</li>
+<li>A subnet within the VPC</li>
+<li>A security group</li>
+<li>Your zappa project configured to use the subnet and security group</li>
+</ul>
+<p>There are no need for routes, NAT gateways, Internet gateways, or even allowing inbound rules on the security group.  </p>
+<p>How could this work you ask?  Well essentially the magic is in the API Gateway that zappa creates on deployment.  From the <a href="https://aws.amazon.com/api-gateway/faqs/">API Gateway FAQ</a>:</p>
+<blockquote>
+<p>Amazon API Gateway endpoints are always public to the Internet. Proxy requests to backend operations also need to be publicly accessible on the Internet. However, you can generate a client-side SSL certificate in Amazon API Gateway to verify that requests to your backend systems were sent by API Gateway using the public key of the certificate.</p>
+</blockquote>
+<p>So API Gateways act as an 'always-on' Internet facing service that sends the HTTP requests directly to the Zappa Lambda functions - even if the Lambda functions are in a top-secret lockbox.  Note that in the above setup the Lambda function is completely isolated from direct access to the Internet.  So the Lambda functions can't make outbound connections to anything: other servers, databases, S3, etc.</p>
+<p>Let's face it, there's no real point to going through the effort of doing this if the Lambda functions are really this isolated.  <em>But</em> the reason this information is important is because in order to leverage other AWS resources, the VPC lays the foundation to do this securely.</p>
+<h2 id="extending-the-vpc">Extending the VPC</h2>
+<p>To re-iterate: we don't need a VPC network to make the Zappa Lambda-powered Django site visible on the Internet.  We need to extend the VPC so that we can add more AWS services like:</p>
+<ul>
+<li>Adding an RDS database that is only accessible from our Lambda functions</li>
+<li>Adding an S3 bucket </li>
+<li>Allowing Lambda functions to communicate to traditional EC2 instances for long running processes</li>
+<li>Allowing the Lambda functions to access the Internet to hit an external API</li>
+<li>Ability to interact with SQS and/or SNS</li>
+</ul>
+<p>The important thing is that we can enable all these scenarios in a secure manner.  There are too many scenarios to go into detail here, so we will provide some guidelines.</p>
+<p>Next we learn about the common patterns of VPC usage and try to identify usage options.</p>
+<h2 id="vpc-patterns">VPC Patterns</h2>
 <p>For a full list of options and other valuable information about VPCs, see this link: <a href="https://aws.amazon.com/answers/networking/aws-single-vpc-design/">https://aws.amazon.com/answers/networking/aws-single-vpc-design/</a></p>
 <p>The options are summarized here:</p>
-<ul>
-<li>
-<p>Internet-Accessible VPC</p>
+<h3 id="internet-accessible-vpc">Internet-Accessible VPC</h3>
 <p>One could serious consider this configuration.  If you put your lambda functions, your RDS, and additional SNS/SQS services in a single subnet in an Internet Accessible VPC it could work.  In theory you could configure your security groups to ensure only lambda functions can hit your RDS.  </p>
 <p>One advantage of this setup is that you can setup your local machine to connect to your RDS without a <a href="http://serverfault.com/a/648116/60094">bastion host</a>.  Just restrict access based on IP.  </p>
-<p><strong>This scenario could be very viable based on your needs</strong></p>
-</li>
-<li>
-<p>Public and Privately Routed VPC</p>
-<p>Arguably the most secure of all web application setups.  You have two subnets: one public and one private.  Your RDS and lambda functions reside in the private subnet, far away from bad guys, but also far away from your local machine.  In order to access the database from your system you will need a <a href="http://serverfault.com/a/648116/60094">bastion host</a> in the public subnet.  </p>
+<p>Important note - you will want to ensure careful inbound IP restrictions.  While it's great that you can connect to RDS with your SQL desktop client, you should setup the bastion host.</p>
+<p><strong>This scenario is good for straightforward setups with a little work</strong></p>
+<h3 id="public-and-privately-routed-vpc">Public and Privately Routed VPC</h3>
+<p>Arguably the most flexible and future-proof of all web application setups.  You have two subnets: one public and one private.  Your RDS and lambda functions reside in the private subnet, far away from bad guys, but also far away from your local machine.  In order to access the database from your system you will need a <a href="http://serverfault.com/a/648116/60094">bastion host</a> in the public subnet.  </p>
 <p>Another advantage of this setup is that if you ever want to add additional EC2-based services that need to interact with the Internet you can do this very easily without compromising security.  </p>
-<p><strong>The upshot is this configuration is the most secure and most flexible for your growth needs with minimal additional complexity.</strong></p>
-</li>
-<li>
-<p>On-Premises and Internet-Accessible VPC</p>
+<p>Generally this setup will require networking knowledge to setup the Internet gateway, bastion host, and NAT Gateway.</p>
+<p><strong>The upshot is this configuration is the most secure and most flexible for your growth but will be complex from a network standpoint</strong></p>
+<h3 id="on-premises-and-internet-accessible-vpc">On-Premises and Internet-Accessible VPC</h3>
 <p>Same as the last configuration, but if you have an internal corporate network to connect, you can easily establish a connection to the private subnet without compromising security.</p>
+<p>If you thought the last setup was complex, you better know what you are doing from a network standpoint.</p>
 <p><strong>A good solution if you need to connect an internal corporate network</strong></p>
-</li>
-<li>
-<p>Internal-Only VPC</p>
+<h3 id="internal-only-vpc">Internal-Only VPC</h3>
 <p>Obviously a very special case of creating a Django app for internal use only with no desire to have it accessible by the Internet.</p>
-<p><strong>Useful for special cases</strong></p>
-</li>
-</ul></div>
+<p>This is actually most secure.  Since you can access any of the resources from your desktop on the internal network.  Not bad for the paranoid or security conscious devops team.</p>
+<p><strong>Useful for the simple environment if you have an existing secure network</strong></p>
+<h2 id="subdividing-the-vpc">Subdividing the VPC</h2>
+<p>Once you get a VPC selected you must create subnets within the VPC.  When defining a subnet, you just have to pick a non-overlapping segment of the ip range.  So if you have VPC that spans IP address 10.5.0.1 to 10.5.0.254, then you pick contiguous segments within this range.</p>
+<h2 id="examples-for-walkthroughs">Examples for Walkthroughs</h2>
+<p>For the purposes of walkthroughs, we will leverage a simple VPC with a single subnet.  A single subnet will generally be enough to guide readers through the scenarios.</p>
+<p>We have a VPC:</p>
+<ul>
+<li>id: vpc-9a9a1dfc</li>
+<li>cidr: 10.6.0.0/16</li>
+</ul>
+<p>With subnet:</p>
+<ul>
+<li>id: subnet-f3446aba</li>
+<li>cidr: 10.6.1.0/24</li>
+</ul>
+<p>And security group:</p>
+<ul>
+<li>id: sg-13a5736f</li>
+<li>inbound rules: none</li>
+<li>outbound rules: all traffic</li>
+</ul>
+<h2 id="note-on-redundancy">Note on Redundancy</h2>
+<p>While these examples are all using a single subnet for clarity, in production you will want to create multiple subnets within the VPC all with different availability zones.  This ensures if there is a failure within a single subnet, there are alternate paths.  </p>
+<p>The general approach is to associate the Lambda functions with multiple subnets and the AWS resources with the same multiple subnets (e.g. RDS).</p></div>
         </div>
 
         <footer class="col-md-12">

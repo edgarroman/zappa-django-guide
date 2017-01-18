@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Core Django Setup - Zappa Django Example Walkthroughs</title>
+        <title>Core Django Setup - Guide to using Django with Zappa</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -38,7 +38,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="..">Zappa Django Example Walkthroughs</a>
+            <a class="navbar-brand" href="..">Guide to using Django with Zappa</a>
         </div>
 
         <!-- Expanded navigation -->
@@ -57,11 +57,44 @@
 </li>
                             
 <li >
-    <a href="../static_files/">Hosting Static Files</a>
+    <a href="../walk_static/">Hosting Static Files</a>
 </li>
                             
 <li >
-    <a href="../aws_setup/">A Brief Interlude: AWS Setup</a>
+    <a href="../walk_database/">Using a Database</a>
+</li>
+                            
+<li >
+    <a href="../walk_cdn/">You need a CDN</a>
+</li>
+                            
+<li >
+    <a href="../walk_https/">Secure HTTPS</a>
+</li>
+                            
+<li >
+    <a href="../walk_media/">Wrangling Media Files</a>
+</li>
+                            
+<li >
+    <a href="../walk_scheduling/">Tasks and Events</a>
+</li>
+                            
+<li >
+    <a href="../walk_debug/">Debugging</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">AWS Setup <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../aws_credentials/">Managing Credentials</a>
+</li>
+                            
+<li >
+    <a href="../aws_network/">Adventures in Networking</a>
 </li>
                         </ul>
                     </li>
@@ -82,7 +115,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../static_files/">
+                        <a rel="prev" href="../walk_static/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -96,7 +129,6 @@
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#core-django-setup">Core Django Setup</a></li>
             <li><a href="#expectations-and-goals">Expectations and Goals</a></li>
-            <li><a href="#setup-and-prerequisites">Setup and Prerequisites</a></li>
             <li><a href="#setup-aws-account-credentials">Setup AWS Account Credentials</a></li>
             <li><a href="#create-local-environment">Create local environment</a></li>
             <li><a href="#create-very-basic-django-project">Create very basic Django project</a></li>
@@ -118,51 +150,12 @@
 </ul>
 <p>What will not work (yet - see other walkthroughs for this functionality)</p>
 <ul>
-<li>Static Files will not be served (More on that <a href="../static_files/">here</a>)</li>
+<li>Static Files will not be served (More on that <a href="../walk_static/">here</a>)</li>
 <li>There is no database connection available (not even SQLite)</li>
 <li>No HTTPS support</li>
 </ul>
-<h2 id="setup-and-prerequisites">Setup and Prerequisites</h2>
-<ul>
-<li>Python 2.7 (due to <a href="http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html">AWS lambda only supporting 2.7</a>) </li>
-<li>Django 1.10.4</li>
-<li><a href="https://pypi.python.org/pypi/zappa">zappa 0.32.1</a></li>
-</ul>
 <h2 id="setup-aws-account-credentials">Setup AWS Account Credentials</h2>
-<p>Details in this section are light because this information is documented well elsewhere on the web.</p>
-<ul>
-<li>Create AWS Account if you haven't already</li>
-<li>Create an S3 bucket.<br />
-   For purposes of this walkthrough I have used the bucket name of <code>zappatest-code</code> in the 'US Standard' region.  This bucket will be used by zappa as a mechanism to upload your project into the lambda environment.  Thus it will generally be empty except during the brief time you are deploying the project.</li>
-<li>Create an IAM User with API keys
-   Easier said than done.  The quick and easy way of doing this is to create a user with a policy that allows a very broad set of permissions.  However, this is not great from a security perspective. There is an <a href="https://github.com/Miserlou/Zappa/issues/244">ongoing discussion</a> about the exact set of permissions needed.</li>
-</ul>
-<p>Now we need to allow scripts and local programs to get the credentials created above.  You have some options for this:</p>
-<ol>
-<li>
-<p>Set <a href="https://github.com/Miserlou/Zappa/issues/244">environment variables</a></p>
-<p>This is very easy but must be done for each bash console you are using.</p>
-<pre><code>export AWS_ACCESS_KEY_ID=&lt;your key here&gt;
-export AWS_SECRET_ACCESS_KEY=&lt;your secret access key here&gt;
-</code></pre>
-
-</li>
-<li>
-<p>Create a local credentials file (<code>~/.aws/credentials</code> on Linux, or OS X)</p>
-<p>Probably a better long term solution since you can store multiple 
- sets of keys for different environments using profiles.</p>
-<pre><code>[default]
-aws_access_key_id = your_access_key_id
-aws_secret_access_key = your_secret_access_key
-</code></pre>
-
-</li>
-</ol>
-<h3 id="useful-links-for-windows-or-more-information">Useful links for Windows or more information:</h3>
-<ul>
-<li>http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html</li>
-<li>http://boto3.readthedocs.io/en/latest/guide/configuration.html#configuring-credentials</li>
-</ul>
+<p>Make sure you setup access to your AWS account from your local command line.  See: <a href="../aws_credentials/#setup-local-account-credentials">Setup Local Account Credentials</a></p>
 <h2 id="create-local-environment">Create local environment</h2>
 <p>It is highly recommended that you leverage virtual environments for this test project.</p>
 <pre><code>mkdir zappatest

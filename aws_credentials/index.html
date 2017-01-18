@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Additional - Guide to using Django with Zappa</title>
+        <title>Managing Credentials - Guide to using Django with Zappa</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -85,12 +85,12 @@
 </li>
                         </ul>
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">AWS Setup <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             
-<li >
-    <a href="../aws_credentials/">Managing Credentials</a>
+<li class="active">
+    <a href="./">Managing Credentials</a>
 </li>
                             
 <li >
@@ -98,8 +98,8 @@
 </li>
                         </ul>
                     </li>
-                    <li class="active">
-                        <a href="./">Additional</a>
+                    <li >
+                        <a href="../additional/">Additional</a>
                     </li>
                 </ul>
 
@@ -110,12 +110,12 @@
                     </a>
                 </li>
                     <li >
-                        <a rel="next" href="../aws_network/">
+                        <a rel="next" href="../walk_debug/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
-                    <li class="disabled">
-                        <a rel="prev" >
+                    <li >
+                        <a rel="prev" href="../aws_network/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -127,14 +127,50 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#additional-resources">Additional Resources</a></li>
+        <li class="main active"><a href="#managing-aws-credentials">Managing AWS Credentials</a></li>
+            <li><a href="#getting-started-with-aws-and-zappa">Getting Started with AWS and Zappa</a></li>
+            <li><a href="#setup-local-account-credentials">Setup Local Account Credentials</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="additional-resources">Additional Resources</h1>
-<p>This site powered by <a href="http://www.mkdocs.org/">mkdocs</a> and powered by github. </p>
-<p>Source documents are here: <a href="https://github.com/edgarroman/zappa-django-example">https://github.com/edgarroman/zappa-django-example</a></p></div>
+<h1 id="managing-aws-credentials">Managing AWS Credentials</h1>
+<h2 id="getting-started-with-aws-and-zappa">Getting Started with AWS and Zappa</h2>
+<p>Details in this section are light because this information is documented well elsewhere on the web.</p>
+<ul>
+<li>Create AWS Account if you haven't already</li>
+<li>Create an S3 bucket.<br />
+   For purposes of this walkthrough I have used the bucket name of <code>zappatest-code</code> in the 'US Standard' region.  This bucket will be used by zappa as a mechanism to upload your project into the lambda environment.  Thus it will generally be empty except during the brief time you are deploying the project.</li>
+<li>Create an IAM User with API keys
+   Easier said than done.  The quick and easy way of doing this is to create a user with a policy that allows a very broad set of permissions.  However, this is not great from a security perspective. There is an <a href="https://github.com/Miserlou/Zappa/issues/244">ongoing discussion</a> about the exact set of permissions needed.</li>
+</ul>
+<p>Now we need to allow scripts and local programs to get the credentials created above.  You have some options for this:</p>
+<h2 id="setup-local-account-credentials">Setup Local Account Credentials</h2>
+<ol>
+<li>
+<p>Set <a href="https://github.com/Miserlou/Zappa/issues/244">environment variables</a></p>
+<p>This is very easy but must be done for each bash console you are using.</p>
+<pre><code>export AWS_ACCESS_KEY_ID=&lt;your key here&gt;
+export AWS_SECRET_ACCESS_KEY=&lt;your secret access key here&gt;
+</code></pre>
+
+</li>
+<li>
+<p>Create a local credentials file (<code>~/.aws/credentials</code> on Linux, or OS X)</p>
+<p>Probably a better long term solution since you can store multiple 
+ sets of keys for different environments using profiles.</p>
+<pre><code>[default]
+aws_access_key_id = your_access_key_id
+aws_secret_access_key = your_secret_access_key
+</code></pre>
+
+</li>
+</ol>
+<h3 id="useful-links-for-windows-or-more-information">Useful links for Windows or more information:</h3>
+<ul>
+<li>http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html</li>
+<li>http://boto3.readthedocs.io/en/latest/guide/configuration.html#configuring-credentials</li>
+</ul></div>
         </div>
 
         <footer class="col-md-12">

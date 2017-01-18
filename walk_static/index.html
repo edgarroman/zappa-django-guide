@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Hosting Static Files - Zappa Django Example Walkthroughs</title>
+        <title>Hosting Static Files - Guide to using Django with Zappa</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -38,7 +38,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="..">Zappa Django Example Walkthroughs</a>
+            <a class="navbar-brand" href="..">Guide to using Django with Zappa</a>
         </div>
 
         <!-- Expanded navigation -->
@@ -53,7 +53,7 @@
                         <ul class="dropdown-menu">
                             
 <li >
-    <a href="../core_django_setup/">Core Django Setup</a>
+    <a href="../walk_core/">Core Django Setup</a>
 </li>
                             
 <li class="active">
@@ -61,7 +61,40 @@
 </li>
                             
 <li >
-    <a href="../aws_setup/">A Brief Interlude: AWS Setup</a>
+    <a href="../walk_database/">Using a Database</a>
+</li>
+                            
+<li >
+    <a href="../walk_cdn/">You need a CDN</a>
+</li>
+                            
+<li >
+    <a href="../walk_https/">Secure HTTPS</a>
+</li>
+                            
+<li >
+    <a href="../walk_media/">Wrangling Media Files</a>
+</li>
+                            
+<li >
+    <a href="../walk_scheduling/">Tasks and Events</a>
+</li>
+                            
+<li >
+    <a href="../walk_debug/">Debugging</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">AWS Setup <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../aws_credentials/">Managing Credentials</a>
+</li>
+                            
+<li >
+    <a href="../aws_network/">Adventures in Networking</a>
 </li>
                         </ul>
                     </li>
@@ -77,12 +110,12 @@
                     </a>
                 </li>
                     <li >
-                        <a rel="next" href="../core_django_setup/">
+                        <a rel="next" href="../walk_core/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../aws_setup/">
+                        <a rel="prev" href="../walk_database/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -126,7 +159,7 @@
 <h3 id="using-a-cdn-for-the-entire-project">Using a CDN for the entire project</h3>
 <p>There are also advantages to serving the entire Django project (Lambda functions and S3 Static files) via the CloudFront CDN.  This option will not be covered in this Walkthrough.</p>
 <h2 id="setup-and-prerequisites">Setup and Prerequisites</h2>
-<p>Make sure you understand and execute the <a href="../core_django_setup/">Core Django Walkthrough</a> first.  This Walkthrough builds upon that.</p>
+<p>Make sure you understand and execute the <a href="../walk_core/">Core Django Walkthrough</a> first.  This Walkthrough builds upon that.</p>
 <h2 id="setup-amazon-account">Setup Amazon Account</h2>
 <p>You will need an AWS S3 bucket to host your static files.  This should not be the same as your S3 bucket used by zappa to upload your code.  The reason is that you will be making some modifications to the S3 bucket to properly use HTTP to serve files.</p>
 <p>Create an S3 bucket and name it something like <code>zappa-static</code>.  You may name it anything you like but for the purposes of this walkthrough we will use <code>zappa-static</code>.  Replace all occurrences of this string with your chosen bucket name.</p>

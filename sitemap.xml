@@ -4,7 +4,7 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2017-01-10</lastmod>
+     <lastmod>2017-01-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,20 +12,66 @@
     
         
     <url>
-     <loc>/core_django_setup/</loc>
-     <lastmod>2017-01-10</lastmod>
+     <loc>/walk_core/</loc>
+     <lastmod>2017-01-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/static_files/</loc>
-     <lastmod>2017-01-10</lastmod>
+     <loc>/walk_static/</loc>
+     <lastmod>2017-01-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/aws_setup/</loc>
-     <lastmod>2017-01-10</lastmod>
+     <loc>/walk_database/</loc>
+     <lastmod>2017-01-17</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/walk_cdn/</loc>
+     <lastmod>2017-01-17</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/walk_https/</loc>
+     <lastmod>2017-01-17</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/walk_media/</loc>
+     <lastmod>2017-01-17</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/walk_scheduling/</loc>
+     <lastmod>2017-01-17</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/walk_debug/</loc>
+     <lastmod>2017-01-17</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>/aws_credentials/</loc>
+     <lastmod>2017-01-17</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/aws_network/</loc>
+     <lastmod>2017-01-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -34,7 +80,7 @@
     
     <url>
      <loc>/additional/</loc>
-     <lastmod>2017-01-10</lastmod>
+     <lastmod>2017-01-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
