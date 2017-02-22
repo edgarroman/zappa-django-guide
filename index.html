@@ -53,6 +53,10 @@
                         <ul class="dropdown-menu">
                             
 <li >
+    <a href="setup/">Setup your Environment</a>
+</li>
+                            
+<li >
     <a href="walk_core/">Core Django Setup</a>
 </li>
                             
@@ -115,7 +119,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="walk_core/">
+                        <a rel="prev" href="setup/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -128,7 +132,7 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#guide-to-using-django-with-zappa">Guide to using Django with Zappa</a></li>
-            <li><a href="#setup-and-prerequisites">Setup and Prerequisites</a></li>
+            <li><a href="#setup-your-environment">Setup your Environment</a></li>
             <li><a href="#walkthroughs">Walkthroughs</a></li>
     </ul>
 </div></div>
@@ -137,13 +141,8 @@
 <h1 id="guide-to-using-django-with-zappa">Guide to using Django with Zappa</h1>
 <p>This repo exists to document the process of getting a standard Django project running live in AWS Lambda using the 
 <a href="https://github.com/Miserlou/Zappa">zappa project</a>.  We will explore various configurations in a building-block fashion in the hopes that folks can leverage only the relevant parts for their needs.</p>
-<h2 id="setup-and-prerequisites">Setup and Prerequisites</h2>
-<p>To ensure baseline expectations are set, all walkthroughs will assume the following criteria:</p>
-<ul>
-<li>Python 2.7 (due to <a href="http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html">AWS lambda only supporting 2.7</a>) </li>
-<li>Django 1.10.4</li>
-<li><a href="https://pypi.python.org/pypi/zappa">zappa 0.32.1</a></li>
-</ul>
+<h2 id="setup-your-environment">Setup your Environment</h2>
+<p>It is important to read this section in order to establish your working environment: <a href="setup/">Setup your Environment</a></p>
 <h2 id="walkthroughs">Walkthroughs</h2>
 <h3 id="core-django-setup"><a href="walk_core/">Core Django Setup</a></h3>
 <p>This section documents setting up a Django project with only core Python functionality responding to HTTP calls.  The value of this core walkthrough could be to power an API driven compute engine or a event-driven data processing tool without the need to provide a UI.</p>
@@ -187,5 +186,5 @@
 
 <!--
 MkDocs version : 0.16.1
-Build Date UTC : 2017-01-18 03:09:31
+Build Date UTC : 2017-02-22 17:33:45
 -->

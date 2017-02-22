@@ -53,6 +53,10 @@
                         <ul class="dropdown-menu">
                             
 <li >
+    <a href="../setup/">Setup your Environment</a>
+</li>
+                            
+<li >
     <a href="../walk_core/">Core Django Setup</a>
 </li>
                             
@@ -176,6 +180,7 @@
 </ul>
 <p>The important thing is that we can enable all these scenarios in a secure manner.  There are too many scenarios to go into detail here, so we will provide some guidelines.</p>
 <p>Next we learn about the common patterns of VPC usage and try to identify usage options.</p>
+<p>One warning before we go on with VPC and Lambda:  When Lambda functions fire, they must be assigned an IP address temporarily.  If you have a lot of Lambda functions firing, then you must have a lot of IP addresses available.  You can learn more <a href="http://docs.aws.amazon.com/lambda/latest/dg/vpc.html#vpc-setup-guidelines">here</a>.</p>
 <h2 id="vpc-patterns">VPC Patterns</h2>
 <p>For a full list of options and other valuable information about VPCs, see this link: <a href="https://aws.amazon.com/answers/networking/aws-single-vpc-design/">https://aws.amazon.com/answers/networking/aws-single-vpc-design/</a></p>
 <p>The options are summarized here:</p>
@@ -217,6 +222,9 @@
 <li>inbound rules: none</li>
 <li>outbound rules: all traffic</li>
 </ul>
+<blockquote>
+<p>TODO: Show example zappa configuration here</p>
+</blockquote>
 <h2 id="note-on-redundancy">Note on Redundancy</h2>
 <p>While these examples are all using a single subnet for clarity, in production you will want to create multiple subnets within the VPC all with different availability zones.  This ensures if there is a failure within a single subnet, there are alternate paths.  </p>
 <p>The general approach is to associate the Lambda functions with multiple subnets and the AWS resources with the same multiple subnets (e.g. RDS).</p></div>

@@ -52,6 +52,10 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Walkthroughs <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             
+<li >
+    <a href="../setup/">Setup your Environment</a>
+</li>
+                            
 <li class="active">
     <a href="./">Core Django Setup</a>
 </li>
@@ -110,7 +114,7 @@
                     </a>
                 </li>
                     <li >
-                        <a rel="next" href="..">
+                        <a rel="next" href="../setup/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -129,8 +133,8 @@
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#core-django-setup">Core Django Setup</a></li>
             <li><a href="#expectations-and-goals">Expectations and Goals</a></li>
-            <li><a href="#setup-aws-account-credentials">Setup AWS Account Credentials</a></li>
             <li><a href="#create-local-environment">Create local environment</a></li>
+            <li><a href="#setup-aws-account-credentials">Setup AWS Account Credentials</a></li>
             <li><a href="#create-very-basic-django-project">Create very basic Django project</a></li>
             <li><a href="#setup-zappa">Setup Zappa</a></li>
             <li><a href="#deploy-your-project-using-zappa">Deploy your project using Zappa</a></li>
@@ -154,17 +158,10 @@
 <li>There is no database connection available (not even SQLite)</li>
 <li>No HTTPS support</li>
 </ul>
+<h2 id="create-local-environment">Create local environment</h2>
+<p>See <a href="../setup/">Setup your Environment</a></p>
 <h2 id="setup-aws-account-credentials">Setup AWS Account Credentials</h2>
 <p>Make sure you setup access to your AWS account from your local command line.  See: <a href="../aws_credentials/#setup-local-account-credentials">Setup Local Account Credentials</a></p>
-<h2 id="create-local-environment">Create local environment</h2>
-<p>It is highly recommended that you leverage virtual environments for this test project.</p>
-<pre><code>mkdir zappatest
-cd zappatest
-virtualenv ve
-source ve/bin/activate
-pip install django zappa
-</code></pre>
-
 <h2 id="create-very-basic-django-project">Create very basic Django project</h2>
 <p>For the purposes of this walkthrough we are taking the most basic Django project.</p>
 <pre><code>django-admin startproject frankie .

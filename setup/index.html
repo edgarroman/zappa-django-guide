@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Setup your Environment - Guide to using Django with Zappa</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="..">Guide to using Django with Zappa</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Walkthroughs <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li class="active">
+    <a href="./">Setup your Environment</a>
+</li>
+                            
+<li >
+    <a href="../walk_core/">Core Django Setup</a>
+</li>
+                            
+<li >
+    <a href="../walk_static/">Hosting Static Files</a>
+</li>
+                            
+<li >
+    <a href="../walk_database/">Using a Database</a>
+</li>
+                            
+<li >
+    <a href="../walk_cdn/">You need a CDN</a>
+</li>
+                            
+<li >
+    <a href="../walk_https/">Secure HTTPS</a>
+</li>
+                            
+<li >
+    <a href="../walk_media/">Wrangling Media Files</a>
+</li>
+                            
+<li >
+    <a href="../walk_scheduling/">Tasks and Events</a>
+</li>
+                            
+<li >
+    <a href="../walk_debug/">Debugging</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">AWS Setup <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../aws_credentials/">Managing Credentials</a>
+</li>
+                            
+<li >
+    <a href="../aws_network/">Adventures in Networking</a>
+</li>
+                        </ul>
+                    </li>
+                    <li >
+                        <a href="../additional/">Additional</a>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="..">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../walk_core/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#setup-your-environment">Setup your Environment</a></li>
+            <li><a href="#why-do-i-need-a-working-environment">Why do I need a working environment?</a></li>
+            <li><a href="#baseline-packages">Baseline packages</a></li>
+        <li class="main "><a href="#approach-1-local-machine">Approach #1 - Local Machine</a></li>
+            <li><a href="#cautions">Cautions</a></li>
+        <li class="main "><a href="#approach-2-docker-with-zappa">Approach #2 - Docker with zappa</a></li>
+            <li><a href="#inital-setup">Inital Setup</a></li>
+            <li><a href="#usage-on-a-project">Usage on a Project</a></li>
+            <li><a href="#changes-to-the-docker-image">Changes to the Docker Image</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="setup-your-environment">Setup your Environment</h1>
+<p>This section provides guidance to set up a zappa working environment.</p>
+<h2 id="why-do-i-need-a-working-environment">Why do I need a working environment?</h2>
+<p>While the ultimate goal is to have your Django application hosted in a cloud-based serverless environment, a working environment is needed to:</p>
+<ul>
+<li>Collect the required packages</li>
+<li>Build a lambda compatible deployment</li>
+<li>Upload the deployment </li>
+<li>Coordinate the various AWS services to enable the cloud-based environment</li>
+</ul>
+<p>In addition, a working environment assists with development and testing.  The caveat is that this working environment will not match exactly the cloud-based deployment. However, the goal is to get a reasonablly close approximation while still balancing ease of use.</p>
+<h2 id="baseline-packages">Baseline packages</h2>
+<p>To ensure baseline expectations are set, all environments will assume the following criteria:</p>
+<ul>
+<li>Python 2.7 (due to <a href="http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html">AWS lambda only supporting 2.7</a>) </li>
+<li>Django 1.10</li>
+<li>Latest version of <a href="https://pypi.python.org/pypi/zappa">zappa</a></li>
+</ul>
+<p>In addition, zappa <em>requires</em> a virtual environment in which to function.  So all approaches below include a virtual environment.  </p>
+<h3 id="why-not-python-3">Why not Python 3?</h3>
+<p>While the Python community is rapidly moving to python 3, currently <a href="http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html">AWS lamdba supports only python 2.7</a></p>
+<h1 id="approach-1-local-machine">Approach #1 - Local Machine</h1>
+<p>You can easily set up your working environment on your local machine. For simple projects, this is very easy to manage and maintain.  All you need is Python 2.7, pip, and virtualenv installed.  This works for Windows, MacOS, and Linux machines.  </p>
+<p>Here we setup a working environment named 'zappatest'</p>
+<p><pre><code class="sh">mkdir zappatest
+cd zappatest
+virtualenv ve
+source ve/bin/activate
+pip install django zappa
+</code></pre>
+And you are done.  </p>
+<h2 id="cautions">Cautions</h2>
+<p>While this approach is easy to get up and running, the challenge comes along when you require more advanced python packages.  </p>
+<p>For example, once you start connecting to databases, you will need to compile packages such as 'psycopg2' for PostGresSQL.  You should consider the implications of installing needed libraries on your local machine.</p>
+<h1 id="approach-2-docker-with-zappa">Approach #2 - Docker with zappa</h1>
+<p>Sometimes leveraging Docker to create an isolated working environment is a good idea.  It takes more work to setup initially, but once you have the foundations, it is quite easy to create multiple working environments and it is easier to share those same environments with other folks on your team.  </p>
+<p>Most of this information is taken from the <a href="https://github.com/danielwhatmuff/zappa">current zappa docker project</a>.  Be sure to check that repo for current updates.</p>
+<h2 id="inital-setup">Inital Setup</h2>
+<p>These steps need to be performed once</p>
+<ul>
+<li><a href="https://docs.docker.com/engine/installation/">Install Docker</a></li>
+<li>Pull the zappa docker image from Docker github
+<pre><code class="sh">docker pull danielwhatmuff/zappa
+</code></pre></li>
+<li>
+<p>Create a shortcut that allows AWS credentials to pass through to the docker container</p>
+<ul>
+<li>
+<p>If you use <a href="../aws_credentials#setup-local-account-credentials">environment variables for AWS Credentials</a> then use:
+<pre><code class="sh">alias zappashell='docker run -ti -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION -v $(pwd):/var/task  --rm danielwhatmuff/zappa bash'
+alias &gt;&gt; ~/.bash_profile
+</code></pre>
+Be sure to define the <code>$AWS_DEFAULT_REGION</code> environment variable</p>
+</li>
+<li>
+<p>If you use a <a href="../aws_credentials#setup-local-account-credentials">credentials file for AWS Credentials</a> then use:
+<pre><code class="sh">alias zappashell='docker run -ti -e AWS_PROFILE=$AWS_PROFILE -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm danielwhatmuff/zappa bash'
+alias &gt;&gt; ~/.bash_profile
+</code></pre>
+Note that you must either define the <code>$AWS_PROFILE</code> environment variable or edit the alias above to be hardcoded to a specific profile.  Example of hardcoding the alias:
+<pre><code class="sh">alias zappashell='docker run -ti -e AWS_PROFILE=zappa -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm danielwhatmuff/zappa bash'
+alias &gt;&gt; ~/.bash_profile
+</code></pre></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="usage-on-a-project">Usage on a Project</h2>
+<p>Once the steps above are complete, then it is very easy to start a working environment.</p>
+<h3 id="first-time-project-setup">First time Project setup</h3>
+<p>You will need to install any python dependencies and/or system libraries.  To fire up the docker container use:</p>
+<pre><code class="sh">$ cd /your_zappa_project
+$ zappashell
+zappa&gt;
+</code></pre>
+
+<p>Next, create the <em>required</em> virtual environment, activate it, and install needed dependencies</p>
+<pre><code class="sh">zappa&gt; virtualenv ve
+zappa&gt; source ve/bin/activate 
+(ve)zappa&gt; pip install -r requirements.txt
+</code></pre>
+
+<p>Since the virtual environment is contained in the current directory, and the current directory is mapped to your local machine, any changes you make will be persisted between Docker container instances.  </p>
+<p>At this point, you are ready to start using zappa.  Once you are finished, you can simply exit the container.</p>
+<h3 id="each-time-using-the-project">Each time using the Project</h3>
+<p>Subsequent times you'd like to use the project, merely fire up the container:
+<pre><code class="sh">$ cd /your_zappa_project
+$ zappashell
+zappa&gt; source ve/bin/activate
+(ve)zappa&gt; 
+</code></pre></p>
+<h2 id="changes-to-the-docker-image">Changes to the Docker Image</h2>
+<p>Once at the zappashell prompt you can install any needed libraries.  But if you depend on libraries that are installed in the system (essentially anything out of the current directory and virtual environment), they will be lost when the container exits.</p>
+<p>The solution is to make your own Docker Image.  Full directions of creating a Docker Image is beyond the scope of this document, but essentially there are a few steps</p>
+<h3 id="create-a-dockerfile">Create a Dockerfile</h3>
+<p>In the local directory create a Dockerfile (note that only the 'D' is capitalized)</p>
+<pre><code class="Docker">FROM danielwhatmuff/zappa
+
+RUN yum -y install postgresql-devel
+
+CMD [&quot;zappa&quot;]
+</code></pre>
+
+<h3 id="build-the-docker-image">Build the Docker Image</h3>
+<p>In the same directory as the Dockerfile</p>
+<pre><code class="sh">docker build -t myzappa .
+</code></pre>
+
+<h3 id="update-your-zappashell-alias">Update your zappashell alias</h3>
+<p>To make sure it points to your new image.  Essentially replace <code>danielwhatmuff/zappa</code> with <code>myzappa</code>.  Example:
+<pre><code class="sh">alias zappashell='docker run -ti -e AWS_PROFILE=zappa -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm myzappa bash'
+alias &gt;&gt; ~/.bash_profile
+</code></pre></p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '..';</script>
+        <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+        <script src="../js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
