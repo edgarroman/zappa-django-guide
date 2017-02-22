@@ -392,12 +392,12 @@
         }, 
         {
             "location": "/additional/", 
-            "text": "Additional Resources\n\n\nThis site powered by \nmkdocs\n and powered by github. \n\n\nSource documents are here: \nhttps://github.com/edgarroman/zappa-django-example", 
+            "text": "Additional Resources\n\n\nThis site powered by \nmkdocs\n and powered by github. \n\n\nSource documents are here: \nhttps://github.com/edgarroman/zappa-django-guide", 
             "title": "Additional"
         }, 
         {
             "location": "/additional/#additional-resources", 
-            "text": "This site powered by  mkdocs  and powered by github.   Source documents are here:  https://github.com/edgarroman/zappa-django-example", 
+            "text": "This site powered by  mkdocs  and powered by github.   Source documents are here:  https://github.com/edgarroman/zappa-django-guide", 
             "title": "Additional Resources"
         }
     ]
