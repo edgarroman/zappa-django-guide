@@ -37,6 +37,7 @@ So API Gateways act as an 'always-on' Internet facing service that sends the HTT
 
 Let's face it, there's no real point to going through the effort of doing this if the Lambda functions are really this isolated.  *But* the reason this information is important is because in order to leverage other AWS resources, the VPC lays the foundation to do this securely.
 
+
 ## Extending the VPC
 
 To re-iterate: we don't need a VPC network to make the Zappa Lambda-powered Django site visible on the Internet.  We need to extend the VPC so that we can add more AWS services like:
@@ -50,6 +51,8 @@ To re-iterate: we don't need a VPC network to make the Zappa Lambda-powered Djan
 The important thing is that we can enable all these scenarios in a secure manner.  There are too many scenarios to go into detail here, so we will provide some guidelines.
 
 Next we learn about the common patterns of VPC usage and try to identify usage options.
+
+One warning before we go on with VPC and Lambda:  When Lambda functions fire, they must be assigned an IP address temporarily.  If you have a lot of Lambda functions firing, then you must have a lot of IP addresses available.  You can learn more [here](http://docs.aws.amazon.com/lambda/latest/dg/vpc.html#vpc-setup-guidelines).
 
 ## VPC Patterns
 
@@ -116,6 +119,8 @@ And security group:
 * id: sg-13a5736f
 * inbound rules: none
 * outbound rules: all traffic
+
+> TODO: Show example zappa configuration here
 
 
 ## Note on Redundancy

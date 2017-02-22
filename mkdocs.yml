@@ -2,6 +2,7 @@ site_name: Guide to using Django with Zappa
 pages:
   - Home: 'index.md'
   - Walkthroughs:
+    - 'Setup your Environment' : 'setup.md'
     - 'Core Django Setup' : 'walk_core.md'
     - 'Hosting Static Files' : 'walk_static.md'
     - 'Using a Database' : 'walk_database.md'

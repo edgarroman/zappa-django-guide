@@ -3,13 +3,9 @@
 This repo exists to document the process of getting a standard Django project running live in AWS Lambda using the 
 [zappa project](https://github.com/Miserlou/Zappa).  We will explore various configurations in a building-block fashion in the hopes that folks can leverage only the relevant parts for their needs.
 
-## Setup and Prerequisites 
+## Setup your Environment
 
-To ensure baseline expectations are set, all walkthroughs will assume the following criteria:
-
-* Python 2.7 (due to [AWS lambda only supporting 2.7](http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html)) 
-* Django 1.10.4
-* [zappa 0.32.1](https://pypi.python.org/pypi/zappa)
+It is important to read this section in order to establish your working environment: [Setup your Environment](setup.md)
 
 ## Walkthroughs
 

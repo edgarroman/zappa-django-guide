@@ -26,12 +26,22 @@ Now we need to allow scripts and local programs to get the credentials created a
 2. Create a local credentials file (`~/.aws/credentials` on Linux, or OS X)
 
 	 Probably a better long term solution since you can store multiple 
-	 sets of keys for different environments using profiles.
+	 sets of keys for different environments using profiles.  In addition, you can provide multiple profiles that provides some isolation between AWS accounts and/or roles.  The alternate profile example shown below is called 'zappa'
 
     ```
     [default]
     aws_access_key_id = your_access_key_id
     aws_secret_access_key = your_secret_access_key
+
+    [zappa]
+    aws_access_key_id = your_access_key_id_specific_to_zappa
+    aws_secret_access_key = your_secret_access_key_specific_to_zappa
+    ```
+
+    Since you have multiple profiles, it is recommended that you use an environment variable to distinguish which profile is desired to be active.  Shown here is an example of using the 'zappa' profile:
+
+    ```sh
+    export AWS_PROFILE=zappa
     ```
 
 ### Useful links for Windows or more information:

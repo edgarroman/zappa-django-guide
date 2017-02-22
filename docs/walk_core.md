@@ -16,21 +16,13 @@ What will not work (yet - see other walkthroughs for this functionality)
 * There is no database connection available (not even SQLite)
 * No HTTPS support
 
+## Create local environment
+
+See [Setup your Environment](setup.md)
+
 ## Setup AWS Account Credentials
 
 Make sure you setup access to your AWS account from your local command line.  See: [Setup Local Account Credentials](aws_credentials.md#setup-local-account-credentials)
-
-## Create local environment
-
-It is highly recommended that you leverage virtual environments for this test project.
-
-```
-mkdir zappatest
-cd zappatest
-virtualenv ve
-source ve/bin/activate
-pip install django zappa
-```
 
 ## Create very basic Django project
 
