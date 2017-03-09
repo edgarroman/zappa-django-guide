@@ -100,6 +100,10 @@
 <li >
     <a href="../aws_network/">Adventures in Networking</a>
 </li>
+                            
+<li >
+    <a href="../aws_database/">Creating an RDS Database</a>
+</li>
                         </ul>
                     </li>
                     <li >
@@ -134,7 +138,12 @@
         <li class="main active"><a href="#using-a-database">Using a Database</a></li>
             <li><a href="#prerequisites">Prerequisites</a></li>
             <li><a href="#options-for-databases">Options for Databases</a></li>
-            <li><a href="#lets-do-this-thing">Let's do this thing</a></li>
+            <li><a href="#create-your-rds-database">Create your RDS Database</a></li>
+            <li><a href="#setup-your-configuration">Setup your Configuration</a></li>
+            <li><a href="#create-your-database">Create your Database</a></li>
+            <li><a href="#init-the-database">Init the Database</a></li>
+            <li><a href="#create-your-django-superuser">Create your Django superuser</a></li>
+            <li><a href="#test-and-profit">Test and profit</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -153,12 +162,147 @@ But basically you will need the private subnet or subnets which can access the d
 <p>Of course you can be running any type of database on an EC2 instance of your choosing.  Usually an EC2 instance will be associated with one subnet, but it is possible to have multiple IP addresses in different subnets for redundancy.</p>
 <h3 id="use-another-db-service">Use another DB Service</h3>
 <p>There as some other database services such as DynamoDB.  Depending on the capabilities of the service, you may or may need the subnet information.  </p>
-<h2 id="lets-do-this-thing">Let's do this thing</h2>
+<h2 id="create-your-rds-database">Create your RDS Database</h2>
 <p>We'll just focus on the RDS case for this walkthough.  In fact we'll go through the walkthough using PostGreSQL.</p>
-<p>create db subnet in two availablilty zones</p>
-<p>Then create db - new security group</p>
-<p>http://marcelog.github.io/articles/aws_lambda_internet_vpc.html
-https://www.isc.upenn.edu/accessing-mysql-databases-aws-python-lambda-function</p></div>
+<p>So zip on over to (Creating an RDS Database)[aws_database.md] and set up one.  You should record some key information we'll need here:</p>
+<ul>
+<li>The subnets (there should be at least two) in which we can access the database</li>
+<li>The endpoint (hostname) of the database and the port</li>
+<li>The username and password for the root user</li>
+</ul>
+<p>Note that at this point you don't yet have a database installed on your RDS instance.  So let's just pick a name we will use for the walkthough.  </p>
+<p>Here is our sample data:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Sample value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>subnets</td>
+<td>subnet-f3446aba, subnet-c5b8c79e</td>
+</tr>
+<tr>
+<td>endpoint</td>
+<td>zappa-db.crt239fsjdlk.us-east-1.rds.amazonaws.com</td>
+</tr>
+<tr>
+<td>db username</td>
+<td>administrator</td>
+</tr>
+<tr>
+<td>db password</td>
+<td>this_is_not_a_good_password</td>
+</tr>
+<tr>
+<td>db name</td>
+<td>zappadbname</td>
+</tr>
+</tbody>
+</table>
+<h2 id="setup-your-configuration">Setup your Configuration</h2>
+<h3 id="edit-requirements">Edit requirements</h3>
+<p>Note on PostGreSQL: because the psycopg2 library often involves compiling the library, I would suggest using the <a href="../setup/#approach-2-docker-with-zappa">Docker version of zappa</a> to ensure you have isolation of environments and you don't mess up your local system.</p>
+<p>Add this to your requirements.txt 
+<pre><code class="sh">psycopg2
+</code></pre></p>
+<p>and then</p>
+<pre><code class="sh">pip install -r requirements
+</code></pre>
+
+<h3 id="django-settings">Django Settings</h3>
+<p>Add the above settings to your settings.py</p>
+<pre><code>DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'zappadbname',
+        'USER': 'administrator',
+        'PASSWORD': 'this_is_not_a_good_password',
+        'HOST': 'zappa-db.crt239fsjdlk.us-east-1.rds.amazonaws.com',
+        'PORT': '5432',
+    }
+
+}
+</code></pre>
+
+<h3 id="zappa-settings">Zappa Settings</h3>
+<pre><code>{
+    &quot;dev&quot;: {
+        &quot;django_settings&quot;: &quot;frankie.settings&quot;, 
+        &quot;s3_bucket&quot;: &quot;zappatest-code&quot;,
+        &quot;aws_region&quot;: &quot;us-east-1&quot;,
+        &quot;vpc_config&quot; : {
+            &quot;SubnetIds&quot;: [ &quot;subnet-f3446aba&quot;,&quot;subnet-c5b8c79e&quot; ], // use the private subnet
+            &quot;SecurityGroupIds&quot;: [ &quot;sg-9a9a1dfc&quot; ]
+        }
+    }
+}
+</code></pre>
+
+<h2 id="create-your-database">Create your Database</h2>
+<p>Ok, easy so far?  Yes!  All we had to do up to this point was carefully click a mouse in the AWS console and 
+edit some text files.  Well fun time is over - now we run into some bootstrapping problems.  Fortunately, we only have to do this once each time we need a new database.</p>
+<p>Turns out that when AWS creates a PostGreSQL RDS instance for you, it doesn't create a database.  So you have to do it yourself.  There are many options, but two methods could be:</p>
+<ol>
+<li>Use a db tool on your local machine via a bastion host </li>
+<li>Write some code to setup the database using zappa</li>
+</ol>
+<p>Option 1 is easy if you have the db tool and the bastion host setup.  But let's explore how to do option two.</p>
+<p>Well, there is no easy way to get this done but here is a possible option: create a management command that can be run in the zappa environment.  </p>
+<h3 id="create-a-management-command-in-your-django-project">Create a management command in your Django Project</h3>
+<p>Follow these steps to create a management command environment (make sure your virtualenv is fired up)</p>
+<pre><code class="sh">cd frankie
+python manage.py startapp axe
+cd axe
+mkdir management
+cd management
+touch __init.py__
+mkdir commands
+cd commands
+touch __init.py__
+</code></pre>
+
+<p>Then create a file called <code>create_db.py</code></p>
+<pre><code class="python">from psycopg2 import connect
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+from django.core.management.base import BaseCommand, CommandError
+from django.conf import settings
+
+class Command(BaseCommand):
+    help = 'Creates the initial database'
+
+    def handle(self, *args, **options):
+        self.stdout.write(self.style.SUCCESS('Starting db creation'))
+
+        dbname = settings.DATABASES['default']['NAME']
+        user = settings.DATABASES['default']['USER']
+        password = settings.DATABASES['default']['PASSWORD']
+        host = settings.DATABASES['default']['HOST']
+
+        con = None
+        con = connect(dbname='postgres', user=user, host = host, password=password)
+        dbname = dbname
+        con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+        cur = con.cursor()
+        cur.execute('CREATE DATABASE ' + dbname)
+        cur.close()
+        con.close()
+
+        self.stdout.write(self.style.SUCCESS('All Done'))
+</code></pre>
+
+<h3 id="run-the-management-command">Run the management command</h3>
+<pre><code>zappa dev manage create_db
+</code></pre>
+
+<h2 id="init-the-database">Init the Database</h2>
+<h2 id="create-your-django-superuser">Create your Django superuser</h2>
+<p>Again, a bit of a pain in the ass</p>
+<h2 id="test-and-profit">Test and profit</h2>
+<p>(http://marcelog.github.io/articles/aws_lambda_internet_vpc.html)</p>
+<p>[https://www.isc.upenn.edu/accessing-mysql-databases-aws-python-lambda-function]</p></div>
         </div>
 
         <footer class="col-md-12">
