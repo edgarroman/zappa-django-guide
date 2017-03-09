@@ -16,17 +16,17 @@ What will not work (yet - see other walkthroughs for this functionality)
 * There is no database connection available (not even SQLite)
 * No HTTPS support
 
-## Create local environment
-
-See [Setup your Environment](setup.md)
-
 ## Setup AWS Account Credentials
 
 Make sure you setup access to your AWS account from your local command line.  See: [Setup Local Account Credentials](aws_credentials.md#setup-local-account-credentials)
 
+## Create local environment
+
+See [Setup your Environment](setup.md)
+
 ## Create very basic Django project
 
-For the purposes of this walkthrough we are taking the most basic Django project.
+For the purposes of this walkthrough we are taking the most basic Django project.  From within your project working directory type the following.  We are creating a fictional Django project called 'frankie'
 
 ```
 django-admin startproject frankie .

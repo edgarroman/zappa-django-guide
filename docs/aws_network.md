@@ -6,13 +6,13 @@ Well, there is an important aspect about interacting with additional AWS service
 
 ## A simple, but naive approach
 
-A simple approach would be to create an AWS RDS instance that is open to the Internet and have your lambda Django project login directly.  While this may work, this approach is fraught with peril.  Numerous vulnerabilities could exist and credentials could be brute forces.  Even without access to your RDS, it is trivial to launch a denial-of-service attack to ensure your Django project has no database services.
+A simple approach would be to create an AWS RDS instance that is open to the Internet and have your lambda Django project login directly.  While this may work, this approach is fraught with peril.  Numerous vulnerabilities could exist and credentials could be discovered by brute force.  Even without gaining access to your RDS, it is trivial to launch a denial-of-service attack to ensure your Django project has no database services.
 
 Basically, do not do this.
 
 ## That's why Amazon has VPC
 
-Introduce Amazon Virtual Private Cloud (VPC).  This provides a way of segmenting Internet traffic from your AWS services.  This feature is incredibly valuable to securing our project.  So that bad guys have the smallest attack surface possible.  It's easy to setup a VPC - there are many webpages that will assist you.  But basically you pick an IP range and let it fly.
+Introducing AWS Virtual Private Cloud (VPC).  This service provides a way of segmenting Internet traffic from your other AWS services.  This feature is incredibly valuable to securing our project.  So that bad guys have the smallest attack surface possible.  It's easy to setup a VPC - there are many webpages that will assist you.  But basically you pick an IP range and let it fly.
 
 Once a VPC is established, you can then subdivide the VPC into subnets.  Which are little non-overlapping IP chunks of the overall VPC.  Like dividing a pie into slices.  
 
@@ -27,13 +27,13 @@ Here is the absolute minimum you must have to have a working Django site within 
 * A security group
 * Your zappa project configured to use the subnet and security group
 
-There are no need for routes, NAT gateways, Internet gateways, or even allowing inbound rules on the security group.  
+There are no need for routes, NAT gateways, Internet gateways, or even allowing inbound rules on the security group.  You will probably need many of these services eventually for a robust and full-featured application, but for illustration purposes now, we will keep it simple.
 
-How could this work you ask?  Well essentially the magic is in the API Gateway that zappa creates on deployment.  From the [API Gateway FAQ](https://aws.amazon.com/api-gateway/faqs/):
+You may be asking yourself how will traffic from the Internet reach the lambda function. Well essentially the magic is in the API Gateway that zappa creates on deployment.  From the [API Gateway FAQ](https://aws.amazon.com/api-gateway/faqs/):
 
 > Amazon API Gateway endpoints are always public to the Internet. Proxy requests to backend operations also need to be publicly accessible on the Internet. However, you can generate a client-side SSL certificate in Amazon API Gateway to verify that requests to your backend systems were sent by API Gateway using the public key of the certificate.
 
-So API Gateways act as an 'always-on' Internet facing service that sends the HTTP requests directly to the Zappa Lambda functions - even if the Lambda functions are in a top-secret lockbox.  Note that in the above setup the Lambda function is completely isolated from direct access to the Internet.  So the Lambda functions can't make outbound connections to anything: other servers, databases, S3, etc.
+So API Gateways act as an 'always-on' Internet facing service that sends the HTTP requests directly to the Zappa Lambda functions - even if the Lambda functions are in a top-secret lockbox.  Note that in the above VPC setup the Lambda function is completely isolated from direct access to the Internet.  Thus the Lambda functions can't make outbound connections to anything: other servers, databases, S3, etc.
 
 Let's face it, there's no real point to going through the effort of doing this if the Lambda functions are really this isolated.  *But* the reason this information is important is because in order to leverage other AWS resources, the VPC lays the foundation to do this securely.
 
@@ -56,21 +56,21 @@ One warning before we go on with VPC and Lambda:  When Lambda functions fire, th
 
 ## VPC Patterns
 
-For a full list of options and other valuable information about VPCs, see this link: [https://aws.amazon.com/answers/networking/aws-single-vpc-design/](https://aws.amazon.com/answers/networking/aws-single-vpc-design/)
+While the actual VPC itself is very straightforward, the combination of subnets within the VPC can take many forms.  Additionally, you must consider how the subnets will communicate among themselves as well as how  they communicate with outside networks. For a more comprehensive list of options and other valuable information about VPCs, see this link: [https://aws.amazon.com/answers/networking/aws-single-vpc-design/](https://aws.amazon.com/answers/networking/aws-single-vpc-design/)
 
 The options are summarized here:
 
-### Internet-Accessible VPC
+### VPC with a single Internet-Accessible subnet
 
-One could serious consider this configuration.  If you put your lambda functions, your RDS, and additional SNS/SQS services in a single subnet in an Internet Accessible VPC it could work.  In theory you could configure your security groups to ensure only lambda functions can hit your RDS.  
+This pattern places your lambda functions, your RDS, and additional SNS/SQS services in a single subnet that is Internet accessible in your VPC.  In theory you could configure your security groups to ensure only lambda functions can hit your RDS.  
     
 One advantage of this setup is that you can setup your local machine to connect to your RDS without a [bastion host](http://serverfault.com/a/648116/60094).  Just restrict access based on IP.  
 
-Important note - you will want to ensure careful inbound IP restrictions.  While it's great that you can connect to RDS with your SQL desktop client, you should setup the bastion host.
+Important note - you will want to ensure careful inbound IP restrictions.  While it's great that you can connect to RDS with your SQL desktop client, you should setup a [bastion host]((http://serverfault.com/a/648116/60094)).
 
 **This scenario is good for straightforward setups with a little work**
 
-### Public and Privately Routed VPC
+### VPC with a Public subnet and Private subnet
 
 Arguably the most flexible and future-proof of all web application setups.  You have two subnets: one public and one private.  Your RDS and lambda functions reside in the private subnet, far away from bad guys, but also far away from your local machine.  In order to access the database from your system you will need a [bastion host](http://serverfault.com/a/648116/60094) in the public subnet.  
 
@@ -88,7 +88,7 @@ If you thought the last setup was complex, you better know what you are doing fr
 
 **A good solution if you need to connect an internal corporate network**
 
-### Internal-Only VPC
+### VPC with an Internal-Only subnet
 
 Obviously a very special case of creating a Django app for internal use only with no desire to have it accessible by the Internet.
 

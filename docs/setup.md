@@ -67,19 +67,19 @@ docker pull danielwhatmuff/zappa
     * If you use [environment variables for AWS Credentials](aws_credentials#setup-local-account-credentials) then use:
 ```sh
 alias zappashell='docker run -ti -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION -v $(pwd):/var/task  --rm danielwhatmuff/zappa bash'
-alias >> ~/.bash_profile
+alias zappashell >> ~/.bash_profile
 ```
     Be sure to define the `$AWS_DEFAULT_REGION` environment variable
 
     * If you use a [credentials file for AWS Credentials](aws_credentials#setup-local-account-credentials) then use:
 ```sh
 alias zappashell='docker run -ti -e AWS_PROFILE=$AWS_PROFILE -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm danielwhatmuff/zappa bash'
-alias >> ~/.bash_profile
+alias zappashell >> ~/.bash_profile
 ```
     Note that you must either define the `$AWS_PROFILE` environment variable or edit the alias above to be hardcoded to a specific profile.  Example of hardcoding the alias:
 ```sh
 alias zappashell='docker run -ti -e AWS_PROFILE=zappa -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm danielwhatmuff/zappa bash'
-alias >> ~/.bash_profile
+alias zappashell >> ~/.bash_profile
 ```
 
 ## Usage on a Project
@@ -105,6 +105,11 @@ zappa> source ve/bin/activate
 ```
 
 Since the virtual environment is contained in the current directory, and the current directory is mapped to your local machine, any changes you make will be persisted between Docker container instances.  
+
+Finally, I recommend upgrading to the latest zappa project since it changes frequently
+```sh
+(ve)zappa> pip install --upgrade zappa
+```
 
 At this point, you are ready to start using zappa.  Once you are finished, you can simply exit the container.
 
@@ -149,7 +154,7 @@ docker build -t myzappa .
 To make sure it points to your new image.  Essentially replace `danielwhatmuff/zappa` with `myzappa`.  Example:
 ```sh
 alias zappashell='docker run -ti -e AWS_PROFILE=zappa -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm myzappa bash'
-alias >> ~/.bash_profile
+alias zappashell >> ~/.bash_profile
 ```
 
 
