@@ -131,10 +131,30 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#using-a-database">Using a Database</a></li>
+            <li><a href="#prerequisites">Prerequisites</a></li>
+            <li><a href="#options-for-databases">Options for Databases</a></li>
+            <li><a href="#lets-do-this-thing">Let's do this thing</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
+<h1 id="using-a-database">Using a Database</h1>
+<p>This walkthough documents the steps necessary to connect your application to a hosted database.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This walkthough requires the (Core Django Setup)[walk_core.md] to be completed.  Also, it is important 
+to have your network setup properly so check out (Adventures in Networking)[aws_network.md].  </p>
+<p>We will assume you have chosen the VPC pattern: "VPC with a Public subnet and Private subnet"
+But basically you will need the private subnet or subnets which can access the database.</p>
+<h2 id="options-for-databases">Options for Databases</h2>
+<h3 id="use-aws-rds">Use AWS RDS</h3>
+<p>This is probably the easiest to get up and running.  AWS takes care of the messy details of managing the host and provides database-as-a-service (if that's a real thing).  In addition, AWS RDS supports mySQL and PostGreSQL, both which are highly compatible with Django.  </p>
+<h3 id="host-your-own">Host Your Own</h3>
+<p>Of course you can be running any type of database on an EC2 instance of your choosing.  Usually an EC2 instance will be associated with one subnet, but it is possible to have multiple IP addresses in different subnets for redundancy.</p>
+<h3 id="use-another-db-service">Use another DB Service</h3>
+<p>There as some other database services such as DynamoDB.  Depending on the capabilities of the service, you may or may need the subnet information.  </p>
+<h2 id="lets-do-this-thing">Let's do this thing</h2>
+<p>We'll just focus on the RDS case for this walkthough.  In fact we'll go through the walkthough using PostGreSQL.</p>
 <p>create db subnet in two availablilty zones</p>
 <p>Then create db - new security group</p>
 <p>http://marcelog.github.io/articles/aws_lambda_internet_vpc.html

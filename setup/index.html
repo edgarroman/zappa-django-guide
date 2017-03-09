@@ -194,18 +194,18 @@ And you are done.  </p>
 <li>
 <p>If you use <a href="../aws_credentials#setup-local-account-credentials">environment variables for AWS Credentials</a> then use:
 <pre><code class="sh">alias zappashell='docker run -ti -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION -v $(pwd):/var/task  --rm danielwhatmuff/zappa bash'
-alias &gt;&gt; ~/.bash_profile
+alias zappashell &gt;&gt; ~/.bash_profile
 </code></pre>
 Be sure to define the <code>$AWS_DEFAULT_REGION</code> environment variable</p>
 </li>
 <li>
 <p>If you use a <a href="../aws_credentials#setup-local-account-credentials">credentials file for AWS Credentials</a> then use:
 <pre><code class="sh">alias zappashell='docker run -ti -e AWS_PROFILE=$AWS_PROFILE -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm danielwhatmuff/zappa bash'
-alias &gt;&gt; ~/.bash_profile
+alias zappashell &gt;&gt; ~/.bash_profile
 </code></pre>
 Note that you must either define the <code>$AWS_PROFILE</code> environment variable or edit the alias above to be hardcoded to a specific profile.  Example of hardcoding the alias:
 <pre><code class="sh">alias zappashell='docker run -ti -e AWS_PROFILE=zappa -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm danielwhatmuff/zappa bash'
-alias &gt;&gt; ~/.bash_profile
+alias zappashell &gt;&gt; ~/.bash_profile
 </code></pre></p>
 </li>
 </ul>
@@ -227,6 +227,9 @@ zappa&gt; source ve/bin/activate
 </code></pre>
 
 <p>Since the virtual environment is contained in the current directory, and the current directory is mapped to your local machine, any changes you make will be persisted between Docker container instances.  </p>
+<p>Finally, I recommend upgrading to the latest zappa project since it changes frequently
+<pre><code class="sh">(ve)zappa&gt; pip install --upgrade zappa
+</code></pre></p>
 <p>At this point, you are ready to start using zappa.  Once you are finished, you can simply exit the container.</p>
 <h3 id="each-time-using-the-project">Each time using the Project</h3>
 <p>Subsequent times you'd like to use the project, merely fire up the container:
@@ -255,7 +258,7 @@ CMD [&quot;zappa&quot;]
 <h3 id="update-your-zappashell-alias">Update your zappashell alias</h3>
 <p>To make sure it points to your new image.  Essentially replace <code>danielwhatmuff/zappa</code> with <code>myzappa</code>.  Example:
 <pre><code class="sh">alias zappashell='docker run -ti -e AWS_PROFILE=zappa -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm myzappa bash'
-alias &gt;&gt; ~/.bash_profile
+alias zappashell &gt;&gt; ~/.bash_profile
 </code></pre></p></div>
         </div>
 
