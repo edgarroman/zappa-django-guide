@@ -14,6 +14,7 @@ pages:
   - AWS Setup:
     - 'Managing Credentials' : 'aws_credentials.md'
     - 'Adventures in Networking' : 'aws_network.md'
+    - 'Creating an RDS Database' : 'aws_database.md'
   - Additional: 'additional.md'
 markdown_extensions:
   - pymdownx.superfences
