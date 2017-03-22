@@ -144,6 +144,9 @@
             <li><a href="#init-the-database">Init the Database</a></li>
             <li><a href="#create-your-django-superuser">Create your Django superuser</a></li>
             <li><a href="#test-and-profit">Test and profit</a></li>
+        <li class="main "><a href="#further-topics">Further Topics</a></li>
+            <li><a href="#security">Security</a></li>
+            <li><a href="#additional-references">Additional References</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -164,7 +167,7 @@ But basically you will need the private subnet or subnets which can access the d
 <p>There as some other database services such as DynamoDB.  Depending on the capabilities of the service, you may or may need the subnet information.  </p>
 <h2 id="create-your-rds-database">Create your RDS Database</h2>
 <p>We'll just focus on the RDS case for this walkthough.  In fact we'll go through the walkthough using PostGreSQL.</p>
-<p>So zip on over to (Creating an RDS Database)[aws_database.md] and set up one.  You should record some key information we'll need here:</p>
+<p>So zip on over to <a href="../aws_database/">Creating an RDS Database</a> and set up one.  You should record some key information we'll need here:</p>
 <ul>
 <li>The subnets (there should be at least two) in which we can access the database</li>
 <li>The endpoint (hostname) of the database and the port</li>
@@ -247,11 +250,17 @@ edit some text files.  Well fun time is over - now we run into some bootstrappin
 <p>Turns out that when AWS creates a PostGreSQL RDS instance for you, it doesn't create a database.  So you have to do it yourself.  There are many options, but two methods could be:</p>
 <ol>
 <li>Use a db tool on your local machine via a bastion host </li>
+<li>Use the AWS command line tool</li>
 <li>Write some code to setup the database using zappa</li>
 </ol>
-<p>Option 1 is easy if you have the db tool and the bastion host setup.  But let's explore how to do option two.</p>
+<p>Option 1 is easy if you have the db tool and the bastion host setup.  But let's explore how to do options two and three.</p>
+<h3 id="using-aws-command-line-tool">Using AWS command line tool</h3>
+<p>You can only use the AWS command line tool to create the database if you are also creating the entire RDS instance.  Be sure to identify the database name to create with '<a href="http://docs.aws.amazon.com/cli/latest/reference/rds/create-db-instance.html#options">db-name</a>'</p>
+<p>Simply use the <code>aws</code> command tool using syntax similar to
+<a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateInstance.html#USER_CreateInstance.CLI">http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateInstance.html#USER_CreateInstance.CLI</a></p>
+<h3 id="setup-the-database-using-zappa">Setup the Database using zappa</h3>
 <p>Well, there is no easy way to get this done but here is a possible option: create a management command that can be run in the zappa environment.  </p>
-<h3 id="create-a-management-command-in-your-django-project">Create a management command in your Django Project</h3>
+<h4 id="create-a-management-command-in-your-django-project">Create a management command in your Django Project</h4>
 <p>Follow these steps to create a management command environment (make sure your virtualenv is fired up)</p>
 <pre><code class="sh">cd frankie
 python manage.py startapp axe
@@ -293,16 +302,42 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('All Done'))
 </code></pre>
 
-<h3 id="run-the-management-command">Run the management command</h3>
-<pre><code>zappa dev manage create_db
+<h4 id="run-the-management-command">Run the management command</h4>
+<pre><code class="sh">zappa dev manage create_db
 </code></pre>
 
+<p>If all goes well, then your database should be created.</p>
 <h2 id="init-the-database">Init the Database</h2>
+<p>At this point you should have an empty database ready for your Django application to fill up with schema. If this were a traditional server, you would merely run the <code>migrate</code> command.  But you can't because there is no command line.  Thus we have to modify them to adjust to the new environment.</p>
+<p>So create your migrations and push the updated code.  </p>
+<p><pre><code class="sh">python manage.py makemigrations
+zappa update dev
+</code></pre>
+Now you invoke the zappa manage command:</p>
+<pre><code class="sh">zappa manage dev migrate
+</code></pre>
+
+<p>And repeat this process everytime you make model changes.</p>
 <h2 id="create-your-django-superuser">Create your Django superuser</h2>
-<p>Again, a bit of a pain in the ass</p>
+<p>The Django management commands were meant to be run interactively on a command line on a traditional server.  Because there is no command line with lambda, we must do some trickery to get around the input needed for the Django createsuperuser management command.</p>
+<p>Essentially we will use the <code>raw</code> flag on the invoke command to just run raw python.  The following command creates a new superuser named 'admin' with email 'admin@yourdomain.com' and password of 'horse battery stapler'</p>
+<pre><code class="sh">zappa invoke --raw dev &quot;from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@yourdomain.com', 'horse battery stapler')&quot;
+</code></pre>
+
+<p>Additional superusers can be added via this method or the Django admin console.</p>
 <h2 id="test-and-profit">Test and profit</h2>
+<p>At this point you should be able to log into your Django admin:
+<img alt="Database FTW" src="../images/db_success.png" /></p>
 <p>(http://marcelog.github.io/articles/aws_lambda_internet_vpc.html)</p>
-<p>[https://www.isc.upenn.edu/accessing-mysql-databases-aws-python-lambda-function]</p></div>
+<p>[https://www.isc.upenn.edu/accessing-mysql-databases-aws-python-lambda-function]</p>
+<h1 id="further-topics">Further Topics</h1>
+<h2 id="security">Security</h2>
+<p>Notice that we are using the master user credentials for the RDS system.  It would be more secure if we created a dedicated user that can only access the relevant database.  More information on that can be found here:
+<a href="https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04">https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04</a></p>
+<p>You will have to modify your custom Django management command to accommodate creation of a new user.</p>
+<h2 id="additional-references">Additional References</h2>
+<p>For MySQL tips:
+<a href="https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04">https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04</a></p></div>
         </div>
 
         <footer class="col-md-12">

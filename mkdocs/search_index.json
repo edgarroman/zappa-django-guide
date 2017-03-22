@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Guide to using Django with Zappa\n\n\nThis repo exists to document the process of getting a standard Django project running live in AWS Lambda using the \n\nzappa project\n.  We will explore various configurations in a building-block fashion in the hopes that folks can leverage only the relevant parts for their needs.\n\n\nSetup your Environment\n\n\nIt is important to read this section in order to establish your working environment: \nSetup your Environment\n\n\nWalkthroughs\n\n\nCore Django Setup\n\n\nThis section documents setting up a Django project with only core Python functionality responding to HTTP calls.  The value of this core walkthrough could be to power an API driven compute engine or a event-driven data processing tool without the need to provide a UI.\n\n\nSupport for Static Files\n\n\nGenerally if you'd like to use your Django project to present a User Interface (UI) then you'll need to display Images and CSS and serve Javascript files.  These are known as static files and to deliver them using Zappa is unlike the traditional method of hosting the static files on a Linux or Windows box.  This walkthrough documents one way of hosting the files on AWS S3.", 
+            "text": "Guide to using Django with Zappa\n\n\nThis repo exists to document the process of getting a standard Django project running live in AWS Lambda using the \n\nzappa project\n.  We will explore various configurations in a building-block fashion in the hopes that folks can leverage only the relevant parts for their needs.\n\n\nSetup your Environment\n\n\nIt is important to read this section in order to establish your working environment: \nSetup your Environment\n\n\nWalkthroughs\n\n\nCore Django Setup\n\n\nThis section documents setting up a Django project with only core Python functionality responding to HTTP calls.  The value of this core walkthrough could be to power an API driven compute engine or a event-driven data processing tool without the need to provide a UI.\n\n\nHosting Static Files\n\n\nGenerally if you'd like to use your Django project to present a User Interface (UI) then you'll need to display Images and CSS and serve Javascript files.  These are known as static files and to deliver them using Zappa is unlike the traditional method of hosting the static files on a Linux or Windows box.  This walkthrough documents one way of hosting the files on AWS S3.\n\n\nUsing a Database\n\n\nThis walkthough documents the steps necessary to connect your application to a hosted database.", 
             "title": "Home"
         }, 
         {
@@ -26,9 +26,14 @@
             "title": "Core Django Setup"
         }, 
         {
-            "location": "/#support-for-static-files", 
+            "location": "/#hosting-static-files", 
             "text": "Generally if you'd like to use your Django project to present a User Interface (UI) then you'll need to display Images and CSS and serve Javascript files.  These are known as static files and to deliver them using Zappa is unlike the traditional method of hosting the static files on a Linux or Windows box.  This walkthrough documents one way of hosting the files on AWS S3.", 
-            "title": "Support for Static Files"
+            "title": "Hosting Static Files"
+        }, 
+        {
+            "location": "/#using-a-database", 
+            "text": "This walkthough documents the steps necessary to connect your application to a hosted database.", 
+            "title": "Using a Database"
         }, 
         {
             "location": "/setup/", 
@@ -262,7 +267,7 @@
         }, 
         {
             "location": "/walk_database/", 
-            "text": "Using a Database\n\n\nThis walkthough documents the steps necessary to connect your application to a hosted database.\n\n\nPrerequisites\n\n\nThis walkthough requires the (Core Django Setup)[walk_core.md] to be completed.  Also, it is important \nto have your network setup properly so check out (Adventures in Networking)[aws_network.md].  \n\n\nWe will assume you have chosen the VPC pattern: \"VPC with a Public subnet and Private subnet\"\nBut basically you will need the private subnet or subnets which can access the database.\n\n\nOptions for Databases\n\n\nUse AWS RDS\n\n\nThis is probably the easiest to get up and running.  AWS takes care of the messy details of managing the host and provides database-as-a-service (if that's a real thing).  In addition, AWS RDS supports mySQL and PostGreSQL, both which are highly compatible with Django.  \n\n\nHost Your Own\n\n\nOf course you can be running any type of database on an EC2 instance of your choosing.  Usually an EC2 instance will be associated with one subnet, but it is possible to have multiple IP addresses in different subnets for redundancy.\n\n\nUse another DB Service\n\n\nThere as some other database services such as DynamoDB.  Depending on the capabilities of the service, you may or may need the subnet information.  \n\n\nCreate your RDS Database\n\n\nWe'll just focus on the RDS case for this walkthough.  In fact we'll go through the walkthough using PostGreSQL.\n\n\nSo zip on over to (Creating an RDS Database)[aws_database.md] and set up one.  You should record some key information we'll need here:\n\n\n\n\nThe subnets (there should be at least two) in which we can access the database\n\n\nThe endpoint (hostname) of the database and the port\n\n\nThe username and password for the root user\n\n\n\n\nNote that at this point you don't yet have a database installed on your RDS instance.  So let's just pick a name we will use for the walkthough.  \n\n\nHere is our sample data:\n\n\n\n\n\n\n\n\nParameter\n\n\nSample value\n\n\n\n\n\n\n\n\n\n\nsubnets\n\n\nsubnet-f3446aba, subnet-c5b8c79e\n\n\n\n\n\n\nendpoint\n\n\nzappa-db.crt239fsjdlk.us-east-1.rds.amazonaws.com\n\n\n\n\n\n\ndb username\n\n\nadministrator\n\n\n\n\n\n\ndb password\n\n\nthis_is_not_a_good_password\n\n\n\n\n\n\ndb name\n\n\nzappadbname\n\n\n\n\n\n\n\n\nSetup your Configuration\n\n\nEdit requirements\n\n\nNote on PostGreSQL: because the psycopg2 library often involves compiling the library, I would suggest using the \nDocker version of zappa\n to ensure you have isolation of environments and you don't mess up your local system.\n\n\nAdd this to your requirements.txt \n\npsycopg2\n\n\n\nand then\n\n\npip install -r requirements\n\n\n\n\nDjango Settings\n\n\nAdd the above settings to your settings.py\n\n\nDATABASES = {\n    'default': {\n        'ENGINE': 'django.db.backends.postgresql_psycopg2',\n        'NAME': 'zappadbname',\n        'USER': 'administrator',\n        'PASSWORD': 'this_is_not_a_good_password',\n        'HOST': 'zappa-db.crt239fsjdlk.us-east-1.rds.amazonaws.com',\n        'PORT': '5432',\n    }\n\n}\n\n\n\n\nZappa Settings\n\n\n{\n    \ndev\n: {\n        \ndjango_settings\n: \nfrankie.settings\n, \n        \ns3_bucket\n: \nzappatest-code\n,\n        \naws_region\n: \nus-east-1\n,\n        \nvpc_config\n : {\n            \nSubnetIds\n: [ \nsubnet-f3446aba\n,\nsubnet-c5b8c79e\n ], // use the private subnet\n            \nSecurityGroupIds\n: [ \nsg-9a9a1dfc\n ]\n        }\n    }\n}\n\n\n\n\nCreate your Database\n\n\nOk, easy so far?  Yes!  All we had to do up to this point was carefully click a mouse in the AWS console and \nedit some text files.  Well fun time is over - now we run into some bootstrapping problems.  Fortunately, we only have to do this once each time we need a new database.\n\n\nTurns out that when AWS creates a PostGreSQL RDS instance for you, it doesn't create a database.  So you have to do it yourself.  There are many options, but two methods could be:\n\n\n\n\nUse a db tool on your local machine via a bastion host \n\n\nWrite some code to setup the database using zappa\n\n\n\n\nOption 1 is easy if you have the db tool and the bastion host setup.  But let's explore how to do option two.\n\n\nWell, there is no easy way to get this done but here is a possible option: create a management command that can be run in the zappa environment.  \n\n\nCreate a management command in your Django Project\n\n\nFollow these steps to create a management command environment (make sure your virtualenv is fired up)\n\n\ncd frankie\npython manage.py startapp axe\ncd axe\nmkdir management\ncd management\ntouch __init.py__\nmkdir commands\ncd commands\ntouch __init.py__\n\n\n\n\nThen create a file called \ncreate_db.py\n\n\nfrom psycopg2 import connect\nfrom psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT\nfrom django.core.management.base import BaseCommand, CommandError\nfrom django.conf import settings\n\nclass Command(BaseCommand):\n    help = 'Creates the initial database'\n\n    def handle(self, *args, **options):\n        self.stdout.write(self.style.SUCCESS('Starting db creation'))\n\n        dbname = settings.DATABASES['default']['NAME']\n        user = settings.DATABASES['default']['USER']\n        password = settings.DATABASES['default']['PASSWORD']\n        host = settings.DATABASES['default']['HOST']\n\n        con = None\n        con = connect(dbname='postgres', user=user, host = host, password=password)\n        dbname = dbname\n        con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)\n        cur = con.cursor()\n        cur.execute('CREATE DATABASE ' + dbname)\n        cur.close()\n        con.close()\n\n        self.stdout.write(self.style.SUCCESS('All Done'))\n\n\n\n\nRun the management command\n\n\nzappa dev manage create_db\n\n\n\n\nInit the Database\n\n\nCreate your Django superuser\n\n\nAgain, a bit of a pain in the ass\n\n\nTest and profit\n\n\n(http://marcelog.github.io/articles/aws_lambda_internet_vpc.html)\n\n\n[https://www.isc.upenn.edu/accessing-mysql-databases-aws-python-lambda-function]", 
+            "text": "Using a Database\n\n\nThis walkthough documents the steps necessary to connect your application to a hosted database.\n\n\nPrerequisites\n\n\nThis walkthough requires the (Core Django Setup)[walk_core.md] to be completed.  Also, it is important \nto have your network setup properly so check out (Adventures in Networking)[aws_network.md].  \n\n\nWe will assume you have chosen the VPC pattern: \"VPC with a Public subnet and Private subnet\"\nBut basically you will need the private subnet or subnets which can access the database.\n\n\nOptions for Databases\n\n\nUse AWS RDS\n\n\nThis is probably the easiest to get up and running.  AWS takes care of the messy details of managing the host and provides database-as-a-service (if that's a real thing).  In addition, AWS RDS supports mySQL and PostGreSQL, both which are highly compatible with Django.  \n\n\nHost Your Own\n\n\nOf course you can be running any type of database on an EC2 instance of your choosing.  Usually an EC2 instance will be associated with one subnet, but it is possible to have multiple IP addresses in different subnets for redundancy.\n\n\nUse another DB Service\n\n\nThere as some other database services such as DynamoDB.  Depending on the capabilities of the service, you may or may need the subnet information.  \n\n\nCreate your RDS Database\n\n\nWe'll just focus on the RDS case for this walkthough.  In fact we'll go through the walkthough using PostGreSQL.\n\n\nSo zip on over to \nCreating an RDS Database\n and set up one.  You should record some key information we'll need here:\n\n\n\n\nThe subnets (there should be at least two) in which we can access the database\n\n\nThe endpoint (hostname) of the database and the port\n\n\nThe username and password for the root user\n\n\n\n\nNote that at this point you don't yet have a database installed on your RDS instance.  So let's just pick a name we will use for the walkthough.  \n\n\nHere is our sample data:\n\n\n\n\n\n\n\n\nParameter\n\n\nSample value\n\n\n\n\n\n\n\n\n\n\nsubnets\n\n\nsubnet-f3446aba, subnet-c5b8c79e\n\n\n\n\n\n\nendpoint\n\n\nzappa-db.crt239fsjdlk.us-east-1.rds.amazonaws.com\n\n\n\n\n\n\ndb username\n\n\nadministrator\n\n\n\n\n\n\ndb password\n\n\nthis_is_not_a_good_password\n\n\n\n\n\n\ndb name\n\n\nzappadbname\n\n\n\n\n\n\n\n\nSetup your Configuration\n\n\nEdit requirements\n\n\nNote on PostGreSQL: because the psycopg2 library often involves compiling the library, I would suggest using the \nDocker version of zappa\n to ensure you have isolation of environments and you don't mess up your local system.\n\n\nAdd this to your requirements.txt \n\npsycopg2\n\n\n\nand then\n\n\npip install -r requirements\n\n\n\n\nDjango Settings\n\n\nAdd the above settings to your settings.py\n\n\nDATABASES = {\n    'default': {\n        'ENGINE': 'django.db.backends.postgresql_psycopg2',\n        'NAME': 'zappadbname',\n        'USER': 'administrator',\n        'PASSWORD': 'this_is_not_a_good_password',\n        'HOST': 'zappa-db.crt239fsjdlk.us-east-1.rds.amazonaws.com',\n        'PORT': '5432',\n    }\n\n}\n\n\n\n\nZappa Settings\n\n\n{\n    \ndev\n: {\n        \ndjango_settings\n: \nfrankie.settings\n, \n        \ns3_bucket\n: \nzappatest-code\n,\n        \naws_region\n: \nus-east-1\n,\n        \nvpc_config\n : {\n            \nSubnetIds\n: [ \nsubnet-f3446aba\n,\nsubnet-c5b8c79e\n ], // use the private subnet\n            \nSecurityGroupIds\n: [ \nsg-9a9a1dfc\n ]\n        }\n    }\n}\n\n\n\n\nCreate your Database\n\n\nOk, easy so far?  Yes!  All we had to do up to this point was carefully click a mouse in the AWS console and \nedit some text files.  Well fun time is over - now we run into some bootstrapping problems.  Fortunately, we only have to do this once each time we need a new database.\n\n\nTurns out that when AWS creates a PostGreSQL RDS instance for you, it doesn't create a database.  So you have to do it yourself.  There are many options, but two methods could be:\n\n\n\n\nUse a db tool on your local machine via a bastion host \n\n\nUse the AWS command line tool\n\n\nWrite some code to setup the database using zappa\n\n\n\n\nOption 1 is easy if you have the db tool and the bastion host setup.  But let's explore how to do options two and three.\n\n\nUsing AWS command line tool\n\n\nYou can only use the AWS command line tool to create the database if you are also creating the entire RDS instance.  Be sure to identify the database name to create with '\ndb-name\n'\n\n\nSimply use the \naws\n command tool using syntax similar to\n\nhttp://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateInstance.html#USER_CreateInstance.CLI\n\n\nSetup the Database using zappa\n\n\nWell, there is no easy way to get this done but here is a possible option: create a management command that can be run in the zappa environment.  \n\n\nCreate a management command in your Django Project\n\n\nFollow these steps to create a management command environment (make sure your virtualenv is fired up)\n\n\ncd frankie\npython manage.py startapp axe\ncd axe\nmkdir management\ncd management\ntouch __init.py__\nmkdir commands\ncd commands\ntouch __init.py__\n\n\n\n\nThen create a file called \ncreate_db.py\n\n\nfrom psycopg2 import connect\nfrom psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT\nfrom django.core.management.base import BaseCommand, CommandError\nfrom django.conf import settings\n\nclass Command(BaseCommand):\n    help = 'Creates the initial database'\n\n    def handle(self, *args, **options):\n        self.stdout.write(self.style.SUCCESS('Starting db creation'))\n\n        dbname = settings.DATABASES['default']['NAME']\n        user = settings.DATABASES['default']['USER']\n        password = settings.DATABASES['default']['PASSWORD']\n        host = settings.DATABASES['default']['HOST']\n\n        con = None\n        con = connect(dbname='postgres', user=user, host = host, password=password)\n        dbname = dbname\n        con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)\n        cur = con.cursor()\n        cur.execute('CREATE DATABASE ' + dbname)\n        cur.close()\n        con.close()\n\n        self.stdout.write(self.style.SUCCESS('All Done'))\n\n\n\n\nRun the management command\n\n\nzappa dev manage create_db\n\n\n\n\nIf all goes well, then your database should be created.\n\n\nInit the Database\n\n\nAt this point you should have an empty database ready for your Django application to fill up with schema. If this were a traditional server, you would merely run the \nmigrate\n command.  But you can't because there is no command line.  Thus we have to modify them to adjust to the new environment.\n\n\nSo create your migrations and push the updated code.  \n\n\npython manage.py makemigrations\nzappa update dev\n\n\nNow you invoke the zappa manage command:\n\n\nzappa manage dev migrate\n\n\n\n\nAnd repeat this process everytime you make model changes.\n\n\nCreate your Django superuser\n\n\nThe Django management commands were meant to be run interactively on a command line on a traditional server.  Because there is no command line with lambda, we must do some trickery to get around the input needed for the Django createsuperuser management command.\n\n\nEssentially we will use the \nraw\n flag on the invoke command to just run raw python.  The following command creates a new superuser named 'admin' with email 'admin@yourdomain.com' and password of 'horse battery stapler'\n\n\nzappa invoke --raw dev \nfrom django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@yourdomain.com', 'horse battery stapler')\n\n\n\n\n\nAdditional superusers can be added via this method or the Django admin console.\n\n\nTest and profit\n\n\nAt this point you should be able to log into your Django admin:\n\n\n\n(http://marcelog.github.io/articles/aws_lambda_internet_vpc.html)\n\n\n[https://www.isc.upenn.edu/accessing-mysql-databases-aws-python-lambda-function]\n\n\nFurther Topics\n\n\nSecurity\n\n\nNotice that we are using the master user credentials for the RDS system.  It would be more secure if we created a dedicated user that can only access the relevant database.  More information on that can be found here:\n\nhttps://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04\n\n\nYou will have to modify your custom Django management command to accommodate creation of a new user.\n\n\nAdditional References\n\n\nFor MySQL tips:\n\nhttps://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04", 
             "title": "Using a Database"
         }, 
         {
@@ -297,7 +302,7 @@
         }, 
         {
             "location": "/walk_database/#create-your-rds-database", 
-            "text": "We'll just focus on the RDS case for this walkthough.  In fact we'll go through the walkthough using PostGreSQL.  So zip on over to (Creating an RDS Database)[aws_database.md] and set up one.  You should record some key information we'll need here:   The subnets (there should be at least two) in which we can access the database  The endpoint (hostname) of the database and the port  The username and password for the root user   Note that at this point you don't yet have a database installed on your RDS instance.  So let's just pick a name we will use for the walkthough.    Here is our sample data:     Parameter  Sample value      subnets  subnet-f3446aba, subnet-c5b8c79e    endpoint  zappa-db.crt239fsjdlk.us-east-1.rds.amazonaws.com    db username  administrator    db password  this_is_not_a_good_password    db name  zappadbname", 
+            "text": "We'll just focus on the RDS case for this walkthough.  In fact we'll go through the walkthough using PostGreSQL.  So zip on over to  Creating an RDS Database  and set up one.  You should record some key information we'll need here:   The subnets (there should be at least two) in which we can access the database  The endpoint (hostname) of the database and the port  The username and password for the root user   Note that at this point you don't yet have a database installed on your RDS instance.  So let's just pick a name we will use for the walkthough.    Here is our sample data:     Parameter  Sample value      subnets  subnet-f3446aba, subnet-c5b8c79e    endpoint  zappa-db.crt239fsjdlk.us-east-1.rds.amazonaws.com    db username  administrator    db password  this_is_not_a_good_password    db name  zappadbname", 
             "title": "Create your RDS Database"
         }, 
         {
@@ -322,8 +327,18 @@
         }, 
         {
             "location": "/walk_database/#create-your-database", 
-            "text": "Ok, easy so far?  Yes!  All we had to do up to this point was carefully click a mouse in the AWS console and \nedit some text files.  Well fun time is over - now we run into some bootstrapping problems.  Fortunately, we only have to do this once each time we need a new database.  Turns out that when AWS creates a PostGreSQL RDS instance for you, it doesn't create a database.  So you have to do it yourself.  There are many options, but two methods could be:   Use a db tool on your local machine via a bastion host   Write some code to setup the database using zappa   Option 1 is easy if you have the db tool and the bastion host setup.  But let's explore how to do option two.  Well, there is no easy way to get this done but here is a possible option: create a management command that can be run in the zappa environment.", 
+            "text": "Ok, easy so far?  Yes!  All we had to do up to this point was carefully click a mouse in the AWS console and \nedit some text files.  Well fun time is over - now we run into some bootstrapping problems.  Fortunately, we only have to do this once each time we need a new database.  Turns out that when AWS creates a PostGreSQL RDS instance for you, it doesn't create a database.  So you have to do it yourself.  There are many options, but two methods could be:   Use a db tool on your local machine via a bastion host   Use the AWS command line tool  Write some code to setup the database using zappa   Option 1 is easy if you have the db tool and the bastion host setup.  But let's explore how to do options two and three.", 
             "title": "Create your Database"
+        }, 
+        {
+            "location": "/walk_database/#using-aws-command-line-tool", 
+            "text": "You can only use the AWS command line tool to create the database if you are also creating the entire RDS instance.  Be sure to identify the database name to create with ' db-name '  Simply use the  aws  command tool using syntax similar to http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateInstance.html#USER_CreateInstance.CLI", 
+            "title": "Using AWS command line tool"
+        }, 
+        {
+            "location": "/walk_database/#setup-the-database-using-zappa", 
+            "text": "Well, there is no easy way to get this done but here is a possible option: create a management command that can be run in the zappa environment.", 
+            "title": "Setup the Database using zappa"
         }, 
         {
             "location": "/walk_database/#create-a-management-command-in-your-django-project", 
@@ -332,33 +347,58 @@
         }, 
         {
             "location": "/walk_database/#run-the-management-command", 
-            "text": "zappa dev manage create_db", 
+            "text": "zappa dev manage create_db  If all goes well, then your database should be created.", 
             "title": "Run the management command"
         }, 
         {
             "location": "/walk_database/#init-the-database", 
-            "text": "", 
+            "text": "At this point you should have an empty database ready for your Django application to fill up with schema. If this were a traditional server, you would merely run the  migrate  command.  But you can't because there is no command line.  Thus we have to modify them to adjust to the new environment.  So create your migrations and push the updated code.    python manage.py makemigrations\nzappa update dev \nNow you invoke the zappa manage command:  zappa manage dev migrate  And repeat this process everytime you make model changes.", 
             "title": "Init the Database"
         }, 
         {
             "location": "/walk_database/#create-your-django-superuser", 
-            "text": "Again, a bit of a pain in the ass", 
+            "text": "The Django management commands were meant to be run interactively on a command line on a traditional server.  Because there is no command line with lambda, we must do some trickery to get around the input needed for the Django createsuperuser management command.  Essentially we will use the  raw  flag on the invoke command to just run raw python.  The following command creates a new superuser named 'admin' with email 'admin@yourdomain.com' and password of 'horse battery stapler'  zappa invoke --raw dev  from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@yourdomain.com', 'horse battery stapler')   Additional superusers can be added via this method or the Django admin console.", 
             "title": "Create your Django superuser"
         }, 
         {
             "location": "/walk_database/#test-and-profit", 
-            "text": "(http://marcelog.github.io/articles/aws_lambda_internet_vpc.html)  [https://www.isc.upenn.edu/accessing-mysql-databases-aws-python-lambda-function]", 
+            "text": "At this point you should be able to log into your Django admin:  (http://marcelog.github.io/articles/aws_lambda_internet_vpc.html)  [https://www.isc.upenn.edu/accessing-mysql-databases-aws-python-lambda-function]", 
             "title": "Test and profit"
         }, 
         {
-            "location": "/walk_cdn/", 
+            "location": "/walk_database/#further-topics", 
             "text": "", 
+            "title": "Further Topics"
+        }, 
+        {
+            "location": "/walk_database/#security", 
+            "text": "Notice that we are using the master user credentials for the RDS system.  It would be more secure if we created a dedicated user that can only access the relevant database.  More information on that can be found here: https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04  You will have to modify your custom Django management command to accommodate creation of a new user.", 
+            "title": "Security"
+        }, 
+        {
+            "location": "/walk_database/#additional-references", 
+            "text": "For MySQL tips: https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04", 
+            "title": "Additional References"
+        }, 
+        {
+            "location": "/walk_cdn/", 
+            "text": "Not yet written", 
             "title": "You need a CDN"
         }, 
         {
-            "location": "/walk_https/", 
+            "location": "/walk_cdn/#not-yet-written", 
             "text": "", 
+            "title": "Not yet written"
+        }, 
+        {
+            "location": "/walk_https/", 
+            "text": "Not yet written", 
             "title": "Secure HTTPS"
+        }, 
+        {
+            "location": "/walk_https/#not-yet-written", 
+            "text": "", 
+            "title": "Not yet written"
         }, 
         {
             "location": "/walk_media/", 
@@ -372,13 +412,23 @@
         }, 
         {
             "location": "/walk_scheduling/", 
-            "text": "", 
+            "text": "Not yet written", 
             "title": "Tasks and Events"
         }, 
         {
-            "location": "/walk_debug/", 
+            "location": "/walk_scheduling/#not-yet-written", 
             "text": "", 
+            "title": "Not yet written"
+        }, 
+        {
+            "location": "/walk_debug/", 
+            "text": "Not yet written", 
             "title": "Debugging"
+        }, 
+        {
+            "location": "/walk_debug/#not-yet-written", 
+            "text": "", 
+            "title": "Not yet written"
         }, 
         {
             "location": "/aws_credentials/", 
