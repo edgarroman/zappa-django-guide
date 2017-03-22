@@ -13,6 +13,10 @@ It is important to read this section in order to establish your working environm
 
 This section documents setting up a Django project with only core Python functionality responding to HTTP calls.  The value of this core walkthrough could be to power an API driven compute engine or a event-driven data processing tool without the need to provide a UI.
 
-### [Support for Static Files](walk_static.md)
+### [Hosting Static Files](walk_static.md)
 
 Generally if you'd like to use your Django project to present a User Interface (UI) then you'll need to display Images and CSS and serve Javascript files.  These are known as static files and to deliver them using Zappa is unlike the traditional method of hosting the static files on a Linux or Windows box.  This walkthrough documents one way of hosting the files on AWS S3.
+
+### [Using a Database](walk_database.md)
+This walkthough documents the steps necessary to connect your application to a hosted database.
+
