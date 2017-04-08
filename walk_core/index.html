@@ -69,11 +69,7 @@
 </li>
                             
 <li >
-    <a href="../walk_cdn/">You need a CDN</a>
-</li>
-                            
-<li >
-    <a href="../walk_https/">Secure HTTPS</a>
+    <a href="../walk_domain/">Custom Domains</a>
 </li>
                             
 <li >
@@ -341,9 +337,9 @@ You may need to add x6kb437rh.execute-api.us-east-1.amazonaws.com' to ALLOWED_HO
 
 <p>The built-in <a href="https://docs.djangoproject.com/en/1.10/topics/security/#host-header-validation">Django security settings</a> are kicking in and preventing bad stuff from happening.  So we need to modify our Django settings file to accommodate the <a href="http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html">default hostname that AWS API Gateway uses</a>.  Note that the AWS region is part of the hostname and thus should match your selected region.</p>
 <p>Now edit <code>frankie/settings.py</code> and change ALLOWED_HOSTS to;</p>
-<pre><code>ALLOWED_HOSTS = [ '127.0.0.1', '.execute-api.us-east-1.amazonaws.com', ]
+<p><pre><code>ALLOWED_HOSTS = [ '127.0.0.1', 'x6kb437rh.execute-api.us-east-1.amazonaws.com', ]
 </code></pre>
-
+As an aside, for best security practices, put the full domain of the API Gateway here.  Less secure would be to use just <code>.execute-api.us-east-1.amazonaws.com</code>.  </p>
 <p>Once done, we can again deploy to AWS Lambda.  But this time, since we've already pushed the initial deploy, we use the <strong>update</strong> action on the zappa command line.</p>
 <pre><code>zappa update dev
 </code></pre>
@@ -352,10 +348,19 @@ You may need to add x6kb437rh.execute-api.us-east-1.amazonaws.com' to ALLOWED_HO
 <p><img alt="404" src="../images/core_404.png" /></p>
 <h2 id="how-is-this-functional">How is this functional?</h2>
 <p>Wait, what?  A 404 page is functional?  Well yes, it is.  The Lambda function is working fine.  A whole series of AWS systems are working in concert to load your python Django code and running the view.  Because we've cut to the bare minimum Django project, there is no application ready to handle the url paths.  The only thing we see is the admin application.</p>
-<p>So from here we are ready to start working on views and providing data.  However, if you wish to host a website with static files and databases, continue onward to the subsequent walkthroughs.</p>
+<p>So from here we are ready to start working on views and providing data.  However, if you wish to host a website with static files and databases, continue onward to the subsequent walkthroughs:</p>
+<ul>
+<li><a href="../walk_static/">Hosting Static Files</a></li>
+<li><a href="../walk_database/">Using a Database</a></li>
+</ul>
 <h3 id="why-is-the-url-path-appended-with-dev">Why is the URL path appended with 'dev'?</h3>
-<p>Astute readers will notice that the url in the image shown above indeed has the root domain with the suffix of 'dev' which happens to be the name of the zappa environment.  </p>
-<p>At this time, having the environment appended to the url is embedded into zappa.  However, if you place the lambda function behind a CDN such as cloudfront, this preference may be changed.</p></div>
+<p>Astute readers will notice that the url in the image shown above indeed has the root domain with the suffix of 'dev' which happens to be the name of the zappa environment.  Indeed, the url domain is based on the generated API Gateway and the path of the URL is the 'Stage Name' of the API Gateway - it matches the name of the Zappa environment you chose above.</p>
+<pre><code>https://bnu0zcwezd.execute-api.us-east-1.amazonaws.com/dev/
+        ^^^^^^^^^^^^^^^^^^^^^^                         ^^^
+      Auto Generated API Gateway              Your Zappa Environment
+</code></pre>
+
+<p>While this url may be considered functional, most would regard it as extremely unfriendly to users. To improve this and even get HTTPS encryption see the section on <a href="../walk_domain/">using a Custom Domain</a>.</p></div>
         </div>
 
         <footer class="col-md-12">

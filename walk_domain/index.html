@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Secure HTTPS - Guide to using Django with Zappa</title>
+        <title>Custom Domains - Guide to using Django with Zappa</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -68,12 +68,8 @@
     <a href="../walk_database/">Using a Database</a>
 </li>
                             
-<li >
-    <a href="../walk_cdn/">You need a CDN</a>
-</li>
-                            
 <li class="active">
-    <a href="./">Secure HTTPS</a>
+    <a href="./">Custom Domains</a>
 </li>
                             
 <li >
@@ -118,7 +114,7 @@
                     </a>
                 </li>
                     <li >
-                        <a rel="next" href="../walk_cdn/">
+                        <a rel="next" href="../walk_database/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -135,12 +131,69 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#not-yet-written">Not yet written</a></li>
+        <li class="main active"><a href="#using-a-custom-domain">Using a Custom Domain</a></li>
+        <li class="main "><a href="#domain-name-prep">Domain Name Prep</a></li>
+            <li><a href="#hosting-elsewhere">Hosting elsewhere</a></li>
+            <li><a href="#hosting-on-route53">Hosting on Route53</a></li>
+        <li class="main "><a href="#get-ssl-cert">Get SSL Cert</a></li>
+            <li><a href="#outside">outside</a></li>
+            <li><a href="#acm">ACM</a></li>
+        <li class="main "><a href="#put-in-zappa-settings">put in zappa settings</a></li>
+        <li class="main "><a href="#run">Run</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="not-yet-written">Not yet written</h1></div>
+<h1 id="using-a-custom-domain">Using a Custom Domain</h1>
+<p>If you've followed the walkthroughs thus far, you've at least created a working <a href="../walk_core/">Django site using Zappa</a>
+But the URL provided by Zappa is pretty darn ugly.  Not only does it use an apparent random domain name, but the Zappa environment is used as the path.  For example:</p>
+<pre><code class="sh">https://bnu0zcwezd.execute-api.us-east-1.amazonaws.com/dev/
+        ^^^^^^^^^^^^^^^^^^^^^^                         ^^^
+      Auto Generated API Gateway              Your Zappa Environment
+</code></pre>
+
+<p>Ideally most sites would be something like:</p>
+<pre><code class="sh">https://www.contoso.com/
+</code></pre>
+
+<p>This is entirely possible with Zappa - so how do we get there?</p>
+<p>Notes here:</p>
+<h1 id="domain-name-prep">Domain Name Prep</h1>
+<h2 id="hosting-elsewhere">Hosting elsewhere</h2>
+<h2 id="hosting-on-route53">Hosting on Route53</h2>
+<ul>
+<li>Create hosted zone</li>
+</ul>
+<h1 id="get-ssl-cert">Get SSL Cert</h1>
+<h2 id="outside">outside</h2>
+<ul>
+<li>import the cert into acm</li>
+<li>but you have to deal with renewals yourself
+https://aws.amazon.com/certificate-manager/faqs/</li>
+</ul>
+<h2 id="acm">ACM</h2>
+<p>do this from the east region and it will distribute
+https://aws.amazon.com/certificate-manager/faqs/</p>
+<ul>
+<li>add domain</li>
+<li>the look for email</li>
+<li>verify and get the ARN</li>
+</ul>
+<p>good for 13 months
+https://aws.amazon.com/certificate-manager/faqs/</p>
+<h1 id="put-in-zappa-settings">put in zappa settings</h1>
+<pre><code>    "certificate_arn": "arn:aws:acm:us-east-1:738356466015:certificate/1d066282-ce94-4ad7-a802-2fe87d32b104",
+    "domain": "vpcman.photobrain.net",
+</code></pre>
+<h1 id="run">Run</h1>
+<pre><code>zappa certify dev
+</code></pre>
+
+<p>so what happens is that zappa requests that the api gateway associate the custom domain and ssl to a new, hidden cloudfront distribution.  It's hard to figure out what the settings are on this cf distro so just roll with it.
+if you are a control freak, just make your own</p>
+<p>it takes some time, but now hit it</p>
+<p>https://vpcman.photobrain.net</p>
+<p>http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html</p></div>
         </div>
 
         <footer class="col-md-12">
