@@ -1,4 +1,4 @@
-# Static Files Setup
+# Hosting Static Files
 
 Generally if you'd like to use your Django project to present a User Interface (UI) then you'll need to display Images and CSS and serve Javascript files.  These are known as [static files](https://docs.djangoproject.com/en/1.10/howto/static-files/deployment/) and to deliver them using Zappa is unlike the traditional method of hosting the static files on a Linux or Windows box.  
 

@@ -231,8 +231,9 @@ The built-in [Django security settings](https://docs.djangoproject.com/en/1.10/t
 Now edit `frankie/settings.py` and change ALLOWED_HOSTS to;
 
 ```
-ALLOWED_HOSTS = [ '127.0.0.1', '.execute-api.us-east-1.amazonaws.com', ]
+ALLOWED_HOSTS = [ '127.0.0.1', 'x6kb437rh.execute-api.us-east-1.amazonaws.com', ]
 ```
+As an aside, for best security practices, put the full domain of the API Gateway here.  Less secure would be to use just `.execute-api.us-east-1.amazonaws.com`.  
 
 Once done, we can again deploy to AWS Lambda.  But this time, since we've already pushed the initial deploy, we use the **update** action on the zappa command line.
 
@@ -248,10 +249,20 @@ After this completes, you should be able to see your Django site in action.  Not
 
 Wait, what?  A 404 page is functional?  Well yes, it is.  The Lambda function is working fine.  A whole series of AWS systems are working in concert to load your python Django code and running the view.  Because we've cut to the bare minimum Django project, there is no application ready to handle the url paths.  The only thing we see is the admin application.
 
-So from here we are ready to start working on views and providing data.  However, if you wish to host a website with static files and databases, continue onward to the subsequent walkthroughs.
+So from here we are ready to start working on views and providing data.  However, if you wish to host a website with static files and databases, continue onward to the subsequent walkthroughs:
+
+ * [Hosting Static Files](walk_static.md)
+ * [Using a Database](walk_database.md)
 
 ### Why is the URL path appended with 'dev'?
 
-Astute readers will notice that the url in the image shown above indeed has the root domain with the suffix of 'dev' which happens to be the name of the zappa environment.  
+Astute readers will notice that the url in the image shown above indeed has the root domain with the suffix of 'dev' which happens to be the name of the zappa environment.  Indeed, the url domain is based on the generated API Gateway and the path of the URL is the 'Stage Name' of the API Gateway - it matches the name of the Zappa environment you chose above.
 
-At this time, having the environment appended to the url is embedded into zappa.  However, if you place the lambda function behind a CDN such as cloudfront, this preference may be changed.
+```
+https://bnu0zcwezd.execute-api.us-east-1.amazonaws.com/dev/
+        ^^^^^^^^^^^^^^^^^^^^^^                         ^^^
+      Auto Generated API Gateway              Your Zappa Environment
+```
+
+While this url may be considered functional, most would regard it as extremely unfriendly to users. To improve this and even get HTTPS encryption see the section on [using a Custom Domain](walk_domain.md).
+
