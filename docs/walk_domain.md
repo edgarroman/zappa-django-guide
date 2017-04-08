@@ -48,8 +48,8 @@ https://aws.amazon.com/certificate-manager/faqs/
 
 # put in zappa settings
 
-        "certificate_arn": "arn:aws:acm:us-east-1:738356466015:certificate/1d066282-ce94-4ad7-a802-2fe87d32b104",
-        "domain": "vpcman.photobrain.net",
+        "certificate_arn": "arn:aws:acm:us-east-1:738356466015:certificate/1d066282-ce94-4ad7-a802-2ff87d32b104",
+        "domain": "www.contoso.com",
 
 # Run 
 
@@ -62,8 +62,7 @@ if you are a control freak, just make your own
 
 it takes some time, but now hit it
 
-https://vpcman.photobrain.net
-
+https://www.contoso.com
 
 
 
