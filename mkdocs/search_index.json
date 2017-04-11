@@ -382,28 +382,83 @@
         }, 
         {
             "location": "/walk_domain/", 
-            "text": "Using a Custom Domain\n\n\nIf you've followed the walkthroughs thus far, you've at least created a working \nDjango site using Zappa\n\nBut the URL provided by Zappa is pretty darn ugly.  Not only does it use an apparent random domain name, but the Zappa environment is used as the path.  For example:\n\n\nhttps://bnu0zcwezd.execute-api.us-east-1.amazonaws.com/dev/\n        ^^^^^^^^^^^^^^^^^^^^^^                         ^^^\n      Auto Generated API Gateway              Your Zappa Environment\n\n\n\n\nIdeally most sites would be something like:\n\n\nhttps://www.contoso.com/\n\n\n\n\nThis is entirely possible with Zappa - so how do we get there?\n\n\nNotes here:\n\n\nDomain Name Prep\n\n\nHosting elsewhere\n\n\nHosting on Route53\n\n\n\n\nCreate hosted zone\n\n\n\n\nGet SSL Cert\n\n\noutside\n\n\n\n\nimport the cert into acm\n\n\nbut you have to deal with renewals yourself\nhttps://aws.amazon.com/certificate-manager/faqs/\n\n\n\n\nACM\n\n\ndo this from the east region and it will distribute\nhttps://aws.amazon.com/certificate-manager/faqs/\n\n\n\n\nadd domain\n\n\nthe look for email\n\n\nverify and get the ARN\n\n\n\n\ngood for 13 months\nhttps://aws.amazon.com/certificate-manager/faqs/\n\n\nput in zappa settings\n\n\n    \"certificate_arn\": \"arn:aws:acm:us-east-1:738356466015:certificate/1d066282-ce94-4ad7-a802-2ff87d32b104\",\n    \"domain\": \"www.contoso.com\",\n\n\n\nRun\n\n\nzappa certify dev\n\n\n\n\nso what happens is that zappa requests that the api gateway associate the custom domain and ssl to a new, hidden cloudfront distribution.  It's hard to figure out what the settings are on this cf distro so just roll with it.\nif you are a control freak, just make your own\n\n\nit takes some time, but now hit it\n\n\nhttps://www.contoso.com\n\n\nhttp://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html", 
+            "text": "Using a Custom Domain\n\n\nIf you've followed the walkthroughs thus far, you've at least created a working \nDjango site using Zappa\n\nBut the URL provided by Zappa is pretty darn ugly.  Not only does it use an apparent random domain name, but the Zappa environment is used as the path.  For example:\n\n\nhttps://bnu0zcwezd.execute-api.us-east-1.amazonaws.com/dev/\n        ^^^^^^^^^^^^^^^^^^^^^^                         ^^^\n      Auto Generated API Gateway              Your Zappa Environment\n\n\n\n\nIdeally most sites would be something like:\n\n\nhttps://www.zappaguide.com/\n\n\n\n\nThis is entirely possible with Zappa - so how do we get there?\n\n\nLet's talk about HTTPS\n\n\nPerhaps you're wondering why we are introducting the concept of HTTPS when the topic of this walkthough is using a custom domain.  Zappa provides an automated way of creating the necessary custom domain mappings as a part of using encryption.  Thus many of the techiques described in this walkthough will ultimately end up with a custom domain along with HTTPS.  \n\n\nIn an effort to make the process straightforward, we are therefore bundling HTTPS as part of the walkthough.  Philosophical arguments for HTTPS are made [elsewhere].(https://developers.google.com/web/fundamentals/security/encrypt-in-transit/why-https)  But with free services like \"Let's Encrypt\" and AWS Certificate Manner (free for API Gateways) there is no additional cost burden to leverage HTTPS certificates.\n\n\nNote that we refer to HTTPS instead of SSL and or TLS where \nappropriate\n.\n\n\nAs a final note, if you are really opposed to encryption, or need unencrypted traffic for some reason, we will provide a method to accomplish this at the end of the walkthrough.\n\n\nOverview of the process\n\n\nThere are a number of services that are involved in this process:\n\n\n\n\nDomain Name Registrar\n - Allows you to purchase and register domain names\n\n\nDNS Providers\n - Allows you to host things online using that domain name\n\n\nCertificate Authority (CA)\n - Provides encryption certifications to encrypt traffic for the site\n\n\n\n\nCombined with Zappa, these services will all be used in this walkthrough.  Note that many companies and organizations can provide these services and some, like Amazon, can provide all three.\n\n\nUltimately, the AWS API Gateway will be associated with a new, dedicated CloudFront distribution that not only leverages the digital certificate to provide HTTPS, but also hides the Zappa environment path.  Finally, a DNS record will point to this new CF Distro to complete the experience for the end user.\n\n\nRegistering your Custom Domain\n\n\nFirst you need a registered domain.  It doesn't matter who your domain registrar is as long as you have control over the name server records to point to a DNS provider.  Of all the services, this one is the most generic and almost any Registar will do.\n\n\nLet's choose an example domain for this walkthrough:\n\nwww.zappaguide.com\n\n\n\nOptions Matrix\n\n\nSince there are so many service providers, we focus on a couple combinations that work best.  Use the chart below to select the scenario that best matches your situation and follow only one set of instructions.\n\n\n\n\n\n\n\n\nDNS Provider\n\n\nCA\n\n\nNotes\n\n\nInstructions\n\n\n\n\n\n\n\n\n\n\nRoute53\n\n\nAWS Certificate Manager\n\n\nAll AWS combo makes this ridiculous easy\n\n\nsee below\n\n\n\n\n\n\nRoute53\n\n\nLet's Encrypt\n\n\nAnother good option that Zappa has smoothed the way\n\n\nsee below\n\n\n\n\n\n\nOther DNS\n\n\nACM or Let's Encrypt\n\n\nSome minor additional steps\n\n\nsee below\n\n\n\n\n\n\nOther DNS\n\n\nOther\n\n\nYou got some work to do\n\n\nsee below\n\n\n\n\n\n\n\n\nRoute53 and ACM\n\n\nStep 1: Create a Hosted Zone in Route53\n\n\nIf your Registrar is also Route53, skip this step and move on to Step 2.  AWS did this for you when you registered the domain.\n\n\nFollow the instructions for \ncreating a hosted zone in Route53\n\n\nStep 2: Create your digital certificate in ACM\n\n\nFollow the instructions for \nrequesting a certificate in the ACM console\n\n\nBe sure to record the ARN for the newly issued certificate.\n\n\nStep 3: Edit the Zappa Settings File\n\n\nStep 4: Run Certify\n\n\nRoute53 and Let's Encrypt\n\n\nStep 1: Create a Hosted Zone in Route53\n\n\nIf your Registrar is also Route53, skip this step and move on to Step 2.  AWS did this for you when you registered the domain.\n\n\nFollow the instructions for \ncreating a hosted zone in Route53\n\n\nStep 2: Get Let's Encrypt certificate\n\n\nOther DNS and ACM or Let's Encrypt\n\n\nFollow the above steps outlined above but make the following modifications.\nZappa settings\n        route53 false\n\n\nadd a CNAME in your DNS provider\n\n\nwarning: you will be responsible for rotating an expired certificates\n\n\nOther Service Providers\n\n\nIf you are using a number of non-Amazon service providers, it is possible to still use a custom domain, but you must follow the manual steps \noutlined here\n.\n\n\n\n\nCreate hosted zone\n\n\n\n\nGet SSL Cert\n\n\noutside\n\n\n\n\nimport the cert into acm\n\n\nbut you have to deal with renewals yourself\nhttps://aws.amazon.com/certificate-manager/faqs/\n\n\n\n\nACM\n\n\ndo this from the east region and it will distribute\nhttps://aws.amazon.com/certificate-manager/faqs/\n\n\n\n\nadd domain\n\n\nthe look for email\n\n\nverify and get the ARN\n\n\n\n\ngood for 13 months\nhttps://aws.amazon.com/certificate-manager/faqs/\n\n\nput in zappa settings\n\n\n    \"certificate_arn\": \"arn:aws:acm:us-east-1:738356466015:certificate/1d066282-ce94-4ad7-a802-2ff87d32b104\",\n    \"domain\": \"www.contoso.com\",\n\n\n\nRun\n\n\nzappa certify dev\n\n\n\n\nso what happens is that zappa requests that the api gateway associate the custom domain and ssl to a new, hidden cloudfront distribution.  It's hard to figure out what the settings are on this cf distro so just roll with it.\nif you are a control freak, just make your own\n\n\nit takes some time, but now hit it\n\n\nhttps://www.contoso.com\n\n\nhttp://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html", 
             "title": "Custom Domains"
         }, 
         {
             "location": "/walk_domain/#using-a-custom-domain", 
-            "text": "If you've followed the walkthroughs thus far, you've at least created a working  Django site using Zappa \nBut the URL provided by Zappa is pretty darn ugly.  Not only does it use an apparent random domain name, but the Zappa environment is used as the path.  For example:  https://bnu0zcwezd.execute-api.us-east-1.amazonaws.com/dev/\n        ^^^^^^^^^^^^^^^^^^^^^^                         ^^^\n      Auto Generated API Gateway              Your Zappa Environment  Ideally most sites would be something like:  https://www.contoso.com/  This is entirely possible with Zappa - so how do we get there?  Notes here:", 
+            "text": "If you've followed the walkthroughs thus far, you've at least created a working  Django site using Zappa \nBut the URL provided by Zappa is pretty darn ugly.  Not only does it use an apparent random domain name, but the Zappa environment is used as the path.  For example:  https://bnu0zcwezd.execute-api.us-east-1.amazonaws.com/dev/\n        ^^^^^^^^^^^^^^^^^^^^^^                         ^^^\n      Auto Generated API Gateway              Your Zappa Environment  Ideally most sites would be something like:  https://www.zappaguide.com/  This is entirely possible with Zappa - so how do we get there?", 
             "title": "Using a Custom Domain"
         }, 
         {
-            "location": "/walk_domain/#domain-name-prep", 
-            "text": "", 
-            "title": "Domain Name Prep"
+            "location": "/walk_domain/#lets-talk-about-https", 
+            "text": "Perhaps you're wondering why we are introducting the concept of HTTPS when the topic of this walkthough is using a custom domain.  Zappa provides an automated way of creating the necessary custom domain mappings as a part of using encryption.  Thus many of the techiques described in this walkthough will ultimately end up with a custom domain along with HTTPS.    In an effort to make the process straightforward, we are therefore bundling HTTPS as part of the walkthough.  Philosophical arguments for HTTPS are made [elsewhere].(https://developers.google.com/web/fundamentals/security/encrypt-in-transit/why-https)  But with free services like \"Let's Encrypt\" and AWS Certificate Manner (free for API Gateways) there is no additional cost burden to leverage HTTPS certificates.  Note that we refer to HTTPS instead of SSL and or TLS where  appropriate .  As a final note, if you are really opposed to encryption, or need unencrypted traffic for some reason, we will provide a method to accomplish this at the end of the walkthrough.", 
+            "title": "Let's talk about HTTPS"
         }, 
         {
-            "location": "/walk_domain/#hosting-elsewhere", 
-            "text": "", 
-            "title": "Hosting elsewhere"
+            "location": "/walk_domain/#overview-of-the-process", 
+            "text": "There are a number of services that are involved in this process:   Domain Name Registrar  - Allows you to purchase and register domain names  DNS Providers  - Allows you to host things online using that domain name  Certificate Authority (CA)  - Provides encryption certifications to encrypt traffic for the site   Combined with Zappa, these services will all be used in this walkthrough.  Note that many companies and organizations can provide these services and some, like Amazon, can provide all three.  Ultimately, the AWS API Gateway will be associated with a new, dedicated CloudFront distribution that not only leverages the digital certificate to provide HTTPS, but also hides the Zappa environment path.  Finally, a DNS record will point to this new CF Distro to complete the experience for the end user.", 
+            "title": "Overview of the process"
         }, 
         {
-            "location": "/walk_domain/#hosting-on-route53", 
-            "text": "Create hosted zone", 
-            "title": "Hosting on Route53"
+            "location": "/walk_domain/#registering-your-custom-domain", 
+            "text": "First you need a registered domain.  It doesn't matter who your domain registrar is as long as you have control over the name server records to point to a DNS provider.  Of all the services, this one is the most generic and almost any Registar will do.  Let's choose an example domain for this walkthrough: www.zappaguide.com", 
+            "title": "Registering your Custom Domain"
+        }, 
+        {
+            "location": "/walk_domain/#options-matrix", 
+            "text": "Since there are so many service providers, we focus on a couple combinations that work best.  Use the chart below to select the scenario that best matches your situation and follow only one set of instructions.     DNS Provider  CA  Notes  Instructions      Route53  AWS Certificate Manager  All AWS combo makes this ridiculous easy  see below    Route53  Let's Encrypt  Another good option that Zappa has smoothed the way  see below    Other DNS  ACM or Let's Encrypt  Some minor additional steps  see below    Other DNS  Other  You got some work to do  see below", 
+            "title": "Options Matrix"
+        }, 
+        {
+            "location": "/walk_domain/#route53-and-acm", 
+            "text": "", 
+            "title": "Route53 and ACM"
+        }, 
+        {
+            "location": "/walk_domain/#step-1-create-a-hosted-zone-in-route53", 
+            "text": "If your Registrar is also Route53, skip this step and move on to Step 2.  AWS did this for you when you registered the domain.  Follow the instructions for  creating a hosted zone in Route53", 
+            "title": "Step 1: Create a Hosted Zone in Route53"
+        }, 
+        {
+            "location": "/walk_domain/#step-2-create-your-digital-certificate-in-acm", 
+            "text": "Follow the instructions for  requesting a certificate in the ACM console  Be sure to record the ARN for the newly issued certificate.", 
+            "title": "Step 2: Create your digital certificate in ACM"
+        }, 
+        {
+            "location": "/walk_domain/#step-3-edit-the-zappa-settings-file", 
+            "text": "", 
+            "title": "Step 3: Edit the Zappa Settings File"
+        }, 
+        {
+            "location": "/walk_domain/#step-4-run-certify", 
+            "text": "", 
+            "title": "Step 4: Run Certify"
+        }, 
+        {
+            "location": "/walk_domain/#route53-and-lets-encrypt", 
+            "text": "", 
+            "title": "Route53 and Let's Encrypt"
+        }, 
+        {
+            "location": "/walk_domain/#step-1-create-a-hosted-zone-in-route53_1", 
+            "text": "If your Registrar is also Route53, skip this step and move on to Step 2.  AWS did this for you when you registered the domain.  Follow the instructions for  creating a hosted zone in Route53", 
+            "title": "Step 1: Create a Hosted Zone in Route53"
+        }, 
+        {
+            "location": "/walk_domain/#step-2-get-lets-encrypt-certificate", 
+            "text": "", 
+            "title": "Step 2: Get Let's Encrypt certificate"
+        }, 
+        {
+            "location": "/walk_domain/#other-dns-and-acm-or-lets-encrypt", 
+            "text": "Follow the above steps outlined above but make the following modifications.\nZappa settings\n        route53 false  add a CNAME in your DNS provider  warning: you will be responsible for rotating an expired certificates", 
+            "title": "Other DNS and ACM or Let's Encrypt"
+        }, 
+        {
+            "location": "/walk_domain/#other-service-providers", 
+            "text": "If you are using a number of non-Amazon service providers, it is possible to still use a custom domain, but you must follow the manual steps  outlined here .   Create hosted zone", 
+            "title": "Other Service Providers"
         }, 
         {
             "location": "/walk_domain/#get-ssl-cert", 
@@ -564,6 +619,36 @@
             "location": "/aws_database/#creating-an-rds-database", 
             "text": "instructions on how to create a PostGreSQL database here", 
             "title": "Creating an RDS Database"
+        }, 
+        {
+            "location": "/aws_route53/", 
+            "text": "Working with Route53\n\n\nThis page lists various activites that may be necessary to perform when leveraging Zappa\n\n\nCreate a Hosted Zone in Route53\n\n\n\n\nNavigate to the \nRoute53 console\n and click \nCreate a Hosted Zone\n\n\nIn the Domain Name field, put only the \nbare\n or \napex\n form of the domain name.  This should be done regardless of the subdomain you wish to host.  For our example we would enter:\n \nDomain Name: zappaguide.com\nType: Public Hosted zone\n\n\n\n\n\nThe console should show you a number of DNS records that you must provide to your Registrar\n \n\n Once you enter these values into your Registar it may take some time for the values to propagate depending on the prior settings of the Registrar.\n\n\n\n\n\n\nVerify your DNS settings have propagated\n Using some \nonline tools\n confirm that for this domain, the DNS Nameservers are correct.  If they are not updated, it may take some more time for the information to be propagated.\n\n\nAnother useful DNS query tool is \nhttps://dns.google.com", 
+            "title": "Working with Route53"
+        }, 
+        {
+            "location": "/aws_route53/#working-with-route53", 
+            "text": "This page lists various activites that may be necessary to perform when leveraging Zappa", 
+            "title": "Working with Route53"
+        }, 
+        {
+            "location": "/aws_route53/#create-a-hosted-zone-in-route53", 
+            "text": "Navigate to the  Route53 console  and click  Create a Hosted Zone  In the Domain Name field, put only the  bare  or  apex  form of the domain name.  This should be done regardless of the subdomain you wish to host.  For our example we would enter:\n  Domain Name: zappaguide.com\nType: Public Hosted zone   The console should show you a number of DNS records that you must provide to your Registrar\n  \n Once you enter these values into your Registar it may take some time for the values to propagate depending on the prior settings of the Registrar.    Verify your DNS settings have propagated\n Using some  online tools  confirm that for this domain, the DNS Nameservers are correct.  If they are not updated, it may take some more time for the information to be propagated.  Another useful DNS query tool is  https://dns.google.com", 
+            "title": "Create a Hosted Zone in Route53"
+        }, 
+        {
+            "location": "/aws_acm/", 
+            "text": "AWS Credential Manager (ACM)\n\n\nThis page lists various activites that may be necessary to perform when leveraging Zappa\n\n\nRequest a Certificate\n\n\nACM provides digital certificates for free but the certificates can only be used with \nElasic Load Balancing and Amazon CloudFront\n.\n\n\n\n\nNavigate to the \nACM Console\n and click \nRequest a Certificate\n\n\n\n\nIn 'Add a Domain name' enter \n \n\n Note that we entered both the 'www' subdomain and the \napex\n of the domain.  This allows users to leverage either url and have it covered until a single certificate.\n\n\nCarefully consider which domains shall be covered by this certificate because once it is validated, you cannot modify the list of domains; any changes will require a new certificate to be issued.\n\n\n\n\n\n\nClick on Review and Request\n\n\nYou should see a message similar to the image below:\n\n\n\nNotice that ACM's perferred method of domain ownership validate is to send an email to the registered contact address in the WHOIS for the domain.  In addtion, a few select email addresses are also included.  Full \nvalidation rules\n are posted in ACM Documentation.\n\n\n\n\n\n\nCheck your email for validation links\n\n\nYou should receive at least one email for each domain you entered.  You may actually get multiple email addresses because sometimes registered emails are duplicated for Techincal or Administrative contacts in the WHOIS information.  The emails should be similar to:\n\n\n\n\n\n\n\nClick on all the validation links\n\n\nYou must click on the validation link for every domain name included in step 2 above\n.  The digital certificate will not be issued until all domains have been verified.\n\n\n\n\n\n\n\n\n\nRecord the ARN for the digital certificate\n\n\nYou will use the ARN for other purposes.  The ARN is displayed on the verification page but also in the details page for the certificate in the ACM console.", 
+            "title": "AWS Credential Manager (ACM)"
+        }, 
+        {
+            "location": "/aws_acm/#aws-credential-manager-acm", 
+            "text": "This page lists various activites that may be necessary to perform when leveraging Zappa", 
+            "title": "AWS Credential Manager (ACM)"
+        }, 
+        {
+            "location": "/aws_acm/#request-a-certificate", 
+            "text": "ACM provides digital certificates for free but the certificates can only be used with  Elasic Load Balancing and Amazon CloudFront .   Navigate to the  ACM Console  and click  Request a Certificate   In 'Add a Domain name' enter \n  \n Note that we entered both the 'www' subdomain and the  apex  of the domain.  This allows users to leverage either url and have it covered until a single certificate.  Carefully consider which domains shall be covered by this certificate because once it is validated, you cannot modify the list of domains; any changes will require a new certificate to be issued.    Click on Review and Request  You should see a message similar to the image below:  Notice that ACM's perferred method of domain ownership validate is to send an email to the registered contact address in the WHOIS for the domain.  In addtion, a few select email addresses are also included.  Full  validation rules  are posted in ACM Documentation.    Check your email for validation links  You should receive at least one email for each domain you entered.  You may actually get multiple email addresses because sometimes registered emails are duplicated for Techincal or Administrative contacts in the WHOIS information.  The emails should be similar to:    Click on all the validation links  You must click on the validation link for every domain name included in step 2 above .  The digital certificate will not be issued until all domains have been verified.     Record the ARN for the digital certificate  You will use the ARN for other purposes.  The ARN is displayed on the verification page but also in the details page for the certificate in the ACM console.", 
+            "title": "Request a Certificate"
         }, 
         {
             "location": "/additional/", 

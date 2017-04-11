@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Creating an RDS Database - Guide to using Django with Zappa</title>
+        <title>Working with Route53 - Guide to using Django with Zappa</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -97,12 +97,12 @@
     <a href="../aws_network/">Adventures in Networking</a>
 </li>
                             
-<li class="active">
-    <a href="./">Creating an RDS Database</a>
+<li >
+    <a href="../aws_database/">Creating an RDS Database</a>
 </li>
                             
-<li >
-    <a href="../aws_route53/">Working with Route53</a>
+<li class="active">
+    <a href="./">Working with Route53</a>
 </li>
                             
 <li >
@@ -122,12 +122,12 @@
                     </a>
                 </li>
                     <li >
-                        <a rel="next" href="../aws_network/">
+                        <a rel="next" href="../aws_database/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../aws_route53/">
+                        <a rel="prev" href="../aws_acm/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -139,13 +139,32 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#creating-an-rds-database">Creating an RDS Database</a></li>
+        <li class="main active"><a href="#working-with-route53">Working with Route53</a></li>
+            <li><a href="#create-a-hosted-zone-in-route53">Create a Hosted Zone in Route53</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="creating-an-rds-database">Creating an RDS Database</h1>
-<p>instructions on how to create a PostGreSQL database here</p></div>
+<h1 id="working-with-route53">Working with Route53</h1>
+<p>This page lists various activites that may be necessary to perform when leveraging Zappa</p>
+<h2 id="create-a-hosted-zone-in-route53">Create a Hosted Zone in Route53</h2>
+<ol>
+<li>Navigate to the <a href="https://console.aws.amazon.com/route53/">Route53 console</a> and click <code>Create a Hosted Zone</code></li>
+<li>In the Domain Name field, put only the <em>bare</em> or <em>apex</em> form of the domain name.  This should be done regardless of the subdomain you wish to host.  For our example we would enter:
+ <pre><code class="sh">Domain Name: zappaguide.com
+Type: Public Hosted zone
+</code></pre></li>
+<li>
+<p>The console should show you a number of DNS records that you must provide to your Registrar
+ <img alt="Setting up Hosted Zone" src="../images/domain_Route53.png" />
+ Once you enter these values into your Registar it may take some time for the values to propagate depending on the prior settings of the Registrar.</p>
+</li>
+<li>
+<p>Verify your DNS settings have propagated
+ Using some <a href="https://www.ultratools.com/tools/dnsLookup">online tools</a> confirm that for this domain, the DNS Nameservers are correct.  If they are not updated, it may take some more time for the information to be propagated.</p>
+<p>Another useful DNS query tool is <a href="https://dns.google.com">https://dns.google.com</a></p>
+</li>
+</ol></div>
         </div>
 
         <footer class="col-md-12">

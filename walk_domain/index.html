@@ -100,6 +100,14 @@
 <li >
     <a href="../aws_database/">Creating an RDS Database</a>
 </li>
+                            
+<li >
+    <a href="../aws_route53/">Working with Route53</a>
+</li>
+                            
+<li >
+    <a href="../aws_acm/">AWS Credential Manager (ACM)</a>
+</li>
                         </ul>
                     </li>
                     <li >
@@ -132,9 +140,14 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#using-a-custom-domain">Using a Custom Domain</a></li>
-        <li class="main "><a href="#domain-name-prep">Domain Name Prep</a></li>
-            <li><a href="#hosting-elsewhere">Hosting elsewhere</a></li>
-            <li><a href="#hosting-on-route53">Hosting on Route53</a></li>
+            <li><a href="#lets-talk-about-https">Let's talk about HTTPS</a></li>
+            <li><a href="#overview-of-the-process">Overview of the process</a></li>
+            <li><a href="#registering-your-custom-domain">Registering your Custom Domain</a></li>
+        <li class="main "><a href="#options-matrix">Options Matrix</a></li>
+            <li><a href="#route53-and-acm">Route53 and ACM</a></li>
+            <li><a href="#route53-and-lets-encrypt">Route53 and Let's Encrypt</a></li>
+            <li><a href="#other-dns-and-acm-or-lets-encrypt">Other DNS and ACM or Let's Encrypt</a></li>
+            <li><a href="#other-service-providers">Other Service Providers</a></li>
         <li class="main "><a href="#get-ssl-cert">Get SSL Cert</a></li>
             <li><a href="#outside">outside</a></li>
             <li><a href="#acm">ACM</a></li>
@@ -153,14 +166,89 @@ But the URL provided by Zappa is pretty darn ugly.  Not only does it use an appa
 </code></pre>
 
 <p>Ideally most sites would be something like:</p>
-<pre><code class="sh">https://www.contoso.com/
+<pre><code class="sh">https://www.zappaguide.com/
 </code></pre>
 
 <p>This is entirely possible with Zappa - so how do we get there?</p>
-<p>Notes here:</p>
-<h1 id="domain-name-prep">Domain Name Prep</h1>
-<h2 id="hosting-elsewhere">Hosting elsewhere</h2>
-<h2 id="hosting-on-route53">Hosting on Route53</h2>
+<h2 id="lets-talk-about-https">Let's talk about HTTPS</h2>
+<p>Perhaps you're wondering why we are introducting the concept of HTTPS when the topic of this walkthough is using a custom domain.  Zappa provides an automated way of creating the necessary custom domain mappings as a part of using encryption.  Thus many of the techiques described in this walkthough will ultimately end up with a custom domain along with HTTPS.  </p>
+<p>In an effort to make the process straightforward, we are therefore bundling HTTPS as part of the walkthough.  Philosophical arguments for HTTPS are made [elsewhere].(https://developers.google.com/web/fundamentals/security/encrypt-in-transit/why-https)  But with free services like "Let's Encrypt" and AWS Certificate Manner (free for API Gateways) there is no additional cost burden to leverage HTTPS certificates.</p>
+<p>Note that we refer to HTTPS instead of SSL and or TLS where <a href="https://security.stackexchange.com/a/5127">appropriate</a>.</p>
+<p>As a final note, if you are really opposed to encryption, or need unencrypted traffic for some reason, we will provide a method to accomplish this at the end of the walkthrough.</p>
+<h2 id="overview-of-the-process">Overview of the process</h2>
+<p>There are a number of services that are involved in this process:</p>
+<ul>
+<li><strong>Domain Name Registrar</strong> - Allows you to purchase and register domain names</li>
+<li><strong>DNS Providers</strong> - Allows you to host things online using that domain name</li>
+<li><strong>Certificate Authority (CA)</strong> - Provides encryption certifications to encrypt traffic for the site</li>
+</ul>
+<p>Combined with Zappa, these services will all be used in this walkthrough.  Note that many companies and organizations can provide these services and some, like Amazon, can provide all three.</p>
+<p>Ultimately, the AWS API Gateway will be associated with a new, dedicated CloudFront distribution that not only leverages the digital certificate to provide HTTPS, but also hides the Zappa environment path.  Finally, a DNS record will point to this new CF Distro to complete the experience for the end user.</p>
+<h2 id="registering-your-custom-domain">Registering your Custom Domain</h2>
+<p>First you need a registered domain.  It doesn't matter who your domain registrar is as long as you have control over the name server records to point to a DNS provider.  Of all the services, this one is the most generic and almost any Registar will do.</p>
+<p>Let's choose an example domain for this walkthrough:
+<pre><code>www.zappaguide.com
+</code></pre></p>
+<h1 id="options-matrix">Options Matrix</h1>
+<p>Since there are so many service providers, we focus on a couple combinations that work best.  Use the chart below to select the scenario that best matches your situation and follow only one set of instructions.</p>
+<table>
+<thead>
+<tr>
+<th>DNS Provider</th>
+<th>CA</th>
+<th>Notes</th>
+<th>Instructions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Route53</td>
+<td>AWS Certificate Manager</td>
+<td>All AWS combo makes this ridiculous easy</td>
+<td><a href="#route53-and-acm">see below</a></td>
+</tr>
+<tr>
+<td>Route53</td>
+<td>Let's Encrypt</td>
+<td>Another good option that Zappa has smoothed the way</td>
+<td>see below</td>
+</tr>
+<tr>
+<td>Other DNS</td>
+<td>ACM or Let's Encrypt</td>
+<td>Some minor additional steps</td>
+<td>see below</td>
+</tr>
+<tr>
+<td>Other DNS</td>
+<td>Other</td>
+<td>You got some work to do</td>
+<td>see below</td>
+</tr>
+</tbody>
+</table>
+<h2 id="route53-and-acm">Route53 and ACM</h2>
+<h3 id="step-1-create-a-hosted-zone-in-route53">Step 1: Create a Hosted Zone in Route53</h3>
+<p>If your Registrar is also Route53, skip this step and move on to Step 2.  AWS did this for you when you registered the domain.</p>
+<p>Follow the instructions for <a href="../aws_route53/#create-a-hosted-zone-in-route53">creating a hosted zone in Route53</a></p>
+<h3 id="step-2-create-your-digital-certificate-in-acm">Step 2: Create your digital certificate in ACM</h3>
+<p>Follow the instructions for <a href="../aws_acm/##request-a-certificate">requesting a certificate in the ACM console</a></p>
+<p>Be sure to record the ARN for the newly issued certificate.</p>
+<h3 id="step-3-edit-the-zappa-settings-file">Step 3: Edit the Zappa Settings File</h3>
+<h3 id="step-4-run-certify">Step 4: Run Certify</h3>
+<h2 id="route53-and-lets-encrypt">Route53 and Let's Encrypt</h2>
+<h3 id="step-1-create-a-hosted-zone-in-route53_1">Step 1: Create a Hosted Zone in Route53</h3>
+<p>If your Registrar is also Route53, skip this step and move on to Step 2.  AWS did this for you when you registered the domain.</p>
+<p>Follow the instructions for <a href="../aws_route53/#create-a-hosted-zone-in-route53">creating a hosted zone in Route53</a></p>
+<h3 id="step-2-get-lets-encrypt-certificate">Step 2: Get Let's Encrypt certificate</h3>
+<h2 id="other-dns-and-acm-or-lets-encrypt">Other DNS and ACM or Let's Encrypt</h2>
+<p>Follow the above steps outlined above but make the following modifications.
+Zappa settings
+        route53 false</p>
+<p>add a CNAME in your DNS provider</p>
+<p>warning: you will be responsible for rotating an expired certificates</p>
+<h2 id="other-service-providers">Other Service Providers</h2>
+<p>If you are using a number of non-Amazon service providers, it is possible to still use a custom domain, but you must follow the manual steps <a href="http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html">outlined here</a>.</p>
 <ul>
 <li>Create hosted zone</li>
 </ul>
