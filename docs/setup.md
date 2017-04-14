@@ -27,7 +27,7 @@ In addition, zappa *requires* a virtual environment in which to function.  So al
 
 While the Python community is rapidly moving to python 3, currently [AWS lamdba supports only python 2.7](http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html)
 
-# Approach #1 - Local Machine
+## Approach #1 - Local Machine
 
 You can easily set up your working environment on your local machine. For simple projects, this is very easy to manage and maintain.  All you need is Python 2.7, pip, and virtualenv installed.  This works for Windows, MacOS, and Linux machines.  
 
@@ -42,19 +42,19 @@ pip install django zappa
 ```
 And you are done.  
 
-## Cautions
+### Cautions
 
 While this approach is easy to get up and running, the challenge comes along when you require more advanced python packages.  
 
 For example, once you start connecting to databases, you will need to compile packages such as 'psycopg2' for PostGresSQL.  You should consider the implications of installing needed libraries on your local machine.
 
-# Approach #2 - Docker with zappa
+## Approach #2 - Docker with zappa
 
 Sometimes leveraging Docker to create an isolated working environment is a good idea.  It takes more work to setup initially, but once you have the foundations, it is quite easy to create multiple working environments and it is easier to share those same environments with other folks on your team.  
 
 Most of this information is taken from the [current zappa docker project](https://github.com/danielwhatmuff/zappa).  Be sure to check that repo for current updates.
 
-## Inital Setup 
+### Inital Setup 
 
 These steps need to be performed once
 
@@ -82,11 +82,11 @@ alias zappashell='docker run -ti -e AWS_PROFILE=zappa -v $(pwd):/var/task -v ~/.
 alias zappashell >> ~/.bash_profile
 ```
 
-## Usage on a Project
+### Usage on a Project
 
 Once the steps above are complete, then it is very easy to start a working environment.
 
-### First time Project setup
+#### First time Project setup
 
 You will need to install any python dependencies and/or system libraries.  To fire up the docker container use:
 
@@ -113,7 +113,7 @@ Finally, I recommend upgrading to the latest zappa project since it changes freq
 
 At this point, you are ready to start using zappa.  Once you are finished, you can simply exit the container.
 
-### Each time using the Project
+#### Each time using the Project
 
 Subsequent times you'd like to use the project, merely fire up the container:
 ```sh
@@ -123,13 +123,13 @@ zappa> source ve/bin/activate
 (ve)zappa> 
 ```
 
-## Changes to the Docker Image
+### Changes to the Docker Image
 
 Once at the zappashell prompt you can install any needed libraries.  But if you depend on libraries that are installed in the system (essentially anything out of the current directory and virtual environment), they will be lost when the container exits.
 
 The solution is to make your own Docker Image.  Full directions of creating a Docker Image is beyond the scope of this document, but essentially there are a few steps
 
-### Create a Dockerfile
+#### Create a Dockerfile
 
 In the local directory create a Dockerfile (note that only the 'D' is capitalized)
 
@@ -141,7 +141,7 @@ RUN yum -y install postgresql-devel
 CMD ["zappa"]
 ```
 
-### Build the Docker Image
+#### Build the Docker Image
 
 In the same directory as the Dockerfile
 
@@ -149,7 +149,7 @@ In the same directory as the Dockerfile
 docker build -t myzappa .
 ```
 
-### Update your zappashell alias
+#### Update your zappashell alias
 
 To make sure it points to your new image.  Essentially replace `danielwhatmuff/zappa` with `myzappa`.  Example:
 ```sh

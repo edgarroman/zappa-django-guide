@@ -3,10 +3,10 @@
 If you've followed the walkthroughs thus far, you've at least created a working [Django site using Zappa](walk_core.md)
 But the URL provided by Zappa is pretty darn ugly.  Not only does it use an apparent random domain name, but the Zappa environment is used as the path.  For example:
 
-```sh
+```
 https://bnu0zcwezd.execute-api.us-east-1.amazonaws.com/dev/
         ^^^^^^^^^^^^^^^^^^^^^^                         ^^^
-      Auto Generated API Gateway              Your Zappa Environment
+      Auto Generated API Gateway              Your Zappa Environment 
 ```
 
 Ideally most sites would be something like:
@@ -74,6 +74,7 @@ Follow the instructions for [requesting a certificate in the ACM console](aws_ac
 Be sure to record the ARN for the newly issued certificate.
 
 ### Step 3: Edit the Zappa Settings File
+
 
 ### Step 4: Run Certify
 

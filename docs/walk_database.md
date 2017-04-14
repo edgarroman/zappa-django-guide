@@ -4,8 +4,8 @@ This walkthough documents the steps necessary to connect your application to a h
 
 ## Prerequisites
 
-This walkthough requires the (Core Django Setup)[walk_core.md] to be completed.  Also, it is important 
-to have your network setup properly so check out (Adventures in Networking)[aws_network.md].  
+This walkthough requires the [Core Django Setup](walk_core.md) to be completed.  Also, it is important 
+to have your network setup properly so check out [Adventures in Networking](aws_network.md).  
 
 We will assume you have chosen the VPC pattern: "VPC with a Public subnet and Private subnet"
 But basically you will need the private subnet or subnets which can access the database.

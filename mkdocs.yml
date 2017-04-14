@@ -1,4 +1,9 @@
 site_name: Guide to using Django with Zappa
+repo_name: 'edgarroman/zappa-django-guide'
+repo_url: https://github.com/edgarroman/zappa-django-guide
+site_description: A full featured walkthough of using Django on Zappa (powered by AWS Lambda in serverless environment)
+copyright: Copyright &copy; 2016 - 2017 <a href="https://github.com/edgarroman">Edgar Roman</a>
+
 pages:
   - Home: 'index.md'
   - Walkthroughs:
@@ -7,9 +12,9 @@ pages:
     - 'Hosting Static Files' : 'walk_static.md'
     - 'Using a Database' : 'walk_database.md'
     - 'Custom Domains' : 'walk_domain.md'
-    - 'Wrangling Media Files' : 'walk_media.md'
-    - 'Tasks and Events' : 'walk_scheduling.md'
-    - 'Debugging' : 'walk_debug.md'
+#    - 'Wrangling Media Files' : 'walk_media.md'
+#    - 'Tasks and Events' : 'walk_scheduling.md'
+#    - 'Debugging' : 'walk_debug.md'
   - AWS Setup:
     - 'Managing Credentials' : 'aws_credentials.md'
     - 'Adventures in Networking' : 'aws_network.md'
@@ -17,6 +22,20 @@ pages:
     - 'Working with Route53' : 'aws_route53.md'
     - 'AWS Credential Manager (ACM)' : 'aws_acm.md'
   - Additional: 'additional.md'
+theme: 'material'
+extra:
+  palette:
+    primary: 'deep purple'
+  feature:
+      tabs: true
 markdown_extensions:
+  - codehilite
   - pymdownx.superfences
-# - pymdownx.github
+  - admonition
+  - toc(permalink=true)
+social:
+    - type: github
+      link: https://github.com/edgarroman
+google_analytics:
+  - 'UA-97437653-1'
+  - 'auto'
