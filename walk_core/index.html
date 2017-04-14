@@ -1,159 +1,675 @@
+
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        
-        
-        <link rel="shortcut icon" href="../img/favicon.ico">
+<html class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A full featured walkthough of using Django on Zappa (powered by AWS Lambda in serverless environment)">
+      
+      
+      
+      
+        <link rel="shortcut icon" href="../assets/images/favicon.png">
+      
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.5.4">
+    
+    
+      
         <title>Core Django Setup - Guide to using Django with Zappa</title>
-        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
-        <link href="../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="../css/highlight.css">
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
-	
-	<script src="../js/jquery-1.10.2.min.js"></script>
-        <script src="../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../js/highlight.pack.js"></script> 
-    </head>
-
-    <body>
-
-        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-
-        <!-- Collapsed navigation -->
-        <div class="navbar-header">
-            <!-- Expander button -->
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="..">Guide to using Django with Zappa</a>
+      
+    
+    
+      <script src="../assets/javascripts/modernizr-56ade86843.js"></script>
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application-b1a1975878.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-f78e5cb881.palette.css">
+      
+    
+    
+      
+        
+        
+        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+  
+  
+  
+    <body data-md-color-primary="deep-purple" data-md-color-accent="">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <a href=".." title="Guide to using Django with Zappa" class="md-icon md-icon--home md-header-nav__button">
+          </a>
+        
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
+          
+            
+              
+                <span class="md-header-nav__parent">
+                  Walkthroughs
+                </span>
+              
+            
+            Core Django Setup
+          
+        </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+          
+<div class="md-search" data-md-component="search">
+  <div class="md-search__overlay"></div>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
         </div>
-
-        <!-- Expanded navigation -->
-        <div class="navbar-collapse collapse">
-                <!-- Main navigation -->
-                <ul class="nav navbar-nav">
-                    <li >
-                        <a href="..">Home</a>
-                    </li>
-                    <li class="dropdown active">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Walkthroughs <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            
-<li >
-    <a href="../setup/">Setup your Environment</a>
-</li>
-                            
-<li class="active">
-    <a href="./">Core Django Setup</a>
-</li>
-                            
-<li >
-    <a href="../walk_static/">Hosting Static Files</a>
-</li>
-                            
-<li >
-    <a href="../walk_database/">Using a Database</a>
-</li>
-                            
-<li >
-    <a href="../walk_domain/">Custom Domains</a>
-</li>
-                            
-<li >
-    <a href="../walk_media/">Wrangling Media Files</a>
-</li>
-                            
-<li >
-    <a href="../walk_scheduling/">Tasks and Events</a>
-</li>
-                            
-<li >
-    <a href="../walk_debug/">Debugging</a>
-</li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">AWS Setup <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            
-<li >
-    <a href="../aws_credentials/">Managing Credentials</a>
-</li>
-                            
-<li >
-    <a href="../aws_network/">Adventures in Networking</a>
-</li>
-                            
-<li >
-    <a href="../aws_database/">Creating an RDS Database</a>
-</li>
-                            
-<li >
-    <a href="../aws_route53/">Working with Route53</a>
-</li>
-                            
-<li >
-    <a href="../aws_acm/">AWS Credential Manager (ACM)</a>
-</li>
-                        </ul>
-                    </li>
-                    <li >
-                        <a href="../additional/">Additional</a>
-                    </li>
-                </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                        <i class="fa fa-search"></i> Search
-                    </a>
-                </li>
-                    <li >
-                        <a rel="next" href="../setup/">
-                            <i class="fa fa-arrow-left"></i> Previous
-                        </a>
-                    </li>
-                    <li >
-                        <a rel="prev" href="../walk_static/">
-                            Next <i class="fa fa-arrow-right"></i>
-                        </a>
-                    </li>
-            </ul>
-        </div>
+      </div>
     </div>
+  </div>
 </div>
+        
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <div class="md-header-nav__source">
+          
+            
 
-        <div class="container">
-                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#core-django-setup">Core Django Setup</a></li>
-            <li><a href="#expectations-and-goals">Expectations and Goals</a></li>
-            <li><a href="#setup-aws-account-credentials">Setup AWS Account Credentials</a></li>
-            <li><a href="#create-local-environment">Create local environment</a></li>
-            <li><a href="#create-very-basic-django-project">Create very basic Django project</a></li>
-            <li><a href="#setup-zappa">Setup Zappa</a></li>
-            <li><a href="#deploy-your-project-using-zappa">Deploy your project using Zappa</a></li>
-            <li><a href="#how-is-this-functional">How is this functional?</a></li>
+
+  
+
+
+  <a href="https://github.com/edgarroman/zappa-django-guide" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      edgarroman/zappa-django-guide
+    </div>
+  </a>
+
+          
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href=".." title="Home" class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../setup/" title="Walkthroughs" class="md-tabs__link md-tabs__link--active">
+          Walkthroughs
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../aws_credentials/" title="AWS Setup" class="md-tabs__link">
+          AWS Setup
+        </a>
+      
+    </li>
+  
+
+      
+        
+      
     </ul>
-</div></div>
-                <div class="col-md-9" role="main">
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    
+      <i class="md-icon md-icon--home md-nav__button"></i>
+    
+    Guide to using Django with Zappa
+  </label>
+  
+    <div class="md-nav__source">
+      
 
-<h1 id="core-django-setup">Core Django Setup</h1>
+
+  
+
+
+  <a href="https://github.com/edgarroman/zappa-django-guide" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      edgarroman/zappa-django-guide
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Walkthroughs
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Walkthroughs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../setup/" title="Setup your Environment" class="md-nav__link">
+      Setup your Environment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Core Django Setup
+      </label>
+    
+    <a href="./" title="Core Django Setup" class="md-nav__link md-nav__link--active">
+      Core Django Setup
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#expectations-and-goals" title="Expectations and Goals" class="md-nav__link">
+    Expectations and Goals
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-aws-account-credentials" title="Setup AWS Account Credentials" class="md-nav__link">
+    Setup AWS Account Credentials
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-local-environment" title="Create local environment" class="md-nav__link">
+    Create local environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-very-basic-django-project" title="Create very basic Django project" class="md-nav__link">
+    Create very basic Django project
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-the-basic-django-project" title="Testing the basic Django project" class="md-nav__link">
+    Testing the basic Django project
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-zappa" title="Setup Zappa" class="md-nav__link">
+    Setup Zappa
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-the-zappa-setup" title="Testing the Zappa Setup" class="md-nav__link">
+    Testing the Zappa Setup
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy-your-project-using-zappa" title="Deploy your project using Zappa" class="md-nav__link">
+    Deploy your project using Zappa
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-is-this-functional" title="How is this functional?" class="md-nav__link">
+    How is this functional?
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-is-the-url-path-appended-with-dev" title="Why is the URL path appended with 'dev'?" class="md-nav__link">
+    Why is the URL path appended with 'dev'?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../walk_static/" title="Hosting Static Files" class="md-nav__link">
+      Hosting Static Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../walk_database/" title="Using a Database" class="md-nav__link">
+      Using a Database
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../walk_domain/" title="Custom Domains" class="md-nav__link">
+      Custom Domains
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      AWS Setup
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        AWS Setup
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../aws_credentials/" title="Managing Credentials" class="md-nav__link">
+      Managing Credentials
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../aws_network/" title="Adventures in Networking" class="md-nav__link">
+      Adventures in Networking
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../aws_database/" title="Creating an RDS Database" class="md-nav__link">
+      Creating an RDS Database
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../aws_route53/" title="Working with Route53" class="md-nav__link">
+      Working with Route53
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../aws_acm/" title="AWS Credential Manager (ACM)" class="md-nav__link">
+      AWS Credential Manager (ACM)
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../additional/" title="Additional" class="md-nav__link">
+      Additional
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#expectations-and-goals" title="Expectations and Goals" class="md-nav__link">
+    Expectations and Goals
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-aws-account-credentials" title="Setup AWS Account Credentials" class="md-nav__link">
+    Setup AWS Account Credentials
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-local-environment" title="Create local environment" class="md-nav__link">
+    Create local environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-very-basic-django-project" title="Create very basic Django project" class="md-nav__link">
+    Create very basic Django project
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-the-basic-django-project" title="Testing the basic Django project" class="md-nav__link">
+    Testing the basic Django project
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-zappa" title="Setup Zappa" class="md-nav__link">
+    Setup Zappa
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-the-zappa-setup" title="Testing the Zappa Setup" class="md-nav__link">
+    Testing the Zappa Setup
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy-your-project-using-zappa" title="Deploy your project using Zappa" class="md-nav__link">
+    Deploy your project using Zappa
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-is-this-functional" title="How is this functional?" class="md-nav__link">
+    How is this functional?
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-is-the-url-path-appended-with-dev" title="Why is the URL path appended with 'dev'?" class="md-nav__link">
+    Why is the URL path appended with 'dev'?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="core-django-setup">Core Django Setup<a class="headerlink" href="#core-django-setup" title="Permanent link">&para;</a></h1>
 <p>This section documents setting up a Django project with only core Python functionality responding to HTTP calls.  The value of this core walkthrough could be to power an API driven compute engine or a event-driven data processing tool without the need to provide a UI.</p>
-<h3 id="expectations-and-goals">Expectations and Goals</h3>
+<h3 id="expectations-and-goals">Expectations and Goals<a class="headerlink" href="#expectations-and-goals" title="Permanent link">&para;</a></h3>
 <p>After going through this section the following will work:</p>
 <ul>
 <li>URL Routes in your Django projects</li>
@@ -166,24 +682,27 @@
 <li>There is no database connection available (not even SQLite)</li>
 <li>No HTTPS support</li>
 </ul>
-<h2 id="setup-aws-account-credentials">Setup AWS Account Credentials</h2>
+<h2 id="setup-aws-account-credentials">Setup AWS Account Credentials<a class="headerlink" href="#setup-aws-account-credentials" title="Permanent link">&para;</a></h2>
 <p>Make sure you setup access to your AWS account from your local command line.  See: <a href="../aws_credentials/#setup-local-account-credentials">Setup Local Account Credentials</a></p>
-<h2 id="create-local-environment">Create local environment</h2>
+<h2 id="create-local-environment">Create local environment<a class="headerlink" href="#create-local-environment" title="Permanent link">&para;</a></h2>
 <p>See <a href="../setup/">Setup your Environment</a></p>
-<h2 id="create-very-basic-django-project">Create very basic Django project</h2>
+<h2 id="create-very-basic-django-project">Create very basic Django project<a class="headerlink" href="#create-very-basic-django-project" title="Permanent link">&para;</a></h2>
 <p>For the purposes of this walkthrough we are taking the most basic Django project.  From within your project working directory type the following.  We are creating a fictional Django project called 'frankie'</p>
-<pre><code>django-admin startproject frankie .
-</code></pre>
+<div class="codehilite"><pre><span></span>django-admin startproject frankie .
+</pre></div>
 
-<h3 id="testing-the-basic-django-project">Testing the basic Django project</h3>
+
+<h3 id="testing-the-basic-django-project">Testing the basic Django project<a class="headerlink" href="#testing-the-basic-django-project" title="Permanent link">&para;</a></h3>
 <p>At this point if you run 
-<pre><code>python manage.py runserver
-</code></pre></p>
+<div class="codehilite"><pre><span></span>python manage.py runserver
+</pre></div>
+</p>
 <p>And visit http://127.0.0.1:8000 with your browser you should see the standard Django 'It Worked!' page</p>
 <p>Now quit the server using Control-C.  You should be back at the console prompt</p>
-<h2 id="setup-zappa">Setup Zappa</h2>
-<p><pre><code>zappa init
-</code></pre>
+<h2 id="setup-zappa">Setup Zappa<a class="headerlink" href="#setup-zappa" title="Permanent link">&para;</a></h2>
+<p><div class="codehilite"><pre><span></span>zappa init
+</pre></div>
+
 You will encounter a series of prompts:</p>
 <ul>
 <li>Name of environment - just accept the default 'dev'</li>
@@ -193,7 +712,7 @@ You will encounter a series of prompts:</p>
 <li>If everything looks ok, then accept the info</li>
 </ul>
 <p>Here's a transcript of what you should see:</p>
-<pre><code>(ve) $ zappa init
+<div class="codehilite"><pre><span></span>(ve) $ zappa init
 
 ███████╗ █████╗ ██████╗ ██████╗  █████╗
 ╚══███╔╝██╔══██╗██╔══██╗██╔══██╗██╔══██╗
@@ -206,25 +725,25 @@ Welcome to Zappa!
 
 Zappa is a system for running server-less Python web applications on AWS Lambda and AWS API Gateway.
 This `init` command will help you create and configure your new Zappa deployment.
-Let's get started!
+Let&#39;s get started!
 
-Your Zappa configuration can support multiple production environments, like 'dev', 'staging', and 'production'.
-What do you want to call this environment (default 'dev'):
+Your Zappa configuration can support multiple production environments, like &#39;dev&#39;, &#39;staging&#39;, and &#39;production&#39;.
+What do you want to call this environment (default &#39;dev&#39;):
 
 Your Zappa deployments will need to be uploaded to a private S3 bucket.
-If you don't have a bucket yet, we'll create one for you too.
-What do you want call your bucket? (default 'zappa-v20ssav8g'): zappatest-code
+If you don&#39;t have a bucket yet, we&#39;ll create one for you too.
+What do you want call your bucket? (default &#39;zappa-v20ssav8g&#39;): zappatest-code
 
 It looks like this is a Django application!
-What is the module path to your projects's Django settings?
+What is the module path to your projects&#39;s Django settings?
 We discovered: frankie.settings
-Where are your project's settings? (default 'frankie.settings'):
+Where are your project&#39;s settings? (default &#39;frankie.settings&#39;):
 
 You can optionally deploy to all available regions in order to provide fast global service.
-If you are using Zappa for the first time, you probably don't want to do this!
-Would you like to deploy this application to globally? (default 'n') [y/n/(p)rimary]: n
+If you are using Zappa for the first time, you probably don&#39;t want to do this!
+Would you like to deploy this application to globally? (default &#39;n&#39;) [y/n/(p)rimary]: n
 
-Okay, here's your zappa_settings.js:
+Okay, here&#39;s your zappa_settings.js:
 
 {
     &quot;dev&quot;: {
@@ -233,7 +752,7 @@ Okay, here's your zappa_settings.js:
     }
 }
 
-Does this look okay? (default 'y') [y/n]: y
+Does this look okay? (default &#39;y&#39;) [y/n]: y
 
 Done! Now you can deploy your Zappa application by executing:
 
@@ -249,15 +768,17 @@ and stop by our Slack channel here: http://bit.do/zappa
 Enjoy!,
  ~ Team Zappa!
 (ve) $
-</code></pre>
+</pre></div>
 
-<h3 id="testing-the-zappa-setup">Testing the Zappa Setup</h3>
+
+<h3 id="testing-the-zappa-setup">Testing the Zappa Setup<a class="headerlink" href="#testing-the-zappa-setup" title="Permanent link">&para;</a></h3>
 <p>So now if we run</p>
-<pre><code>zappa deploy dev
-</code></pre>
+<div class="codehilite"><pre><span></span>zappa deploy dev
+</pre></div>
+
 
 <p>But unfortunately we encounter an error: </p>
-<p><pre><code>(ve) $ zappa deploy dev
+<p><div class="codehilite"><pre><span></span>(ve) $ zappa deploy dev
 Calling deploy for environment dev..
 Warning! AWS Lambda may not be available in this AWS Region!
 Warning! AWS API Gateway may not be available in this AWS Region!
@@ -277,49 +798,54 @@ And join our Slack channel here: https://slack.zappa.io
 Love!,
  ~ Team Zappa!
 (ve) $
-</code></pre>
+</pre></div>
+
 Aw man, the error <strong>NoRegionError: You must specify a region.</strong> is holding us back.  Zappa is complaining that no AWS region is specified.  So we need to specify a region.  In this walkthrough we are leveraging <code>us-east-1</code> which corresponds to the same region we used above for the S3 bucket.</p>
 <p>You have options:</p>
 <ol>
 <li>
 <p>Specify a default region using environment variables</p>
 <p>Again, the drawback here is this must be set for every console</p>
-<pre><code>export AWS_DEFAULT_REGION=us-east-1
-</code></pre>
+<div class="codehilite"><pre><span></span>export AWS_DEFAULT_REGION=us-east-1
+</pre></div>
+
 
 </li>
 <li>
 <p>Add default region in your <code>~/.awd/credentials</code> file</p>
 <p>Better but this will affect all AWS scripts and programs on your machine.</p>
-<pre><code>[default]
-aws_access_key_id = your_access_key_id
-aws_secret_access_key = your_secret_access_key
-region=us-east-1
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="k">[default]</span>
+<span class="na">aws_access_key_id</span> <span class="o">=</span> <span class="s">your_access_key_id</span>
+<span class="na">aws_secret_access_key</span> <span class="o">=</span> <span class="s">your_secret_access_key</span>
+<span class="na">region</span><span class="o">=</span><span class="s">us-east-1</span>
+</pre></div>
+
 
 </li>
 <li>
 <p>Edit the <code>zappa_settings.json</code> file to have an AWS region.</p>
 <p>Probably best option because now the zappa configuration has minimal dependencies on external user environment.</p>
-<pre><code>{
+<div class="codehilite"><pre><span></span>{
  &quot;dev&quot;: {
-     &quot;aws_region&quot;: &quot;us-east-1&quot;,
-     &quot;django_settings&quot;: &quot;frankie.settings&quot;,
+<span class="hll">     &quot;aws_region&quot;: &quot;us-east-1&quot;,
+</span>     &quot;django_settings&quot;: &quot;frankie.settings&quot;,
      &quot;s3_bucket&quot;: &quot;zappatest-code&quot;
         } 
 }
-</code></pre>
+</pre></div>
+
 
 <p>Don't forget to put commas in the proper place - JSON is fiddly!</p>
 </li>
 </ol>
-<h2 id="deploy-your-project-using-zappa">Deploy your project using Zappa</h2>
+<h2 id="deploy-your-project-using-zappa">Deploy your project using Zappa<a class="headerlink" href="#deploy-your-project-using-zappa" title="Permanent link">&para;</a></h2>
 <p>Now it's easy to do the initial deployment</p>
-<pre><code>zappa deploy dev
-</code></pre>
+<div class="codehilite"><pre><span></span>zappa deploy dev
+</pre></div>
+
 
 <p>Zappa will automatically create an AWS API gateway that will route HTTP requests to your lambda Django project.  You should see something like:</p>
-<pre><code>(ve) $ zappa deploy dev
+<div class="codehilite"><pre><span></span>(ve) $ zappa deploy dev
 Calling deploy for environment dev..
 Downloading and installing dependencies..
 100%|███████████████████████████████████████████████████████████████████████████████████████████| 27/27 [00:07&lt;00:00,  3.91pkg/s]
@@ -334,73 +860,127 @@ Waiting for stack zappatest-dev to create (this can take a bit)..
 100%|█████████████████████████████████████████████████████████████████████████████████████████████| 4/4 [00:18&lt;00:00,  4.69s/res]
 Deploying API Gateway..
 Deployment complete!: https://x6kb437rh.execute-api.us-east-1.amazonaws.com/dev
-</code></pre>
+</pre></div>
+
 
 <p>Brilliant!  We should be able to use a browser to visit the URL provided at the end of the script.</p>
 <p>Once we do, however, we get:</p>
-<pre><code>DisallowedHost at /
-Invalid HTTP_HOST header: 'x6kb437rh.execute-api.us-east-1.amazonaws.com'. 
-You may need to add x6kb437rh.execute-api.us-east-1.amazonaws.com' to ALLOWED_HOSTS.
-</code></pre>
+<div class="codehilite"><pre><span></span>DisallowedHost at /
+Invalid HTTP_HOST header: &#39;x6kb437rh.execute-api.us-east-1.amazonaws.com&#39;. 
+You may need to add x6kb437rh.execute-api.us-east-1.amazonaws.com&#39; to ALLOWED_HOSTS.
+</pre></div>
+
 
 <p>The built-in <a href="https://docs.djangoproject.com/en/1.10/topics/security/#host-header-validation">Django security settings</a> are kicking in and preventing bad stuff from happening.  So we need to modify our Django settings file to accommodate the <a href="http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html">default hostname that AWS API Gateway uses</a>.  Note that the AWS region is part of the hostname and thus should match your selected region.</p>
 <p>Now edit <code>frankie/settings.py</code> and change ALLOWED_HOSTS to;</p>
-<p><pre><code>ALLOWED_HOSTS = [ '127.0.0.1', 'x6kb437rh.execute-api.us-east-1.amazonaws.com', ]
-</code></pre>
+<p><div class="codehilite"><pre><span></span>ALLOWED_HOSTS = [ &#39;127.0.0.1&#39;, &#39;x6kb437rh.execute-api.us-east-1.amazonaws.com&#39;, ]
+</pre></div>
+
 As an aside, for best security practices, put the full domain of the API Gateway here.  Less secure would be to use just <code>.execute-api.us-east-1.amazonaws.com</code>.  </p>
 <p>Once done, we can again deploy to AWS Lambda.  But this time, since we've already pushed the initial deploy, we use the <strong>update</strong> action on the zappa command line.</p>
-<pre><code>zappa update dev
-</code></pre>
+<div class="codehilite"><pre><span></span>zappa update dev
+</pre></div>
+
 
 <p>After this completes, you should be able to see your Django site in action.  Note that you will actually get a Page not found (404) response.  This indicates that your Django site is functional and working.   </p>
 <p><img alt="404" src="../images/core_404.png" /></p>
-<h2 id="how-is-this-functional">How is this functional?</h2>
+<h2 id="how-is-this-functional">How is this functional?<a class="headerlink" href="#how-is-this-functional" title="Permanent link">&para;</a></h2>
 <p>Wait, what?  A 404 page is functional?  Well yes, it is.  The Lambda function is working fine.  A whole series of AWS systems are working in concert to load your python Django code and running the view.  Because we've cut to the bare minimum Django project, there is no application ready to handle the url paths.  The only thing we see is the admin application.</p>
 <p>So from here we are ready to start working on views and providing data.  However, if you wish to host a website with static files and databases, continue onward to the subsequent walkthroughs:</p>
 <ul>
 <li><a href="../walk_static/">Hosting Static Files</a></li>
 <li><a href="../walk_database/">Using a Database</a></li>
 </ul>
-<h3 id="why-is-the-url-path-appended-with-dev">Why is the URL path appended with 'dev'?</h3>
+<h3 id="why-is-the-url-path-appended-with-dev">Why is the URL path appended with 'dev'?<a class="headerlink" href="#why-is-the-url-path-appended-with-dev" title="Permanent link">&para;</a></h3>
 <p>Astute readers will notice that the url in the image shown above indeed has the root domain with the suffix of 'dev' which happens to be the name of the zappa environment.  Indeed, the url domain is based on the generated API Gateway and the path of the URL is the 'Stage Name' of the API Gateway - it matches the name of the Zappa environment you chose above.</p>
-<pre><code>https://bnu0zcwezd.execute-api.us-east-1.amazonaws.com/dev/
+<div class="codehilite"><pre><span></span>https://bnu0zcwezd.execute-api.us-east-1.amazonaws.com/dev/
         ^^^^^^^^^^^^^^^^^^^^^^                         ^^^
       Auto Generated API Gateway              Your Zappa Environment
-</code></pre>
+</pre></div>
 
-<p>While this url may be considered functional, most would regard it as extremely unfriendly to users. To improve this and even get HTTPS encryption see the section on <a href="../walk_domain/">using a Custom Domain</a>.</p></div>
-        </div>
 
-        <footer class="col-md-12">
-            <hr>
-            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
-        </footer>
-        <script>var base_url = '..';</script>
-        <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
-        <script src="../js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
-                <form role="form">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
-                    </div>
-                </form>
-                <div id="mkdocs-search-results"></div>
-            </div>
-            <div class="modal-footer">
-            </div>
+<p>While this url may be considered functional, most would regard it as extremely unfriendly to users. To improve this and even get HTTPS encryption see the section on <a href="../walk_domain/">using a Custom Domain</a>.</p>
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
         </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../setup/" title="Setup your Environment" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Setup your Environment
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../walk_static/" title="Hosting Static Files" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Hosting Static Files
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
     </div>
-</div>
-
-    </body>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2016 - 2017 <a href="https://github.com/edgarroman">Edgar Roman</a>
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        and
+        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application-0b7df094bf.js"></script>
+      <script>app.initialize({url:{base:".."}})</script>
+      
+    
+    
+      
+      <script>!function(e,t,a,n,o,c,i){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,c=t.createElement(a),i=t.getElementsByTagName(a)[0],c.async=1,c.src=n,i.parentNode.insertBefore(c,i)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-97437653-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview");var links=document.getElementsByTagName("a");Array.prototype.map.call(links,function(e){e.host!=document.location.host&&e.addEventListener("click",function(){var t=e.getAttribute("data-md-action")||"follow";ga("send","event","outbound",t,e.href)})});var query=document.forms.search.query;query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})</script>
+      
+    
+  </body>
 </html>
