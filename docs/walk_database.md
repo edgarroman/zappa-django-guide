@@ -60,13 +60,13 @@ psycopg2
 and then
 
 ```sh
-pip install -r requirements
+pip install -r requirements.txt
 ```
 
 
 ### Django Settings
 
-Add the above settings to your settings.py
+Add the above settings to your settings.py.  This is pretty standard Django db stuff.
 
 ```
 DATABASES = {
@@ -84,7 +84,9 @@ DATABASES = {
 
 ### Zappa Settings
 
-```
+Now we add the VPC configuration to our Zappa settings file so that the lambda functions can connect to the database.
+
+``` hl_lines="6 7 8 9"
 {
     "dev": {
         "django_settings": "frankie.settings", 

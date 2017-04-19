@@ -28,14 +28,14 @@ extra:
     primary: 'deep purple'
   feature:
       tabs: true
+  social:
+      - type: github
+        link: https://github.com/edgarroman
 markdown_extensions:
   - codehilite
   - pymdownx.superfences
   - admonition
   - toc(permalink=true)
-social:
-    - type: github
-      link: https://github.com/edgarroman
 google_analytics:
   - 'UA-97437653-1'
   - 'auto'

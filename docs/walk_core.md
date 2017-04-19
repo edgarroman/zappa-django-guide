@@ -176,7 +176,7 @@ You have options:
 
     Probably best option because now the zappa configuration has minimal dependencies on external user environment.
    
-    ```
+    ``` hl_lines="3"
     {
      "dev": {
          "aws_region": "us-east-1",
