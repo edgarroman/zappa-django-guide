@@ -367,6 +367,75 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#options-matrix" title="Options Matrix" class="md-nav__link">
+    Options Matrix
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#route53-and-acm" title="Route53 and ACM" class="md-nav__link">
+    Route53 and ACM
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-create-a-hosted-zone-in-route53" title="Step 1: Create a Hosted Zone in Route53" class="md-nav__link">
+    Step 1: Create a Hosted Zone in Route53
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-create-your-digital-certificate-in-acm" title="Step 2: Create your digital certificate in ACM" class="md-nav__link">
+    Step 2: Create your digital certificate in ACM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-edit-the-zappa-settings-file" title="Step 3: Edit the Zappa Settings File" class="md-nav__link">
+    Step 3: Edit the Zappa Settings File
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-run-certify" title="Step 4: Run Certify" class="md-nav__link">
+    Step 4: Run Certify
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#route53-and-lets-encrypt" title="Route53 and Let's Encrypt" class="md-nav__link">
+    Route53 and Let's Encrypt
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-dns-and-acm-or-lets-encrypt" title="Other DNS and ACM or Let's Encrypt" class="md-nav__link">
+    Other DNS and ACM or Let's Encrypt
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-service-providers" title="Other Service Providers" class="md-nav__link">
+    Other Service Providers
+  </a>
+  
+</li>
+      
       
       
     </ul>
@@ -518,6 +587,75 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#options-matrix" title="Options Matrix" class="md-nav__link">
+    Options Matrix
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#route53-and-acm" title="Route53 and ACM" class="md-nav__link">
+    Route53 and ACM
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-create-a-hosted-zone-in-route53" title="Step 1: Create a Hosted Zone in Route53" class="md-nav__link">
+    Step 1: Create a Hosted Zone in Route53
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-create-your-digital-certificate-in-acm" title="Step 2: Create your digital certificate in ACM" class="md-nav__link">
+    Step 2: Create your digital certificate in ACM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-edit-the-zappa-settings-file" title="Step 3: Edit the Zappa Settings File" class="md-nav__link">
+    Step 3: Edit the Zappa Settings File
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-run-certify" title="Step 4: Run Certify" class="md-nav__link">
+    Step 4: Run Certify
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#route53-and-lets-encrypt" title="Route53 and Let's Encrypt" class="md-nav__link">
+    Route53 and Let's Encrypt
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-dns-and-acm-or-lets-encrypt" title="Other DNS and ACM or Let's Encrypt" class="md-nav__link">
+    Other DNS and ACM or Let's Encrypt
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-service-providers" title="Other Service Providers" class="md-nav__link">
+    Other Service Providers
+  </a>
+  
+</li>
+      
       
       
     </ul>
@@ -568,7 +706,7 @@ But the URL provided by Zappa is pretty darn ugly.  Not only does it use an appa
 <div class="codehilite"><pre><span></span>www.zappaguide.com
 </pre></div>
 </p>
-<h1 id="options-matrix">Options Matrix<a class="headerlink" href="#options-matrix" title="Permanent link">&para;</a></h1>
+<h2 id="options-matrix">Options Matrix<a class="headerlink" href="#options-matrix" title="Permanent link">&para;</a></h2>
 <p>Since there are so many service providers, we focus on a couple combinations that work best.  Use the chart below to select the scenario that best matches your situation and follow only one set of instructions.</p>
 <table>
 <thead>
@@ -614,56 +752,47 @@ But the URL provided by Zappa is pretty darn ugly.  Not only does it use an appa
 <p>Follow the instructions for <a href="../aws_acm/##request-a-certificate">requesting a certificate in the ACM console</a></p>
 <p>Be sure to record the ARN for the newly issued certificate.</p>
 <h3 id="step-3-edit-the-zappa-settings-file">Step 3: Edit the Zappa Settings File<a class="headerlink" href="#step-3-edit-the-zappa-settings-file" title="Permanent link">&para;</a></h3>
+<p>Now we add the following to our Zappa settings file.  These settings prepare Zappa to configure our API gateway properly.</p>
+<div class="codehilite"><pre><span></span>{
+    &quot;dev&quot;: {
+        &quot;django_settings&quot;: &quot;frankie.settings&quot;, 
+        &quot;s3_bucket&quot;: &quot;zappatest-code&quot;,
+        &quot;aws_region&quot;: &quot;us-east-1&quot;,
+        &quot;vpc_config&quot; : {
+            &quot;SubnetIds&quot;: [ &quot;subnet-f3446aba&quot;,&quot;subnet-c5b8c79e&quot; ], // use the private subnet
+            &quot;SecurityGroupIds&quot;: [ &quot;sg-9a9a1dfc&quot; ]
+        },
+<span class="hll">        &quot;certificate_arn&quot;: &quot;arn:aws:acm:us-east-1:738356466015:certificate/1d066282-ce94-4ad7-a802-2ff87d32b104&quot;,
+</span><span class="hll">        &quot;domain&quot;: &quot;www.zappaguide.com&quot;,
+</span>    }
+}
+</pre></div>
+
+
+<p>For the <code>certificate_arn</code> use the ARN value obtained in step 2 above.</p>
 <h3 id="step-4-run-certify">Step 4: Run Certify<a class="headerlink" href="#step-4-run-certify" title="Permanent link">&para;</a></h3>
+<p>This final step triggers your local Zappa environment to reach out to AWS and configure your API Gateway to honor the domain name specified.</p>
+<div class="codehilite"><pre><span></span>(ve) $ zappa certify dev
+Calling certify for environment dev..
+Are you sure you want to certify? [y/n] y
+Certifying domain www.zappaguide.com..
+Created a new domain name with supplied certificate. Please note that it can take up to 40 minutes for this domain to be created and propagated through AWS, but it requires no further work on your part.
+Certificate updated!
+(ve) $ 
+</pre></div>
+
+
+<p>And that should work fine going forward</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This command must be run in the US East (N. Virginia) (us-east-1).  See <a href="http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html#how-to-custom-domains-prerequisites">AWS documentation</a> for more details.</p>
+</div>
 <h2 id="route53-and-lets-encrypt">Route53 and Let's Encrypt<a class="headerlink" href="#route53-and-lets-encrypt" title="Permanent link">&para;</a></h2>
-<h3 id="step-1-create-a-hosted-zone-in-route53_1">Step 1: Create a Hosted Zone in Route53<a class="headerlink" href="#step-1-create-a-hosted-zone-in-route53_1" title="Permanent link">&para;</a></h3>
-<p>If your Registrar is also Route53, skip this step and move on to Step 2.  AWS did this for you when you registered the domain.</p>
-<p>Follow the instructions for <a href="../aws_route53/#create-a-hosted-zone-in-route53">creating a hosted zone in Route53</a></p>
-<h3 id="step-2-get-lets-encrypt-certificate">Step 2: Get Let's Encrypt certificate<a class="headerlink" href="#step-2-get-lets-encrypt-certificate" title="Permanent link">&para;</a></h3>
+<p>Under Construction</p>
 <h2 id="other-dns-and-acm-or-lets-encrypt">Other DNS and ACM or Let's Encrypt<a class="headerlink" href="#other-dns-and-acm-or-lets-encrypt" title="Permanent link">&para;</a></h2>
-<p>Follow the above steps outlined above but make the following modifications.
-Zappa settings
-        route53 false</p>
-<p>add a CNAME in your DNS provider</p>
-<p>warning: you will be responsible for rotating an expired certificates</p>
+<p>Under Construction </p>
 <h2 id="other-service-providers">Other Service Providers<a class="headerlink" href="#other-service-providers" title="Permanent link">&para;</a></h2>
-<p>If you are using a number of non-Amazon service providers, it is possible to still use a custom domain, but you must follow the manual steps <a href="http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html">outlined here</a>.</p>
-<ul>
-<li>Create hosted zone</li>
-</ul>
-<h1 id="get-ssl-cert">Get SSL Cert<a class="headerlink" href="#get-ssl-cert" title="Permanent link">&para;</a></h1>
-<h2 id="outside">outside<a class="headerlink" href="#outside" title="Permanent link">&para;</a></h2>
-<ul>
-<li>import the cert into acm</li>
-<li>but you have to deal with renewals yourself
-https://aws.amazon.com/certificate-manager/faqs/</li>
-</ul>
-<h2 id="acm">ACM<a class="headerlink" href="#acm" title="Permanent link">&para;</a></h2>
-<p>do this from the east region and it will distribute
-https://aws.amazon.com/certificate-manager/faqs/</p>
-<ul>
-<li>add domain</li>
-<li>the look for email</li>
-<li>verify and get the ARN</li>
-</ul>
-<p>good for 13 months
-https://aws.amazon.com/certificate-manager/faqs/</p>
-<h1 id="put-in-zappa-settings">put in zappa settings<a class="headerlink" href="#put-in-zappa-settings" title="Permanent link">&para;</a></h1>
-<div class="codehilite"><pre><span></span>    &quot;certificate_arn&quot;: &quot;arn:aws:acm:us-east-1:738356466015:certificate/1d066282-ce94-4ad7-a802-2ff87d32b104&quot;,
-    &quot;domain&quot;: &quot;www.contoso.com&quot;,
-</pre></div>
-
-
-<h1 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h1>
-<div class="codehilite"><pre><span></span>zappa certify dev
-</pre></div>
-
-
-<p>so what happens is that zappa requests that the api gateway associate the custom domain and ssl to a new, hidden cloudfront distribution.  It's hard to figure out what the settings are on this cf distro so just roll with it.
-if you are a control freak, just make your own</p>
-<p>it takes some time, but now hit it</p>
-<p>https://www.contoso.com</p>
-<p>http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html</p>
+<p>Under Construction</p>
                 
                   
                 

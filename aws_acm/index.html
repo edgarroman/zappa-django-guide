@@ -509,13 +509,20 @@
 <p>This page lists various activites that may be necessary to perform when leveraging Zappa</p>
 <h2 id="request-a-certificate">Request a Certificate<a class="headerlink" href="#request-a-certificate" title="Permanent link">&para;</a></h2>
 <p>ACM provides digital certificates for free but the certificates can only be used with <a href="https://docs.aws.amazon.com/console/acm/supported-services">Elasic Load Balancing and Amazon CloudFront</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To use ACM with Zappa, you must create or import the certificate in the US East (N. Virginia) (us-east-1).  See <a href="http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html#how-to-custom-domains-prerequisites">AWS documentation</a> for more details.</p>
+</div>
 <ol>
 <li>Navigate to the <a href="https://console.aws.amazon.com/acm/">ACM Console</a> and click <code>Request a Certificate</code></li>
 <li>
 <p>In 'Add a Domain name' enter 
  <img alt="Step 1: Add a Domain name" src="../images/aws_amc_request.png" />
  Note that we entered both the 'www' subdomain and the <em>apex</em> of the domain.  This allows users to leverage either url and have it covered until a single certificate.</p>
-<p>Carefully consider which domains shall be covered by this certificate because once it is validated, you cannot modify the list of domains; any changes will require a new certificate to be issued.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Carefully consider which domains shall be covered by this certificate because once it is validated, you cannot modify the list of domains.  Any changes will require a new certificate to be issued.</p>
+</div>
 </li>
 <li>
 <p>Click on Review and Request</p>
