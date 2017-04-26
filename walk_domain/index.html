@@ -459,13 +459,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#step-25-auto-renew-optional" title="Step 2.5: Auto-Renew (Optional)" class="md-nav__link">
-    Step 2.5: Auto-Renew (Optional)
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -753,13 +746,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#step-25-auto-renew-optional" title="Step 2.5: Auto-Renew (Optional)" class="md-nav__link">
-    Step 2.5: Auto-Renew (Optional)
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1011,25 +997,6 @@ Certificate updated!
 <p class="admonition-title">Note</p>
 <p>Amazon official documentation states that this step could take up to 40 minutes to initialize the certificate.</p>
 </div>
-<h4 id="step-25-auto-renew-optional">Step 2.5: Auto-Renew (Optional)<a class="headerlink" href="#step-25-auto-renew-optional" title="Permanent link">&para;</a></h4>
-<p>If you'd like Zappa to automatically renew your HTTPS certificate then simply add the following Let's Encrypt expression to your Zappa Settings file:</p>
-<div class="codehilite"><pre><span></span>{
-    &quot;dev&quot;: {
-        &quot;django_settings&quot;: &quot;frankie.settings&quot;, 
-        &quot;s3_bucket&quot;: &quot;zappatest-code&quot;,
-        &quot;aws_region&quot;: &quot;us-east-1&quot;,
-        &quot;vpc_config&quot; : {
-            &quot;SubnetIds&quot;: [ &quot;subnet-f3446aba&quot;,&quot;subnet-c5b8c79e&quot; ], // use the private subnet
-            &quot;SecurityGroupIds&quot;: [ &quot;sg-9a9a1dfc&quot; ]
-        },
-        &quot;lets_encrypt_key&quot;: &quot;le-account.key&quot;, // Local path to account key - can also be s3 path
-        &quot;domain&quot;: &quot;www.zappaguide.com&quot;,
-<span class="hll">        &quot;lets_encrypt_expression&quot;: &quot;rate(30 days)&quot;, // LE Renew schedule
-</span>    }
-}
-</pre></div>
-
-
 <h3 id="other-service-providers">Other Service Providers<a class="headerlink" href="#other-service-providers" title="Permanent link">&para;</a></h3>
 <p>If you choose to use your own DNS provider and/or your own Certificate Authority to create the custom domain names, you will have to perform the manual steps outlined in the official AWS documentation:</p>
 <p><a href="http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html#how-to-custom-domains-console">http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html#how-to-custom-domains-console</a></p>
