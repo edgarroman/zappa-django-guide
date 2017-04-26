@@ -12,7 +12,7 @@ This page lists various activites that may be necessary to perform when leveragi
  ```
  3. The console should show you a number of DNS records that you must provide to your Registrar
  ![Setting up Hosted Zone](images/domain_Route53.png)
- Once you enter these values into your Registar it may take some time for the values to propagate depending on the prior settings of the Registrar.
+ Once you enter these values into your Registar it may take some time for the values to propagate depending on the prior settings of the Registrar.  In this case your domain name Registrar is someone like GoDaddy or NameCheap.
  
  4. Verify your DNS settings have propagated
  Using some [online tools](https://www.ultratools.com/tools/dnsLookup) confirm that for this domain, the DNS Nameservers are correct.  If they are not updated, it may take some more time for the information to be propagated.

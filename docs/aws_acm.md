@@ -12,7 +12,8 @@ ACM provides digital certificates for free but the certificates can only be used
  1. Navigate to the [ACM Console](https://console.aws.amazon.com/acm/) and click `Request a Certificate`
  2. In 'Add a Domain name' enter 
  ![Step 1: Add a Domain name](images/aws_amc_request.png)
- Note that we entered both the 'www' subdomain and the *apex* of the domain.  This allows users to leverage either url and have it covered until a single certificate.
+ 
+ Note that we entered both the 'www' subdomain and the *apex* of the domain.  This allows users to leverage either url and have it covered with a single certificate.  More info can be found in the AWS ACM documentation on [Requesting a Certificate](http://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request.html)
 
     !!! Warning
         Carefully consider which domains shall be covered by this certificate because once it is validated, you cannot modify the list of domains.  Any changes will require a new certificate to be issued.

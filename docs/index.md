@@ -20,3 +20,6 @@ Generally if you'd like to use your Django project to present a User Interface (
 ### [Using a Database](walk_database.md)
 This walkthough documents the steps necessary to connect your application to a hosted database.
 
+### [Using a Custom Domain Name](walk_domain.md)
+
+Let's face it, the default urls provided by Zappa via API Gateway are ugly.  Read this walkthrough to get a sense of what it takes to make the urls much more user friendly without a dedicated proxy service.
