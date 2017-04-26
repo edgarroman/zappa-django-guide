@@ -515,15 +515,16 @@
 </div>
 <ol>
 <li>Navigate to the <a href="https://console.aws.amazon.com/acm/">ACM Console</a> and click <code>Request a Certificate</code></li>
-<li>
-<p>In 'Add a Domain name' enter 
- <img alt="Step 1: Add a Domain name" src="../images/aws_amc_request.png" />
- Note that we entered both the 'www' subdomain and the <em>apex</em> of the domain.  This allows users to leverage either url and have it covered until a single certificate.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Carefully consider which domains shall be covered by this certificate because once it is validated, you cannot modify the list of domains.  Any changes will require a new certificate to be issued.</p>
-</div>
-</li>
+<li>In 'Add a Domain name' enter 
+ <img alt="Step 1: Add a Domain name" src="../images/aws_amc_request.png" /></li>
+</ol>
+<p>Note that we entered both the 'www' subdomain and the <em>apex</em> of the domain.  This allows users to leverage either url and have it covered with a single certificate.  More info can be found in the AWS ACM documentation on <a href="http://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request.html">Requesting a Certificate</a></p>
+<div class="codehilite"><pre><span></span>!!! Warning
+    Carefully consider which domains shall be covered by this certificate because once it is validated, you cannot modify the list of domains.  Any changes will require a new certificate to be issued.
+</pre></div>
+
+
+<ol>
 <li>
 <p>Click on Review and Request</p>
 <p>You should see a message similar to the image below:

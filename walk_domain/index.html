@@ -368,13 +368,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#options-matrix" title="Options Matrix" class="md-nav__link">
-    Options Matrix
+  <a href="#choices" title="Choices" class="md-nav__link">
+    Choices
   </a>
   
 </li>
       
         <li class="md-nav__item">
+  <a href="#using-the-built-in-zappa-commands" title="Using the built-in Zappa commands" class="md-nav__link">
+    Using the built-in Zappa commands
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#option-1-route53-and-acm" title="Option 1: Route53 and ACM" class="md-nav__link">
     Option 1: Route53 and ACM
   </a>
@@ -414,8 +422,8 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#option-2-route53-and-lets-encrypt" title="Option 2: Route53 and Let's Encrypt" class="md-nav__link">
     Option 2: Route53 and Let's Encrypt
   </a>
@@ -462,18 +470,43 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#other-dns-and-acm-or-lets-encrypt" title="Other DNS and ACM or Let's Encrypt" class="md-nav__link">
-    Other DNS and ACM or Let's Encrypt
+        
+          <li class="md-nav__item">
+  <a href="#other-service-providers" title="Other Service Providers" class="md-nav__link">
+    Other Service Providers
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#other-service-providers" title="Other Service Providers" class="md-nav__link">
-    Other Service Providers
+  <a href="#manage-your-own-cloudfront-distribution" title="Manage Your Own CloudFront Distribution" class="md-nav__link">
+    Manage Your Own CloudFront Distribution
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-cloudfront-distribution" title="Create a CloudFront Distribution" class="md-nav__link">
+    Create a CloudFront Distribution
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#associate-https-certificate" title="Associate HTTPS certificate" class="md-nav__link">
+    Associate HTTPS certificate
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -629,13 +662,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#options-matrix" title="Options Matrix" class="md-nav__link">
-    Options Matrix
+  <a href="#choices" title="Choices" class="md-nav__link">
+    Choices
   </a>
   
 </li>
       
         <li class="md-nav__item">
+  <a href="#using-the-built-in-zappa-commands" title="Using the built-in Zappa commands" class="md-nav__link">
+    Using the built-in Zappa commands
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#option-1-route53-and-acm" title="Option 1: Route53 and ACM" class="md-nav__link">
     Option 1: Route53 and ACM
   </a>
@@ -675,8 +716,8 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#option-2-route53-and-lets-encrypt" title="Option 2: Route53 and Let's Encrypt" class="md-nav__link">
     Option 2: Route53 and Let's Encrypt
   </a>
@@ -723,18 +764,43 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#other-dns-and-acm-or-lets-encrypt" title="Other DNS and ACM or Let's Encrypt" class="md-nav__link">
-    Other DNS and ACM or Let's Encrypt
+        
+          <li class="md-nav__item">
+  <a href="#other-service-providers" title="Other Service Providers" class="md-nav__link">
+    Other Service Providers
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#other-service-providers" title="Other Service Providers" class="md-nav__link">
-    Other Service Providers
+  <a href="#manage-your-own-cloudfront-distribution" title="Manage Your Own CloudFront Distribution" class="md-nav__link">
+    Manage Your Own CloudFront Distribution
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-cloudfront-distribution" title="Create a CloudFront Distribution" class="md-nav__link">
+    Create a CloudFront Distribution
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#associate-https-certificate" title="Associate HTTPS certificate" class="md-nav__link">
+    Associate HTTPS certificate
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -788,8 +854,24 @@ But the URL provided by Zappa is pretty darn ugly.  Not only does it use an appa
 <div class="codehilite"><pre><span></span>www.zappaguide.com
 </pre></div>
 </p>
-<h2 id="options-matrix">Options Matrix<a class="headerlink" href="#options-matrix" title="Permanent link">&para;</a></h2>
-<p>Since there are so many service providers, we focus on a couple combinations that work best.  Use the chart below to select the scenario that best matches your situation and follow only one set of instructions.</p>
+<h2 id="choices">Choices<a class="headerlink" href="#choices" title="Permanent link">&para;</a></h2>
+<p>At this point, you have a registered domain name and a working Zappa deployment.  There are two options:</p>
+<ol>
+<li>
+<p><a href="#using-the-built-in-zappa-commands">Use the built-in Zappa commands</a> </p>
+<p>The Zappa project has a very easy way of associating your custom domain name with your Zappa deployment.  For most circumstances, this will meet the needs of most applications.  </p>
+<p>What happens behind the scenes is that Zappa tells the AWS API Gateway to associate a private AWS CloudFront distribution with the Custom Domain along with an HTTPS certificate.  This CloudFront distribution cannot be configured, but will faithfully pass along HTTP requests as needed.</p>
+<p>It's easy to use and gets you up and running quickly.</p>
+</li>
+<li>
+<p><a href="#manage-your-own-cloudfront-distribution">Manage your own CloudFront Distribution</a></p>
+<p>The private CloudFront distribution created with the API Gateway is fine, but sometimes you need more control.  The alternative is to create your own AWS CloudFront distribution.  By doing this, you may still associate a Custom Domain Name, still use ACM HTTPS; but you have additional control - essentially the full power of AWS CloudFront.  </p>
+<p>This will let you configure caching timeouts for multiple paths.  So if you have a fairly static landing page, the cache timeout could be days or weeks; while the user account page may have cache of seconds or minutes.  Advanced caching could include query parameters and/or cookies.  </p>
+<p>Thus the control of the caching behavoir is vastly increased, so is the complexity of managing the CloudFront distribution.  In some cases, the additional complexity is necessary or even required.</p>
+</li>
+</ol>
+<h2 id="using-the-built-in-zappa-commands">Using the built-in Zappa commands<a class="headerlink" href="#using-the-built-in-zappa-commands" title="Permanent link">&para;</a></h2>
+<p>Zappa has some built-in functionality that streamlines the process of associating a Custom Domain Name with your Zappa deployment.  Since there are so many service providers, we focus on a couple combinations that work best.  Use the chart below to select the scenario that best matches your situation and follow only one set of instructions.</p>
 <table>
 <thead>
 <tr>
@@ -804,36 +886,37 @@ But the URL provided by Zappa is pretty darn ugly.  Not only does it use an appa
 <td>Route53</td>
 <td>AWS Certificate Manager</td>
 <td>All AWS combo makes this ridiculous easy</td>
-<td><a href="#route53-and-acm">see below</a></td>
+<td><a href="#option-1-route53-and-acm">see below</a></td>
 </tr>
 <tr>
 <td>Route53</td>
 <td>Let's Encrypt</td>
 <td>Another good option that Zappa has smoothed the way</td>
-<td><a href="#route53-and-lets-encrypt">see below</a></td>
+<td><a href="#option-2-route53-and-lets-encrypt">see below</a></td>
 </tr>
 <tr>
 <td>Other DNS</td>
 <td>ACM or Let's Encrypt</td>
-<td>Some minor additional steps</td>
-<td>see below</td>
+<td>There are more manual steps</td>
+<td><a href="#other-service-providers">see below</a></td>
 </tr>
 <tr>
 <td>Other DNS</td>
 <td>Other</td>
 <td>You got some work to do</td>
-<td>see below</td>
+<td><a href="#other-service-providers">see below</a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="option-1-route53-and-acm">Option 1: Route53 and ACM<a class="headerlink" href="#option-1-route53-and-acm" title="Permanent link">&para;</a></h2>
-<h3 id="step-11-create-a-hosted-zone-in-route53">Step 1.1: Create a Hosted Zone in Route53<a class="headerlink" href="#step-11-create-a-hosted-zone-in-route53" title="Permanent link">&para;</a></h3>
+<h3 id="option-1-route53-and-acm">Option 1: Route53 and ACM<a class="headerlink" href="#option-1-route53-and-acm" title="Permanent link">&para;</a></h3>
+<p>This option assumes that you will be using AWS Route53 and Amazon Certficate Manager for all functions, except perhaps the domain registration itself.  Therefore any domain registrar will work under this option be it NameCheap, GoDaddy, or anyone else.  Of course the domain name can be registered with Route53.</p>
+<h4 id="step-11-create-a-hosted-zone-in-route53">Step 1.1: Create a Hosted Zone in Route53<a class="headerlink" href="#step-11-create-a-hosted-zone-in-route53" title="Permanent link">&para;</a></h4>
 <p>If your Registrar is also Route53, skip this step and move on to Step 2.  AWS did this for you when you registered the domain.</p>
 <p>Follow the instructions for <a href="../aws_route53/#create-a-hosted-zone-in-route53">creating a hosted zone in Route53</a></p>
-<h3 id="step-12-create-your-digital-certificate-in-acm">Step 1.2: Create your digital certificate in ACM<a class="headerlink" href="#step-12-create-your-digital-certificate-in-acm" title="Permanent link">&para;</a></h3>
+<h4 id="step-12-create-your-digital-certificate-in-acm">Step 1.2: Create your digital certificate in ACM<a class="headerlink" href="#step-12-create-your-digital-certificate-in-acm" title="Permanent link">&para;</a></h4>
 <p>Follow the instructions for <a href="../aws_acm/##request-a-certificate">requesting a certificate in the ACM console</a></p>
 <p>Be sure to record the ARN for the newly issued certificate.</p>
-<h3 id="step-13-edit-the-zappa-settings-file">Step 1.3: Edit the Zappa Settings File<a class="headerlink" href="#step-13-edit-the-zappa-settings-file" title="Permanent link">&para;</a></h3>
+<h4 id="step-13-edit-the-zappa-settings-file">Step 1.3: Edit the Zappa Settings File<a class="headerlink" href="#step-13-edit-the-zappa-settings-file" title="Permanent link">&para;</a></h4>
 <p>Now we add the following to our Zappa settings file.  These settings prepare Zappa to configure our API gateway properly.</p>
 <div class="codehilite"><pre><span></span>{
     &quot;dev&quot;: {
@@ -851,8 +934,8 @@ But the URL provided by Zappa is pretty darn ugly.  Not only does it use an appa
 </pre></div>
 
 
-<p>For the <code>certificate_arn</code> use the ARN value obtained in step 2 above.</p>
-<h3 id="step-14-run-certify">Step 1.4: Run Certify<a class="headerlink" href="#step-14-run-certify" title="Permanent link">&para;</a></h3>
+<p>For the <code>certificate_arn</code> use the ARN value obtained in step 2 above.  For the <code>domain</code> here we could choose either <code>www.zappaguide.com</code> or <code>zappaguide.com</code>, but not both.  In order to handle both, either a redirect must occur or you can setup another <a href="#manage-your-own-cloudfront-distribution">CloudFront Distribution manually</a>.</p>
+<h4 id="step-14-run-certify">Step 1.4: Run Certify<a class="headerlink" href="#step-14-run-certify" title="Permanent link">&para;</a></h4>
 <p>This final step triggers your local Zappa environment to reach out to AWS and configure your API Gateway to honor the domain name specified.</p>
 <div class="codehilite"><pre><span></span>(ve) $ zappa certify dev
 Calling certify for environment dev..
@@ -865,17 +948,21 @@ Certificate updated!
 
 
 <p>And that should work fine going forward</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Amazon official documentation states that this step could take up to 40 minutes to initialize the certificate.</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This command must be run in the US East (N. Virginia) (us-east-1).  See <a href="http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html#how-to-custom-domains-prerequisites">AWS documentation</a> for more details.</p>
 </div>
-<h2 id="option-2-route53-and-lets-encrypt">Option 2: Route53 and Let's Encrypt<a class="headerlink" href="#option-2-route53-and-lets-encrypt" title="Permanent link">&para;</a></h2>
-<h3 id="step-21-create-a-hosted-zone-in-route53">Step 2.1: Create a Hosted Zone in Route53<a class="headerlink" href="#step-21-create-a-hosted-zone-in-route53" title="Permanent link">&para;</a></h3>
+<h3 id="option-2-route53-and-lets-encrypt">Option 2: Route53 and Let's Encrypt<a class="headerlink" href="#option-2-route53-and-lets-encrypt" title="Permanent link">&para;</a></h3>
+<h4 id="step-21-create-a-hosted-zone-in-route53">Step 2.1: Create a Hosted Zone in Route53<a class="headerlink" href="#step-21-create-a-hosted-zone-in-route53" title="Permanent link">&para;</a></h4>
 <p>If your Registrar is also Route53, skip this step and move on to Step 2.  AWS did this for you when you registered the domain.</p>
 <p>Follow the instructions for <a href="../aws_route53/#create-a-hosted-zone-in-route53">creating a hosted zone in Route53</a></p>
-<h3 id="step-22-create-an-aws-rsa-key">Step 2.2: Create an AWS RSA Key<a class="headerlink" href="#step-22-create-an-aws-rsa-key" title="Permanent link">&para;</a></h3>
+<h4 id="step-22-create-an-aws-rsa-key">Step 2.2: Create an AWS RSA Key<a class="headerlink" href="#step-22-create-an-aws-rsa-key" title="Permanent link">&para;</a></h4>
 <p>Zappa will interact automatically with Let's Encrypt on your behalf, but first you must create an RSA key to identify your account to Let's Encrypt.</p>
-<p>To generate it, simply:
+<p>To generate it, simply run:
 <div class="codehilite"><pre><span></span>(ve) $ openssl genrsa -out le-account.key 2048 
 Generating RSA private key, 2048 bit long modulus
 ...........................................................................................................................+++
@@ -889,7 +976,7 @@ e is 65537 (0x10001)
 <p class="admonition-title">Note</p>
 <p>Note that this is a 2048b key. It's generally preferred to use a stronger 4096b key, but AWS does not yet support keys larger than 2048b.</p>
 </div>
-<h3 id="step-23-edit-the-zappa-settings-file">Step 2.3: Edit the Zappa Settings File<a class="headerlink" href="#step-23-edit-the-zappa-settings-file" title="Permanent link">&para;</a></h3>
+<h4 id="step-23-edit-the-zappa-settings-file">Step 2.3: Edit the Zappa Settings File<a class="headerlink" href="#step-23-edit-the-zappa-settings-file" title="Permanent link">&para;</a></h4>
 <p>Now we add the following to our Zappa settings file.  These settings prepare Zappa to configure our API gateway properly.</p>
 <div class="codehilite"><pre><span></span>{
     &quot;dev&quot;: {
@@ -907,7 +994,7 @@ e is 65537 (0x10001)
 </pre></div>
 
 
-<h3 id="step-24-run-certify">Step 2.4: Run Certify<a class="headerlink" href="#step-24-run-certify" title="Permanent link">&para;</a></h3>
+<h4 id="step-24-run-certify">Step 2.4: Run Certify<a class="headerlink" href="#step-24-run-certify" title="Permanent link">&para;</a></h4>
 <p>This final step triggers your local Zappa environment to reach out to AWS and configure your API Gateway to honor the domain name specified.</p>
 <div class="codehilite"><pre><span></span>(ve) $ zappa certify dev
 Calling certify for environment dev..
@@ -920,7 +1007,11 @@ Certificate updated!
 
 
 <p>And that should work fine going forward.  Note that Let's Encrypt certificates only last for 3 months so you should ensure you update the certificate before the 3 months expire.</p>
-<h3 id="step-25-auto-renew-optional">Step 2.5: Auto-Renew (Optional)<a class="headerlink" href="#step-25-auto-renew-optional" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Amazon official documentation states that this step could take up to 40 minutes to initialize the certificate.</p>
+</div>
+<h4 id="step-25-auto-renew-optional">Step 2.5: Auto-Renew (Optional)<a class="headerlink" href="#step-25-auto-renew-optional" title="Permanent link">&para;</a></h4>
 <p>If you'd like Zappa to automatically renew your HTTPS certificate then simply add the following Let's Encrypt expression to your Zappa Settings file:</p>
 <div class="codehilite"><pre><span></span>{
     &quot;dev&quot;: {
@@ -939,10 +1030,30 @@ Certificate updated!
 </pre></div>
 
 
-<h2 id="other-dns-and-acm-or-lets-encrypt">Other DNS and ACM or Let's Encrypt<a class="headerlink" href="#other-dns-and-acm-or-lets-encrypt" title="Permanent link">&para;</a></h2>
-<p>Under Construction </p>
-<h2 id="other-service-providers">Other Service Providers<a class="headerlink" href="#other-service-providers" title="Permanent link">&para;</a></h2>
-<p>Under Construction</p>
+<h3 id="other-service-providers">Other Service Providers<a class="headerlink" href="#other-service-providers" title="Permanent link">&para;</a></h3>
+<p>If you choose to use your own DNS provider and/or your own Certificate Authority to create the custom domain names, you will have to perform the manual steps outlined in the official AWS documentation:</p>
+<p><a href="http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html#how-to-custom-domains-console">http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html#how-to-custom-domains-console</a></p>
+<p>In this case, I would recommend against using the built-in Zappa commands because of unexpected side effects.</p>
+<h2 id="manage-your-own-cloudfront-distribution">Manage Your Own CloudFront Distribution<a class="headerlink" href="#manage-your-own-cloudfront-distribution" title="Permanent link">&para;</a></h2>
+<p>Well, with all this power comes great responsibilites.</p>
+<h3 id="create-a-cloudfront-distribution">Create a CloudFront Distribution<a class="headerlink" href="#create-a-cloudfront-distribution" title="Permanent link">&para;</a></h3>
+<p>To get started, follow <a href="http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-creating-console.html#CreatingDownloadDistributionsConsoleProcedure">these instructions</a></p>
+<p>Some key parameters:</p>
+<ul>
+<li>Select 'Web' Distribution</li>
+<li>For Origin Domain Name, use the Zappa distribution domain name (e.g. 'bnu0zcwezd.execute-api.us-east-1.amazonaws.com')</li>
+<li>For Origin Path, use the Zappa deployment name (e.g. 'dev')</li>
+<li>For Object Caching:</li>
+<li>If you'd like to use Django to control the cache, select 'Use Origin Cache Headers'</li>
+<li>If you'd like to setup static cache timeouts, select 'Customize'<ul>
+<li>Use the Minimum TTL, Maximum TTL, and Default TTL to specify how long (in seconds) to cache objects</li>
+<li>You can add additional paths as needed</li>
+</ul>
+</li>
+<li>Compress Objects Automatically, we recommend True</li>
+</ul>
+<h3 id="associate-https-certificate">Associate HTTPS certificate<a class="headerlink" href="#associate-https-certificate" title="Permanent link">&para;</a></h3>
+<p>Follow <a href="http://docs.aws.amazon.com/acm/latest/userguide/gs-cf.html">these instructions</a> to associate your new distro with a SSL/TLS certificate.</p>
                 
                   
                 
