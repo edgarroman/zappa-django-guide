@@ -1,0 +1,74 @@
+
+
+topics:
+
+- How to setup AWS
+
+- how to upload media files?
+
+- how to login users?
+https://github.com/capless/warrant
+
+
+
+- What about only python processing functions?  
+    {
+    "dev": {
+        "project_name": "test",
+        "apigateway_enabled": false,
+        "s3_bucket": "lambda-zappa",
+        "keep_warm": false,
+        "events": [
+            {   // AWS Reactive events
+                "function": "your_module.your_reactive_function", // The function to execute
+                "event_source": {
+                    "arn":  "arn:aws:s3:::my-bucket", // The ARN of this event source
+                    "events": [
+                        "s3:ObjectCreated:*" // The specific event to execute in response to.
+                    ]
+                }
+            }
+        ],
+    }
+}
+
+=================================================================================================
+DynamoDB: from gareth 4/24/2017
+DynamoDB *should* give you one concurrent function *per* internal Shard... You can find out how many shards it uses by doing "describe" action on the stream ARN. Mine said it had 8, but there was absolutely not 8 lambdas running concurrently
+
+[7:30] 
+I then moved to Kinesis
+
+[7:31] 
+i made the lambda on the DDB stream simply put the request to kinesis, then provisioned a few shards in Kinesis, you get one lambda concurrently per shard
+
+[7:32] 
+this worked perfectly as describes, but you can only half/double your shards i think it's once every 24h... So i turned on 1 to start... bumped it to two then couldn't alter any more for 24h... i thought that was a bit rubbish so i  dropped kinesis
+
+[7:32] 
+Solution... SNS... SNS will run as many concurrent lambdas as your AWS limit allows
+
+[7:32] 
+by this time I had 3000 images to process
+
+[7:33] 
+each image takes 7s to process
+
+[7:33] 
+I ran a few lines of code to scan DDB and pump out SNS messages
+
+[7:33] 
+processed all 3000 in ~10s
+
+[7:34] 
+(a bunch got throttled as that totally blew my provisioned Dynamo DB reads and writes, but boosted those limits temporarily and re-ran :slightly_smiling_face: )
+
+[7:35] 
+in retrospect, more of the documentation makes sense now
+
+[7:36] 
+oh, and based on the last 48h of data... (i'm outside the "free tier" of lambda so that's not a factor) i'm seeing a 90% cost reduction
+
+[7:36] 
+in our server costs
+=================================================================================================

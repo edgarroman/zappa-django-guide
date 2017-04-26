@@ -205,27 +205,6 @@ And that should work fine going forward.  Note that Let's Encrypt certificates o
 !!! Note
     Amazon official documentation states that this step could take up to 40 minutes to initialize the certificate.
 
-#### Step 2.5: Auto-Renew (Optional)
-
-If you'd like Zappa to automatically renew your HTTPS certificate then simply add the following Let's Encrypt expression to your Zappa Settings file:
-
-``` hl_lines="12"
-{
-    "dev": {
-        "django_settings": "frankie.settings", 
-        "s3_bucket": "zappatest-code",
-        "aws_region": "us-east-1",
-        "vpc_config" : {
-            "SubnetIds": [ "subnet-f3446aba","subnet-c5b8c79e" ], // use the private subnet
-            "SecurityGroupIds": [ "sg-9a9a1dfc" ]
-        },
-        "lets_encrypt_key": "le-account.key", // Local path to account key - can also be s3 path
-        "domain": "www.zappaguide.com",
-        "lets_encrypt_expression": "rate(30 days)", // LE Renew schedule
-    }
-}
-```
-
 ### Other Service Providers
 
 If you choose to use your own DNS provider and/or your own Certificate Authority to create the custom domain names, you will have to perform the manual steps outlined in the official AWS documentation:
