@@ -477,6 +477,60 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#troubleshooting" title="Troubleshooting" class="md-nav__link">
+    Troubleshooting
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#403-forbidden" title="403 - Forbidden!" class="md-nav__link">
+    403 - Forbidden!
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-browse-to-api-gateway-custom-domain" title="Step 1 - Browse to API Gateway -&gt; Custom Domain" class="md-nav__link">
+    Step 1 - Browse to API Gateway -&gt; Custom Domain
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-remove-the-custom-domain-mapping" title="Step 2 - Remove the Custom Domain Mapping" class="md-nav__link">
+    Step 2 - Remove the Custom Domain Mapping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-re-run-zappa-certify" title="Step 3 - Re-run zappa certify" class="md-nav__link">
+    Step 3 - Re-run zappa certify
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django-is-redirecting-to-the-raw-url" title="Django is redirecting to the raw url" class="md-nav__link">
+    Django is redirecting to the raw url
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#manage-your-own-cloudfront-distribution" title="Manage Your Own CloudFront Distribution" class="md-nav__link">
     Manage Your Own CloudFront Distribution
   </a>
@@ -494,6 +548,13 @@
           <li class="md-nav__item">
   <a href="#associate-https-certificate" title="Associate HTTPS certificate" class="md-nav__link">
     Associate HTTPS certificate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#then-create-additional-origins" title="Then create additional 'Origins'" class="md-nav__link">
+    Then create additional 'Origins'
   </a>
   
 </li>
@@ -764,6 +825,60 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#troubleshooting" title="Troubleshooting" class="md-nav__link">
+    Troubleshooting
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#403-forbidden" title="403 - Forbidden!" class="md-nav__link">
+    403 - Forbidden!
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-browse-to-api-gateway-custom-domain" title="Step 1 - Browse to API Gateway -&gt; Custom Domain" class="md-nav__link">
+    Step 1 - Browse to API Gateway -&gt; Custom Domain
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-remove-the-custom-domain-mapping" title="Step 2 - Remove the Custom Domain Mapping" class="md-nav__link">
+    Step 2 - Remove the Custom Domain Mapping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-re-run-zappa-certify" title="Step 3 - Re-run zappa certify" class="md-nav__link">
+    Step 3 - Re-run zappa certify
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django-is-redirecting-to-the-raw-url" title="Django is redirecting to the raw url" class="md-nav__link">
+    Django is redirecting to the raw url
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#manage-your-own-cloudfront-distribution" title="Manage Your Own CloudFront Distribution" class="md-nav__link">
     Manage Your Own CloudFront Distribution
   </a>
@@ -781,6 +896,13 @@
           <li class="md-nav__item">
   <a href="#associate-https-certificate" title="Associate HTTPS certificate" class="md-nav__link">
     Associate HTTPS certificate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#then-create-additional-origins" title="Then create additional 'Origins'" class="md-nav__link">
+    Then create additional 'Origins'
   </a>
   
 </li>
@@ -1001,8 +1123,26 @@ Certificate updated!
 <p>If you choose to use your own DNS provider and/or your own Certificate Authority to create the custom domain names, you will have to perform the manual steps outlined in the official AWS documentation:</p>
 <p><a href="http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html#how-to-custom-domains-console">http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html#how-to-custom-domains-console</a></p>
 <p>In this case, I would recommend against using the built-in Zappa commands because of unexpected side effects.</p>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<p>Using your own domain name can be one of the most frustrating experiences, especially due to the potential for a long delay while AWS is creating/setting up the necessary components.  Here we list some of the common errors that you may get when you think everythign is working.</p>
+<h3 id="403-forbidden">403 - Forbidden!<a class="headerlink" href="#403-forbidden" title="Permanent link">&para;</a></h3>
+<p>Sometimes you may encounter the dreaded '403 - Forbidden message': </p>
+<div class="codehilite"><pre><span></span>{&quot;message&quot;:&quot;Forbidden&quot;}
+</pre></div>
+
+
+<p>Often this happens when the user runs <code>zappa certify</code> but has not completed all the steps or correctly configured the zappa settings file.  The best way to handle this is generally to manually remove any partially configured custom domains from the AWS console and then try to run <code>zappa certify</code> again.  Follow these steps to remove any partial custom domain remnants.  </p>
+<h4 id="step-1-browse-to-api-gateway-custom-domain">Step 1 - Browse to API Gateway -&gt; Custom Domain<a class="headerlink" href="#step-1-browse-to-api-gateway-custom-domain" title="Permanent link">&para;</a></h4>
+<p><img alt="API Gateway -&gt; Custom Domain" src="../images/domain_trouble_custom_domain.png" /></p>
+<h4 id="step-2-remove-the-custom-domain-mapping">Step 2 - Remove the Custom Domain Mapping<a class="headerlink" href="#step-2-remove-the-custom-domain-mapping" title="Permanent link">&para;</a></h4>
+<p><img alt="Remove Custom Domain Mapping" src="../images/domain_trouble_custom_domain2.png" /></p>
+<h4 id="step-3-re-run-zappa-certify">Step 3 - Re-run <code>zappa certify</code><a class="headerlink" href="#step-3-re-run-zappa-certify" title="Permanent link">&para;</a></h4>
+<h3 id="django-is-redirecting-to-the-raw-url">Django is redirecting to the raw url<a class="headerlink" href="#django-is-redirecting-to-the-raw-url" title="Permanent link">&para;</a></h3>
+<p>Another mistake often seen is that when a form is submitted or another HTTP redirect happens, the URL generated is no longer the custom domain, but rather the 'raw' API Gateway URL.  If you see this, most often you are missing the <code>domain</code> parameter in the zappa settings file.</p>
 <h2 id="manage-your-own-cloudfront-distribution">Manage Your Own CloudFront Distribution<a class="headerlink" href="#manage-your-own-cloudfront-distribution" title="Permanent link">&para;</a></h2>
-<p>Well, with all this power comes great responsibilites.</p>
+<p>The private CloudFront distribution created with the API Gateway is fine, but sometimes you need more control. The alternative is to create your own AWS CloudFront distribution. By doing this, you may still associate a Custom Domain Name, still use ACM HTTPS; but you have additional control - essentially the full power of AWS CloudFront.</p>
+<p>This will let you configure caching timeouts for multiple paths. So if you have a fairly static landing page, the cache timeout could be days or weeks; while the user account page may have cache of seconds or minutes. Advanced caching could include query parameters and/or cookies.</p>
+<p>Thus the control of the caching behavoir is vastly increased, so is the complexity of managing the CloudFront distribution. In some cases, the additional complexity is necessary or even required.</p>
 <h3 id="create-a-cloudfront-distribution">Create a CloudFront Distribution<a class="headerlink" href="#create-a-cloudfront-distribution" title="Permanent link">&para;</a></h3>
 <p>To get started, follow <a href="http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-creating-console.html#CreatingDownloadDistributionsConsoleProcedure">these instructions</a></p>
 <p>Some key parameters:</p>
@@ -1021,6 +1161,8 @@ Certificate updated!
 </ul>
 <h3 id="associate-https-certificate">Associate HTTPS certificate<a class="headerlink" href="#associate-https-certificate" title="Permanent link">&para;</a></h3>
 <p>Follow <a href="http://docs.aws.amazon.com/acm/latest/userguide/gs-cf.html">these instructions</a> to associate your new distro with a SSL/TLS certificate.</p>
+<h3 id="then-create-additional-origins">Then create additional 'Origins'<a class="headerlink" href="#then-create-additional-origins" title="Permanent link">&para;</a></h3>
+<p>So now that you have your default origin configured you can add additional ones.  And you can point to various url paths in your application to configure the cache timings and other behavoirs like compression and so on.</p>
                 
                   
                 
