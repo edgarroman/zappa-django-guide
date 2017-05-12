@@ -213,10 +213,41 @@ If you choose to use your own DNS provider and/or your own Certificate Authority
 
 In this case, I would recommend against using the built-in Zappa commands because of unexpected side effects.
 
+## Troubleshooting
+
+Using your own domain name can be one of the most frustrating experiences, especially due to the potential for a long delay while AWS is creating/setting up the necessary components.  Here we list some of the common errors that you may get when you think everythign is working.
+
+### 403 - Forbidden!
+
+Sometimes you may encounter the dreaded '403 - Forbidden message': 
+
+```
+{"message":"Forbidden"}
+```
+
+Often this happens when the user runs `zappa certify` but has not completed all the steps or correctly configured the zappa settings file.  The best way to handle this is generally to manually remove any partially configured custom domains from the AWS console and then try to run `zappa certify` again.  Follow these steps to remove any partial custom domain remnants.  
+
+#### Step 1 - Browse to API Gateway -> Custom Domain
+
+![API Gateway -> Custom Domain](images/domain_trouble_custom_domain.png)
+
+#### Step 2 - Remove the Custom Domain Mapping
+
+![Remove Custom Domain Mapping](images/domain_trouble_custom_domain2.png)
+
+#### Step 3 - Re-run `zappa certify`
+
+### Django is redirecting to the raw url
+
+Another mistake often seen is that when a form is submitted or another HTTP redirect happens, the URL generated is no longer the custom domain, but rather the 'raw' API Gateway URL.  If you see this, most often you are missing the `domain` parameter in the zappa settings file.
 
 ## Manage Your Own CloudFront Distribution
 
-Well, with all this power comes great responsibilites.
+The private CloudFront distribution created with the API Gateway is fine, but sometimes you need more control. The alternative is to create your own AWS CloudFront distribution. By doing this, you may still associate a Custom Domain Name, still use ACM HTTPS; but you have additional control - essentially the full power of AWS CloudFront.
+
+This will let you configure caching timeouts for multiple paths. So if you have a fairly static landing page, the cache timeout could be days or weeks; while the user account page may have cache of seconds or minutes. Advanced caching could include query parameters and/or cookies.
+
+Thus the control of the caching behavoir is vastly increased, so is the complexity of managing the CloudFront distribution. In some cases, the additional complexity is necessary or even required.
 
 ### Create a CloudFront Distribution
 
@@ -238,3 +269,6 @@ Some key parameters:
 
 Follow [these instructions](http://docs.aws.amazon.com/acm/latest/userguide/gs-cf.html) to associate your new distro with a SSL/TLS certificate.
 
+### Then create additional 'Origins'
+
+So now that you have your default origin configured you can add additional ones.  And you can point to various url paths in your application to configure the cache timings and other behavoirs like compression and so on.
