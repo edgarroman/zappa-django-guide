@@ -310,19 +310,6 @@
     Baseline packages
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#why-not-python-3" title="Why not Python 3?" class="md-nav__link">
-    Why not Python 3?
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -616,19 +603,6 @@
     Baseline packages
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#why-not-python-3" title="Why not Python 3?" class="md-nav__link">
-    Why not Python 3?
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -761,13 +735,11 @@
 <h2 id="baseline-packages">Baseline packages<a class="headerlink" href="#baseline-packages" title="Permanent link">&para;</a></h2>
 <p>To ensure baseline expectations are set, all environments will assume the following criteria:</p>
 <ul>
-<li>Python 2.7 (due to <a href="http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html">AWS lambda only supporting 2.7</a>) </li>
+<li>Python 3.6 or 2.7 (according to <a href="http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html">AWS lambda support</a>) </li>
 <li>Django 1.10</li>
 <li>Latest version of <a href="https://pypi.python.org/pypi/zappa">zappa</a></li>
 </ul>
 <p>In addition, zappa <em>requires</em> a virtual environment in which to function.  So all approaches below include a virtual environment.  </p>
-<h3 id="why-not-python-3">Why not Python 3?<a class="headerlink" href="#why-not-python-3" title="Permanent link">&para;</a></h3>
-<p>While the Python community is rapidly moving to python 3, currently <a href="http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html">AWS lamdba supports only python 2.7</a></p>
 <h2 id="approach-1-local-machine">Approach #1 - Local Machine<a class="headerlink" href="#approach-1-local-machine" title="Permanent link">&para;</a></h2>
 <p>You can easily set up your working environment on your local machine. For simple projects, this is very easy to manage and maintain.  All you need is Python 2.7, pip, and virtualenv installed.  This works for Windows, MacOS, and Linux machines.  </p>
 <p>Here we setup a working environment named 'zappatest'</p>
