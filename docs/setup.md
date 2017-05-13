@@ -17,15 +17,11 @@ In addition, a working environment assists with development and testing.  The ca
 
 To ensure baseline expectations are set, all environments will assume the following criteria:
 
-* Python 2.7 (due to [AWS lambda only supporting 2.7](http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html)) 
+* Python 3.6 or 2.7 (according to [AWS lambda support](http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html)) 
 * Django 1.10
 * Latest version of [zappa](https://pypi.python.org/pypi/zappa)
 
 In addition, zappa *requires* a virtual environment in which to function.  So all approaches below include a virtual environment.  
-
-### Why not Python 3?
-
-While the Python community is rapidly moving to python 3, currently [AWS lamdba supports only python 2.7](http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html)
 
 ## Approach #1 - Local Machine
 
