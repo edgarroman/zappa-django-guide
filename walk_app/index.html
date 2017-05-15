@@ -17,7 +17,7 @@
     
     
       
-        <title>Managing Credentials - Guide to using Django with Zappa</title>
+        <title>Application Adaptations - Guide to using Django with Zappa</title>
       
     
     
@@ -78,11 +78,11 @@
             
               
                 <span class="md-header-nav__parent">
-                  AWS Setup
+                  Walkthroughs
                 </span>
               
             
-            Managing Credentials
+            Application Adaptations
           
         </span>
       </div>
@@ -167,7 +167,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../setup/" title="Walkthroughs" class="md-tabs__link">
+        <a href="../setup/" title="Walkthroughs" class="md-tabs__link md-tabs__link--active">
           Walkthroughs
         </a>
       
@@ -180,7 +180,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="./" title="AWS Setup" class="md-tabs__link md-tabs__link--active">
+        <a href="../aws_credentials/" title="AWS Setup" class="md-tabs__link">
           AWS Setup
         </a>
       
@@ -249,10 +249,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
     
     <label class="md-nav__link" for="nav-2">
       Walkthroughs
@@ -328,44 +330,6 @@
           
           
 
-
-  <li class="md-nav__item">
-    <a href="../walk_app/" title="Application Adaptations" class="md-nav__link">
-      Application Adaptations
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-  
-
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
-    
-    <label class="md-nav__link" for="nav-3">
-      AWS Setup
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
-        AWS Setup
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
   
 
 
@@ -377,11 +341,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="toc">
-        Managing Credentials
+        Application Adaptations
       </label>
     
-    <a href="./" title="Managing Credentials" class="md-nav__link md-nav__link--active">
-      Managing Credentials
+    <a href="./" title="Application Adaptations" class="md-nav__link md-nav__link--active">
+      Application Adaptations
     </a>
     
       
@@ -395,23 +359,43 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#getting-started-with-aws-and-zappa" title="Getting Started with AWS and Zappa" class="md-nav__link">
-    Getting Started with AWS and Zappa
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#setup-local-account-credentials" title="Setup Local Account Credentials" class="md-nav__link">
-    Setup Local Account Credentials
+  <a href="#minimal-disk-storage-might-be-persistent" title="Minimal disk storage might be persistent" class="md-nav__link">
+    Minimal disk storage might be persistent
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#useful-links-for-windows-or-more-information" title="Useful links for Windows or more information:" class="md-nav__link">
-    Useful links for Windows or more information:
+  <a href="#poor-mans-search-engline" title="Poor Man's Search Engline" class="md-nav__link">
+    Poor Man's Search Engline
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#passing-environment-variables-to-your-application" title="Passing Environment Variables to your Application" class="md-nav__link">
+    Passing Environment Variables to your Application
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables-in-zappa-settings" title="Environment Variables in Zappa Settings" class="md-nav__link">
+    Environment Variables in Zappa Settings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lambda-environment-variables" title="Lambda Environment Variables" class="md-nav__link">
+    Lambda Environment Variables
   </a>
   
 </li>
@@ -427,6 +411,42 @@
   
 </nav>
     
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      AWS Setup
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        AWS Setup
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../aws_credentials/" title="Managing Credentials" class="md-nav__link">
+      Managing Credentials
+    </a>
   </li>
 
         
@@ -516,23 +536,43 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#getting-started-with-aws-and-zappa" title="Getting Started with AWS and Zappa" class="md-nav__link">
-    Getting Started with AWS and Zappa
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#setup-local-account-credentials" title="Setup Local Account Credentials" class="md-nav__link">
-    Setup Local Account Credentials
+  <a href="#minimal-disk-storage-might-be-persistent" title="Minimal disk storage might be persistent" class="md-nav__link">
+    Minimal disk storage might be persistent
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#useful-links-for-windows-or-more-information" title="Useful links for Windows or more information:" class="md-nav__link">
-    Useful links for Windows or more information:
+  <a href="#poor-mans-search-engline" title="Poor Man's Search Engline" class="md-nav__link">
+    Poor Man's Search Engline
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#passing-environment-variables-to-your-application" title="Passing Environment Variables to your Application" class="md-nav__link">
+    Passing Environment Variables to your Application
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables-in-zappa-settings" title="Environment Variables in Zappa Settings" class="md-nav__link">
+    Environment Variables in Zappa Settings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lambda-environment-variables" title="Lambda Environment Variables" class="md-nav__link">
+    Lambda Environment Variables
   </a>
   
 </li>
@@ -557,54 +597,75 @@
               
                 
                 
-                <h1 id="managing-aws-credentials">Managing AWS Credentials<a class="headerlink" href="#managing-aws-credentials" title="Permanent link">&para;</a></h1>
-<h2 id="getting-started-with-aws-and-zappa">Getting Started with AWS and Zappa<a class="headerlink" href="#getting-started-with-aws-and-zappa" title="Permanent link">&para;</a></h2>
-<p>Details in this section are light because this information is documented well elsewhere on the web.</p>
+                <h1 id="adapting-your-application-to-zappa-lambda">Adapting your Application to Zappa / Lambda<a class="headerlink" href="#adapting-your-application-to-zappa-lambda" title="Permanent link">&para;</a></h1>
+<p>If you've done the walkthroughs thus far, they have allowed you to seamlessly get your existing application
+(or allowed you to create a new one) in AWS Lambda using <a href="https://github.com/Miserlou/Zappa">Zappa</a>.  </p>
+<p>But running code in AWS Lambda is not the same as running code on a dedicated virtual server.<br />
+This document describes differences in the AWS Lambda environment and outlines many of the possible
+adaptations you may need to apply to your Application.</p>
+<h2 id="minimal-disk-storage-might-be-persistent">Minimal disk storage might be persistent<a class="headerlink" href="#minimal-disk-storage-might-be-persistent" title="Permanent link">&para;</a></h2>
+<p>When your code runs, whether it was trigged from an HTTP request or other event, the only disk storage
+available to write files is in <code>/tmp</code>.  And that storage is limited to 500MB.  Always check the <a href="http://docs.aws.amazon.com/lambda/latest/dg/limits.html#limits-list">AWS Lambda Limits</a> page because this limitation could change over time.</p>
+<p>Interestingly, once your code runs and is complete, the AWS Lamda service 'freezes' your container and if trigged again, <a href="http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html">could 'unfreeze' the container for reuse</a>.  What this means from a
+practical standpoint is that if you need to write out files to <code>/tmp</code> your code could both find files
+from previous runs and also run out of disk space.</p>
+<p>The obivous adaptations when writing out files:</p>
 <ul>
-<li>Create AWS Account if you haven't already</li>
-<li>Create an S3 bucket.<br />
-   For purposes of this walkthrough I have used the bucket name of <code>zappatest-code</code> in the 'US Standard' region.  This bucket will be used by zappa as a mechanism to upload your project into the lambda environment.  Thus it will generally be empty except during the brief time you are deploying the project.</li>
-<li>Create an IAM User with API keys
-   Easier said than done.  The quick and easy way of doing this is to create a user with a policy that allows a very broad set of permissions.  However, this is not great from a security perspective. There is an <a href="https://github.com/Miserlou/Zappa/issues/244">ongoing discussion</a> about the exact set of permissions needed.</li>
+<li>Do not rely on having files exist between code invocations</li>
+<li>If the temp files are of significant size, it would be better to clean them up on exit to avoid future code invocations from running out of space</li>
+<li>Any content uploaded via HTTP (or downloaded/created during invocation) must be persisted elsewhere such as in S3</li>
+<li>If you need unique files on disk for each invocation, be sure the space required per invocation
+multipied by the number of possible invocations is less than 500MB.</li>
 </ul>
-<p>Now we need to allow scripts and local programs to get the credentials created above.  You have some options for this:</p>
-<h2 id="setup-local-account-credentials">Setup Local Account Credentials<a class="headerlink" href="#setup-local-account-credentials" title="Permanent link">&para;</a></h2>
-<ol>
-<li>
-<p>Set <a href="https://github.com/Miserlou/Zappa/issues/244">environment variables</a></p>
-<p>This is very easy but must be done for each bash console you are using.</p>
-<div class="codehilite"><pre><span></span>export AWS_ACCESS_KEY_ID=&lt;your key here&gt;
-export AWS_SECRET_ACCESS_KEY=&lt;your secret access key here&gt;
+<p>Some additional use cases:</p>
+<h3 id="poor-mans-search-engline">Poor Man's Search Engline<a class="headerlink" href="#poor-mans-search-engline" title="Permanent link">&para;</a></h3>
+<p>You could use the temp space to power file-based tools such as the <a href="http://whoosh.readthedocs.io/en/latest/">Whoosh Search Engine</a> by downloading the search index from S3.  This may work for small indexes.</p>
+<h2 id="passing-environment-variables-to-your-application">Passing Environment Variables to your Application<a class="headerlink" href="#passing-environment-variables-to-your-application" title="Permanent link">&para;</a></h2>
+<p>There are a number of ways to pass information to your application</p>
+<h3 id="environment-variables-in-zappa-settings">Environment Variables in Zappa Settings<a class="headerlink" href="#environment-variables-in-zappa-settings" title="Permanent link">&para;</a></h3>
+<p>You can include variables in the zappa settings file directly.  These variables are easy to set and are included in each deployment.  Great for variables that do not change often or are not sensitive (e.g. credentials).</p>
+<div class="codehilite"><pre><span></span>{
+    &quot;dev&quot;: {
+        ...
+        &quot;environment_variables&quot;: {
+            &quot;some_key&quot;: &quot;some_value&quot;
+        }
+    },
+    ...
+}
 </pre></div>
 
 
-</li>
-<li>
-<p>Create a local credentials file (<code>~/.aws/credentials</code> on Linux, or OS X)</p>
-<p>Probably a better long term solution since you can store multiple 
- sets of keys for different environments using profiles.  In addition, you can provide multiple profiles that provides some isolation between AWS accounts and/or roles.  The alternate profile example shown below is called 'zappa'</p>
-<div class="codehilite"><pre><span></span><span class="k">[default]</span>
-<span class="na">aws_access_key_id</span> <span class="o">=</span> <span class="s">your_access_key_id</span>
-<span class="na">aws_secret_access_key</span> <span class="o">=</span> <span class="s">your_secret_access_key</span>
-
-<span class="k">[zappa]</span>
-<span class="na">aws_access_key_id</span> <span class="o">=</span> <span class="s">your_access_key_id_specific_to_zappa</span>
-<span class="na">aws_secret_access_key</span> <span class="o">=</span> <span class="s">your_secret_access_key_specific_to_zappa</span>
+<p>And then you can easily retrieve the information from within your code:</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">some_value</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;some_key&#39;</span><span class="p">)</span>
 </pre></div>
 
 
-<p>Since you have multiple profiles, it is recommended that you use an environment variable to distinguish which profile is desired to be active.  Shown here is an example of using the 'zappa' profile:</p>
-<div class="codehilite"><pre><span></span><span class="nb">export</span> <span class="nv">AWS_PROFILE</span><span class="o">=</span>zappa
+<h3 id="lambda-environment-variables">Lambda Environment Variables<a class="headerlink" href="#lambda-environment-variables" title="Permanent link">&para;</a></h3>
+<p>Your code can pull information from the execution environment by using the built-in AWS Lambda environment variables.  There is also a method for adding custom variables via the AWS Console.
+This method is generally only useful for system-generated variables since custom variables can more easily be configured in zappa settings (see above).</p>
+<p>First, there are the <a href="http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html">standard environment variables</a> such as path to code, region, and python path.  These values are automatically calculated and driven by AWS.  </p>
+<p>In addition to these system variables, you can set <a href="http://docs.aws.amazon.com/lambda/latest/dg/env_variables.html">custom environment variables in the AWS Console</a>.<br />
+So you could add <code>SOME_LAMBDA_KEY</code> in the AWS console and retrieve it in your code:</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">some_lamda_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;SOME_LAMBDA_KEY&#39;</span><span class="p">)</span>
+<span class="c1"># or get system values</span>
+<span class="n">aws_lambda_function_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;AWS_LAMBDA_FUNCTION_NAME&#39;</span><span class="p">)</span>
 </pre></div>
 
 
-</li>
-</ol>
-<h3 id="useful-links-for-windows-or-more-information">Useful links for Windows or more information:<a class="headerlink" href="#useful-links-for-windows-or-more-information" title="Permanent link">&para;</a></h3>
+<p>While on the topic of system-generated information, your code can also pull important information from 
+the <a href="http://docs.aws.amazon.com/lambda/latest/dg/python-context-object.html">Python execution context</a>:</p>
+<blockquote>
+<p>While a Lambda function is executing, it can interact with the AWS Lambda service to get useful runtime information such as:</p>
 <ul>
-<li>http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html</li>
-<li>http://boto3.readthedocs.io/en/latest/guide/configuration.html#configuring-credentials</li>
+<li>How much time is remaining before AWS Lambda terminates your Lambda function (timeout is one of the Lambda function configuration properties).</li>
+<li>The CloudWatch log group and log stream associated with the Lambda function that is executing.</li>
+<li>The AWS request ID returned to the client that invoked the Lambda function. You can use the request ID for any follow up inquiry with AWS support.</li>
+<li>If the Lambda function is invoked through AWS Mobile SDK, you can learn more about the mobile application calling the Lambda function.</li>
 </ul>
+</blockquote>
                 
                   
                 
@@ -623,7 +684,7 @@ export AWS_SECRET_ACCESS_KEY=&lt;your secret access key here&gt;
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../walk_app/" title="Application Adaptations" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../walk_domain/" title="Custom Domains" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -632,19 +693,19 @@ export AWS_SECRET_ACCESS_KEY=&lt;your secret access key here&gt;
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Application Adaptations
+                Custom Domains
               </span>
             </div>
           </a>
         
         
-          <a href="../aws_network/" title="Adventures in Networking" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../aws_credentials/" title="Managing Credentials" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Adventures in Networking
+                Managing Credentials
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
