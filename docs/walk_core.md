@@ -266,3 +266,37 @@ https://bnu0zcwezd.execute-api.us-east-1.amazonaws.com/dev/
 
 While this url may be considered functional, most would regard it as extremely unfriendly to users. To improve this and even get HTTPS encryption see the section on [using a Custom Domain](walk_domain.md).
 
+## Checking up on the deployment
+
+If, at any time, you would like to get information on the deployment, the command to run is
+
+```
+zappa status dev
+```
+
+And you will get a plethora of data about your deployment:
+```
+	Lambda Versions:      2
+	Lambda Name:          zappatest2-dev
+	Lambda ARN:           arn:aws:lambda:us-east-1:738351236015:function:zappatest2-dev
+	Lambda Role ARN:      arn:aws:iam::738351236015:role/ZappaLambdaExecution
+	Lambda Handler:       handler.lambda_handler
+	Lambda Code Size:     11919234
+	Lambda Version:       $LATEST
+	Lambda Last Modified: 2017-04-02T12:56:32.663+0000
+	Lambda Memory Size:   512
+	Lambda Timeout:       30
+	Lambda Runtime:       python2.7
+	Lambda VPC ID:        None
+	Invocations (24h):    6
+	Errors (24h):         0
+	Error Rate (24h):     0.00%
+	API Gateway URL:      https://i1mf39942k.execute-api.us-east-1.amazonaws.com/dev
+	Domain URL:           None Supplied
+	Num. Event Rules:     1
+	Event Rule ARN:       arn:aws:events:us-east-1:1111111111:rule/zappatest2-dev-zappa-keep-warm-handler.keep_warm_callback
+	Event Rule Name:      zappatest2-dev-zappa-keep-warm-handler.keep_warm_callback
+	Event Rule State:     Enabled
+	Event Rule Schedule:  rate(4 minutes)
+``` 
+It includes the API Gateway URL which is important in case you ever forget the URL
