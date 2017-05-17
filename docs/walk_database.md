@@ -37,18 +37,15 @@ So zip on over to [Creating an RDS Database](aws_database.md) and set up one.  Y
 ### Configure RDS security group
 
 By default newly created RDS Security Groups [have no inbound access](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html).  So you need
-to make sure your RDS Security group has open TCP connections from your local subnet.  
+to make sure your RDS Security group has open TCP connections from your subnets associated with the lambdas.  
 
 So your inbound rules on the RDS security may look like:
 
 Type | Protocol | Port Range | Source
 ----- | ----- | ----- | -----
-All TCP|TCP|5432|10.1.1.0/24
-All TCP|TCP|5432|10.1.2.0/24
+All TCP|TCP|5432|sg9a9a1dfc
 
-You'll note that there are two entries - these represent the IP range for each of the VPC Subnets 
-you configured.  
-We open the whole range because when a lambda container is created, it could take any free address
+We open the whole range associated with the security group because when a lambda container is created, it could take any free address
 in the subnet range.
 
 ### Summary Data
@@ -60,7 +57,6 @@ Here is our sample data:
 Parameter | Sample value
 --------- | ------------
 subnets | subnet-f3446aba, subnet-c5b8c79e
-IP ranges | 10.1.1.0/24 (subnet-f3446aba), 10.1.2.0/24 (subnet-c5b8c79e)
 security group | sg9a9a1dfc
 endpoint | zappa-db.crt239fsjdlk.us-east-1.rds.amazonaws.com
 db username | administrator
