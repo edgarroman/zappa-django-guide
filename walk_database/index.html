@@ -867,7 +867,7 @@ But basically you will need the private subnet or subnets which can access the d
 </ul>
 <h3 id="configure-rds-security-group">Configure RDS security group<a class="headerlink" href="#configure-rds-security-group" title="Permanent link">&para;</a></h3>
 <p>By default newly created RDS Security Groups <a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html">have no inbound access</a>.  So you need
-to make sure your RDS Security group has open TCP connections from your local subnet.  </p>
+to make sure your RDS Security group has open TCP connections from your subnets associated with the lambdas.  </p>
 <p>So your inbound rules on the RDS security may look like:</p>
 <table>
 <thead>
@@ -883,19 +883,11 @@ to make sure your RDS Security group has open TCP connections from your local su
 <td>All TCP</td>
 <td>TCP</td>
 <td>5432</td>
-<td>10.1.1.0/24</td>
-</tr>
-<tr>
-<td>All TCP</td>
-<td>TCP</td>
-<td>5432</td>
-<td>10.1.2.0/24</td>
+<td>sg9a9a1dfc</td>
 </tr>
 </tbody>
 </table>
-<p>You'll note that there are two entries - these represent the IP range for each of the VPC Subnets 
-you configured.<br />
-We open the whole range because when a lambda container is created, it could take any free address
+<p>We open the whole range associated with the security group because when a lambda container is created, it could take any free address
 in the subnet range.</p>
 <h3 id="summary-data">Summary Data<a class="headerlink" href="#summary-data" title="Permanent link">&para;</a></h3>
 <p>Note that at this point you don't yet have a database installed on your RDS instance.  So let's just pick a name we will use for the walkthough.  </p>
@@ -911,10 +903,6 @@ in the subnet range.</p>
 <tr>
 <td>subnets</td>
 <td>subnet-f3446aba, subnet-c5b8c79e</td>
-</tr>
-<tr>
-<td>IP ranges</td>
-<td>10.1.1.0/24 (subnet-f3446aba), 10.1.2.0/24 (subnet-c5b8c79e)</td>
 </tr>
 <tr>
 <td>security group</td>
