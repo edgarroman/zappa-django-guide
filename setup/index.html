@@ -317,24 +317,11 @@
     Approach #1 - Local Machine
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#cautions" title="Cautions" class="md-nav__link">
-    Cautions
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
-  <a href="#approach-2-docker-with-zappa" title="Approach #2 - Docker with zappa" class="md-nav__link">
-    Approach #2 - Docker with zappa
+  <a href="#approach-2-docker-with-zappa-recommended" title="Approach #2 - Docker with zappa (recommended)" class="md-nav__link">
+    Approach #2 - Docker with zappa (recommended)
   </a>
   
     <nav class="md-nav">
@@ -348,35 +335,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#usage-on-a-project" title="Usage on a Project" class="md-nav__link">
-    Usage on a Project
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#first-time-project-setup" title="First time Project setup" class="md-nav__link">
-    First time Project setup
+  <a href="#taking-a-test-drive" title="Taking a test drive" class="md-nav__link">
+    Taking a test drive
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#each-time-using-the-project" title="Each time using the Project" class="md-nav__link">
-    Each time using the Project
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#changes-to-the-docker-image" title="Changes to the Docker Image" class="md-nav__link">
-    Changes to the Docker Image
+  <a href="#project-setup" title="Project Setup" class="md-nav__link">
+    Project Setup
   </a>
   
     <nav class="md-nav">
@@ -390,8 +357,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#build-the-docker-image" title="Build the Docker Image" class="md-nav__link">
-    Build the Docker Image
+  <a href="#build-the-docker-image" title="Build the docker image" class="md-nav__link">
+    Build the docker image
   </a>
   
 </li>
@@ -403,8 +370,22 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#create-the-virtual-environment" title="Create the Virtual Environment" class="md-nav__link">
+    Create the Virtual Environment
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-your-environment" title="Using your environment" class="md-nav__link">
+    Using your environment
+  </a>
   
 </li>
         
@@ -622,24 +603,11 @@
     Approach #1 - Local Machine
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#cautions" title="Cautions" class="md-nav__link">
-    Cautions
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
-  <a href="#approach-2-docker-with-zappa" title="Approach #2 - Docker with zappa" class="md-nav__link">
-    Approach #2 - Docker with zappa
+  <a href="#approach-2-docker-with-zappa-recommended" title="Approach #2 - Docker with zappa (recommended)" class="md-nav__link">
+    Approach #2 - Docker with zappa (recommended)
   </a>
   
     <nav class="md-nav">
@@ -653,35 +621,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#usage-on-a-project" title="Usage on a Project" class="md-nav__link">
-    Usage on a Project
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#first-time-project-setup" title="First time Project setup" class="md-nav__link">
-    First time Project setup
+  <a href="#taking-a-test-drive" title="Taking a test drive" class="md-nav__link">
+    Taking a test drive
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#each-time-using-the-project" title="Each time using the Project" class="md-nav__link">
-    Each time using the Project
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#changes-to-the-docker-image" title="Changes to the Docker Image" class="md-nav__link">
-    Changes to the Docker Image
+  <a href="#project-setup" title="Project Setup" class="md-nav__link">
+    Project Setup
   </a>
   
     <nav class="md-nav">
@@ -695,8 +643,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#build-the-docker-image" title="Build the Docker Image" class="md-nav__link">
-    Build the Docker Image
+  <a href="#build-the-docker-image" title="Build the docker image" class="md-nav__link">
+    Build the docker image
   </a>
   
 </li>
@@ -708,8 +656,22 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#create-the-virtual-environment" title="Create the Virtual Environment" class="md-nav__link">
+    Create the Virtual Environment
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-your-environment" title="Using your environment" class="md-nav__link">
+    Using your environment
+  </a>
   
 </li>
         
@@ -763,18 +725,41 @@ pip install django zappa
 </pre></div>
 
 And you are done.  </p>
-<h3 id="cautions">Cautions<a class="headerlink" href="#cautions" title="Permanent link">&para;</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p>While this approach is easy to get up and running, the challenge comes along when you require more advanced python packages.  </p>
 <p>For example, once you start connecting to databases, you will need to compile packages such as 'psycopg2' for PostGresSQL.  You should consider the implications of installing needed libraries on your local machine.</p>
-<h2 id="approach-2-docker-with-zappa">Approach #2 - Docker with zappa<a class="headerlink" href="#approach-2-docker-with-zappa" title="Permanent link">&para;</a></h2>
+<p>This is approach is not recommended for any type of serious zappa effort.</p>
+</div>
+<h2 id="approach-2-docker-with-zappa-recommended">Approach #2 - Docker with zappa (recommended)<a class="headerlink" href="#approach-2-docker-with-zappa-recommended" title="Permanent link">&para;</a></h2>
 <p>Sometimes leveraging Docker to create an isolated working environment is a good idea.  It takes more work to setup initially, but once you have the foundations, it is quite easy to create multiple working environments and it is easier to share those same environments with other folks on your team.  </p>
-<p>Most of this information is taken from the <a href="https://github.com/danielwhatmuff/zappa">current zappa docker project</a>.  Be sure to check that repo for current updates.</p>
+<p>The main goal of using Docker is to create an environment that closely matches the AWS lambda environment.  The closer it matches, then there will be less difficult-to-debug problems. </p>
+<p>We will leverage the work others have done to enable such an environment.  First and foremost, the folks from <a href="https://github.com/lambci/lambci">lambci</a> have created github repo called <a href="https://github.com/lambci/docker-lambda">docker-lambda</a> that accurately reflects the lambda environment.  It provides:</p>
+<ul>
+<li>Multiple uses<ul>
+<li>A 'build' image for compilation, package creation, and deployment</li>
+<li>A 'run' image for testing and execution of your code</li>
+</ul>
+</li>
+</ul>
+<p>For the purposes of this walkthrough we will focus only on the 'build' image that provides a very nice interactive working environment for zappa.  Further research into how to use the 'run' image is left as an exercise for the reader.</p>
+<ul>
+<li>Multiple Python version support<ul>
+<li>Python 2.7 (<a href="https://hub.docker.com/r/lambci/lambda/tags/">lambci/lambda:build-python2.7</a>)</li>
+<li>Python 3.6 (<a href="https://hub.docker.com/r/lambci/lambda/tags/">lambci/lambda:build-python3.6</a>)</li>
+</ul>
+</li>
+</ul>
+<p>Note that this work was originally inspired from <a href="https://github.com/danielwhatmuff/zappa">danielwhatmuff/zappa</a> but has been enhanced to illustrate support for Python 3.6</p>
 <h3 id="inital-setup">Inital Setup<a class="headerlink" href="#inital-setup" title="Permanent link">&para;</a></h3>
-<p>These steps need to be performed once</p>
+<p>These steps need to be performed once for a new system</p>
 <ul>
 <li><a href="https://docs.docker.com/engine/installation/">Install Docker</a></li>
 <li>Pull the zappa docker image from Docker github
-<div class="codehilite"><pre><span></span>docker pull danielwhatmuff/zappa
+<div class="codehilite"><pre><span></span><span class="c1"># For Python 2.7 projects</span>
+docker pull lambci/lambda:build-python2.7
+<span class="c1"># For Python 3.6 projects</span>
+docker pull lambci/lambda:build-python3.6
 </pre></div>
 </li>
 <li>
@@ -782,83 +767,107 @@ And you are done.  </p>
 <ul>
 <li>
 <p>If you use <a href="../aws_credentials#setup-local-account-credentials">environment variables for AWS Credentials</a> then use:
-<div class="codehilite"><pre><span></span><span class="nb">alias</span> <span class="nv">zappashell</span><span class="o">=</span><span class="s1">&#39;docker run -ti -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION -v $(pwd):/var/task  --rm danielwhatmuff/zappa bash&#39;</span>
-<span class="nb">alias</span> zappashell &gt;&gt; ~/.bash_profile
+<div class="codehilite"><pre><span></span><span class="nb">alias</span> <span class="nv">zappashell2</span><span class="o">=</span><span class="s1">&#39;docker run -ti -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION -v $(pwd):/var/task  --rm lambci/lambda:build-python2.7 bash&#39;</span>
+<span class="nb">alias</span> zappashell2 &gt;&gt; ~/.bash_profile
+<span class="nb">alias</span> <span class="nv">zappashell3</span><span class="o">=</span><span class="s1">&#39;docker run -ti -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION -v $(pwd):/var/task  --rm lambci/lambda:build-python3.6 bash&#39;</span>
+<span class="nb">alias</span> zappashell3 &gt;&gt; ~/.bash_profile
 </pre></div>
 
 Be sure to define the <code>$AWS_DEFAULT_REGION</code> environment variable</p>
 </li>
 <li>
 <p>If you use a <a href="../aws_credentials#setup-local-account-credentials">credentials file for AWS Credentials</a> then use:
-<div class="codehilite"><pre><span></span><span class="nb">alias</span> <span class="nv">zappashell</span><span class="o">=</span><span class="s1">&#39;docker run -ti -e AWS_PROFILE=$AWS_PROFILE -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm danielwhatmuff/zappa bash&#39;</span>
-<span class="nb">alias</span> zappashell &gt;&gt; ~/.bash_profile
+<div class="codehilite"><pre><span></span><span class="nb">alias</span> <span class="nv">zappashell2</span><span class="o">=</span><span class="s1">&#39;docker run -ti -e AWS_PROFILE=$AWS_PROFILE -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm lambci/lambda:build-python2.7 bash&#39;</span>
+<span class="nb">alias</span> zappashell2 &gt;&gt; ~/.bash_profile
+<span class="nb">alias</span> <span class="nv">zappashell3</span><span class="o">=</span><span class="s1">&#39;docker run -ti -e AWS_PROFILE=$AWS_PROFILE -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm lambci/lambda:build-python3.6 bash&#39;</span>
+<span class="nb">alias</span> zappashell3 &gt;&gt; ~/.bash_profile
 </pre></div>
 
 Note that you must either define the <code>$AWS_PROFILE</code> environment variable or edit the alias above to be hardcoded to a specific profile.  Example of hardcoding the alias:
-<div class="codehilite"><pre><span></span><span class="nb">alias</span> <span class="nv">zappashell</span><span class="o">=</span><span class="s1">&#39;docker run -ti -e AWS_PROFILE=zappa -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm danielwhatmuff/zappa bash&#39;</span>
-<span class="nb">alias</span> zappashell &gt;&gt; ~/.bash_profile
+<div class="codehilite"><pre><span></span><span class="nb">alias</span> <span class="nv">zappashell3</span><span class="o">=</span><span class="s1">&#39;docker run -ti -e AWS_PROFILE=zappa -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm lambci/lambda:build-python3.6 bash&#39;</span>
 </pre></div>
 </p>
 </li>
 </ul>
 </li>
 </ul>
-<h3 id="usage-on-a-project">Usage on a Project<a class="headerlink" href="#usage-on-a-project" title="Permanent link">&para;</a></h3>
-<p>Once the steps above are complete, then it is very easy to start a working environment.</p>
-<h4 id="first-time-project-setup">First time Project setup<a class="headerlink" href="#first-time-project-setup" title="Permanent link">&para;</a></h4>
-<p>You will need to install any python dependencies and/or system libraries.  To fire up the docker container use:</p>
+<h3 id="taking-a-test-drive">Taking a test drive<a class="headerlink" href="#taking-a-test-drive" title="Permanent link">&para;</a></h3>
+<p>So let's try this out now.  Examples going forward will focus on Python 3.6.  To fire up the docker container use:</p>
 <div class="codehilite"><pre><span></span>$ <span class="nb">cd</span> /your_zappa_project
-$ zappashell
-zappa&gt;
+$ zappashell3
+bash-4.2# 
 </pre></div>
 
 
 <p>Next, create the <em>required</em> virtual environment, activate it, and install needed dependencies</p>
-<div class="codehilite"><pre><span></span>zappa&gt; virtualenv ve
-zappa&gt; <span class="nb">source</span> ve/bin/activate 
-<span class="o">(</span>ve<span class="o">)</span>zappa&gt; pip install -r requirements.txt
+<div class="codehilite"><pre><span></span>bash-4.2# virtualenv ve
+bash-4.2# <span class="nb">source</span> ve/bin/activate 
+<span class="o">(</span>ve<span class="o">)</span> bash-4.2# pip install -r requirements.txt
 </pre></div>
 
 
-<p>Since the virtual environment is contained in the current directory, and the current directory is mapped to your local machine, any changes you make will be persisted between Docker container instances.  </p>
-<p>Finally, I recommend upgrading to the latest zappa project since it changes frequently
-<div class="codehilite"><pre><span></span><span class="o">(</span>ve<span class="o">)</span>zappa&gt; pip install --upgrade zappa
-</pre></div>
-</p>
+<p>Since the virtual environment is contained in the current directory, and the current directory is mapped to your local machine, any changes you make will be persisted between Docker container instances.  But if you depend on libraries that are installed in the system (essentially anything out of the current directory and virtual environment), they will be lost when the container exits.  The solution for this is to create a custom Dockerfile (see below)</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>It is very important that you install and activate the virtualenv only in the docker shell.  This will prevent any incompatibilities with the local system environment and the docker environment.</p>
+</div>
 <p>At this point, you are ready to start using zappa.  Once you are finished, you can simply exit the container.</p>
-<h4 id="each-time-using-the-project">Each time using the Project<a class="headerlink" href="#each-time-using-the-project" title="Permanent link">&para;</a></h4>
-<p>Subsequent times you'd like to use the project, merely fire up the container:
-<div class="codehilite"><pre><span></span>$ <span class="nb">cd</span> /your_zappa_project
-$ zappashell
-zappa&gt; <span class="nb">source</span> ve/bin/activate
-<span class="o">(</span>ve<span class="o">)</span>zappa&gt; 
-</pre></div>
-</p>
-<h3 id="changes-to-the-docker-image">Changes to the Docker Image<a class="headerlink" href="#changes-to-the-docker-image" title="Permanent link">&para;</a></h3>
-<p>Once at the zappashell prompt you can install any needed libraries.  But if you depend on libraries that are installed in the system (essentially anything out of the current directory and virtual environment), they will be lost when the container exits.</p>
-<p>The solution is to make your own Docker Image.  Full directions of creating a Docker Image is beyond the scope of this document, but essentially there are a few steps</p>
+<h3 id="project-setup">Project Setup<a class="headerlink" href="#project-setup" title="Permanent link">&para;</a></h3>
+<p>Once the steps above are complete, then it is very easy to start a working environment.  But generally additional steps are required for package compilation and customizations.</p>
 <h4 id="create-a-dockerfile">Create a Dockerfile<a class="headerlink" href="#create-a-dockerfile" title="Permanent link">&para;</a></h4>
-<p>In the local directory create a Dockerfile (note that only the 'D' is capitalized)</p>
-<div class="codehilite"><pre><span></span><span class="k">FROM</span><span class="s"> danielwhatmuff/zappa</span>
+<p>Create a local Dockerfile for your project so you can easily modify needed libraries.  Generally this can go in the root of your zappa project.</p>
+<div class="codehilite"><pre><span></span><span class="k">FROM</span><span class="s"> lambci/lambda:build-python3.6</span>
 
-<span class="k">RUN</span> yum -y install postgresql-devel
+<span class="k">MAINTAINER</span><span class="s"> &quot;Your Name&quot; &lt;your@email.com&gt;</span>
 
-<span class="k">CMD</span><span class="s"> [&quot;zappa&quot;]</span>
+<span class="k">WORKDIR</span><span class="s"> /var/task</span>
+
+<span class="c"># Fancy prompt to remind you are in zappashell</span>
+<span class="k">RUN</span> <span class="nb">echo</span> <span class="s1">&#39;export PS1=&quot;\[\e[36m\]zappashell&gt;\[\e[m\] &quot;&#39;</span> &gt;&gt; /root/.bashrc
+
+<span class="c"># Additional RUN commands here</span>
+<span class="c"># RUN yum clean all &amp;&amp; \</span>
+<span class="c">#    yum -y install &lt;stuff&gt;</span>
+
+<span class="k">CMD</span><span class="s"> [&quot;bash&quot;]</span>
 </pre></div>
 
 
-<h4 id="build-the-docker-image">Build the Docker Image<a class="headerlink" href="#build-the-docker-image" title="Permanent link">&para;</a></h4>
-<p>In the same directory as the Dockerfile</p>
-<div class="codehilite"><pre><span></span>docker build -t myzappa .
+<h4 id="build-the-docker-image">Build the docker image<a class="headerlink" href="#build-the-docker-image" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>$ <span class="nb">cd</span> /your_zappa_project
+$ docker built -t myzappa .
 </pre></div>
 
 
+<p>This will create a local Docker image on your system. </p>
 <h4 id="update-your-zappashell-alias">Update your zappashell alias<a class="headerlink" href="#update-your-zappashell-alias" title="Permanent link">&para;</a></h4>
-<p>To make sure it points to your new image.  Essentially replace <code>danielwhatmuff/zappa</code> with <code>myzappa</code>.  Example:
-<div class="codehilite"><pre><span></span><span class="nb">alias</span> <span class="nv">zappashell</span><span class="o">=</span><span class="s1">&#39;docker run -ti -e AWS_PROFILE=zappa -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm myzappa bash&#39;</span>
+<p>To make sure it points to your new image.  Essentially replace <code>lambci/lambda:build-python3.6</code> with <code>myzappa</code>.  Example:
+<div class="codehilite"><pre><span></span><span class="nb">alias</span> <span class="nv">zappashell</span><span class="o">=</span><span class="s1">&#39;docker run -ti -e AWS_PROFILE=zappa -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm myzappa&#39;</span>
 <span class="nb">alias</span> zappashell &gt;&gt; ~/.bash_profile
 </pre></div>
 </p>
+<h4 id="create-the-virtual-environment">Create the Virtual Environment<a class="headerlink" href="#create-the-virtual-environment" title="Permanent link">&para;</a></h4>
+<p>Create the <em>required</em> virtual environment, activate it, and install needed dependencies</p>
+<div class="codehilite"><pre><span></span>$ zappashell
+zappashell&gt; python -m venv ve
+zappashell&gt; <span class="nb">source</span> ve/bin/activate 
+<span class="o">(</span>ve<span class="o">)</span> zappa&gt; pip install -r requirements.txt
+</pre></div>
+
+
+<p>Since the virtual environment is contained in the current directory, and the current directory is mapped to your local machine, any changes you make will be persisted between Docker container instances.  But if you depend on libraries that are installed in the system (essentially anything out of the current directory and virtual environment), they will be lost when the container exits.  The solution for this is to add these installations as RUN commands in the Dockerfile.</p>
+<h3 id="using-your-environment">Using your environment<a class="headerlink" href="#using-your-environment" title="Permanent link">&para;</a></h3>
+<p>Each time you are working on your project, merely fire up the container:</p>
+<div class="codehilite"><pre><span></span>$ <span class="nb">cd</span> /your_zappa_project
+$ zappashell
+zappashell&gt; <span class="nb">source</span> ve/bin/activate
+<span class="o">(</span>ve<span class="o">)</span> zappashell&gt; 
+</pre></div>
+
+
+<p>All zappa commands can be used to deploy your project:</p>
+<div class="codehilite"><pre><span></span><span class="o">(</span>ve<span class="o">)</span> zappashell&gt; zappa info dev
+</pre></div>
                 
                   
                 
