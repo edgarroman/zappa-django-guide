@@ -215,7 +215,7 @@ In this case, I would recommend against using the built-in Zappa commands becaus
 
 ## Troubleshooting
 
-Using your own domain name can be one of the most frustrating experiences, especially due to the potential for a long delay while AWS is creating/setting up the necessary components.  Here we list some of the common errors that you may get when you think everythign is working.
+Using your own domain name can be one of the most frustrating experiences, especially due to the potential for a long delay while AWS is creating/setting up the necessary components.  Here we list some of the common errors that you may get when you think everything is working.
 
 ### 403 - Forbidden!
 
@@ -247,7 +247,7 @@ The private CloudFront distribution created with the API Gateway is fine, but so
 
 This will let you configure caching timeouts for multiple paths. So if you have a fairly static landing page, the cache timeout could be days or weeks; while the user account page may have cache of seconds or minutes. Advanced caching could include query parameters and/or cookies.
 
-Thus the control of the caching behavoir is vastly increased, so is the complexity of managing the CloudFront distribution. In some cases, the additional complexity is necessary or even required.
+Thus the control of the caching behavior is vastly increased, so is the complexity of managing the CloudFront distribution. In some cases, the additional complexity is necessary or even required.
 
 ### Create a CloudFront Distribution
 

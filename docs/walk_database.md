@@ -213,7 +213,7 @@ Now you invoke the zappa manage command:
 zappa manage dev migrate
 ```
 
-And repeat this process everytime you make model changes.
+And repeat this process every time you make model changes.
 
 ## Create your Django superuser
 

@@ -81,7 +81,7 @@ If you don't have a bucket yet, we'll create one for you too.
 What do you want call your bucket? (default 'zappa-v20ssav8g'): zappatest-code
 
 It looks like this is a Django application!
-What is the module path to your projects's Django settings?
+What is the module path to your project's Django settings?
 We discovered: frankie.settings
 Where are your project's settings? (default 'frankie.settings'):
 
