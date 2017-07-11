@@ -1136,7 +1136,7 @@ Certificate updated!
 <p><a href="http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html#how-to-custom-domains-console">http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html#how-to-custom-domains-console</a></p>
 <p>In this case, I would recommend against using the built-in Zappa commands because of unexpected side effects.</p>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
-<p>Using your own domain name can be one of the most frustrating experiences, especially due to the potential for a long delay while AWS is creating/setting up the necessary components.  Here we list some of the common errors that you may get when you think everythign is working.</p>
+<p>Using your own domain name can be one of the most frustrating experiences, especially due to the potential for a long delay while AWS is creating/setting up the necessary components.  Here we list some of the common errors that you may get when you think everything is working.</p>
 <h3 id="403-forbidden">403 - Forbidden!<a class="headerlink" href="#403-forbidden" title="Permanent link">&para;</a></h3>
 <p>Sometimes you may encounter the dreaded '403 - Forbidden message': </p>
 <div class="codehilite"><pre><span></span>{&quot;message&quot;:&quot;Forbidden&quot;}
@@ -1154,7 +1154,7 @@ Certificate updated!
 <h2 id="manage-your-own-cloudfront-distribution">Manage Your Own CloudFront Distribution<a class="headerlink" href="#manage-your-own-cloudfront-distribution" title="Permanent link">&para;</a></h2>
 <p>The private CloudFront distribution created with the API Gateway is fine, but sometimes you need more control. The alternative is to create your own AWS CloudFront distribution. By doing this, you may still associate a Custom Domain Name, still use ACM HTTPS; but you have additional control - essentially the full power of AWS CloudFront.</p>
 <p>This will let you configure caching timeouts for multiple paths. So if you have a fairly static landing page, the cache timeout could be days or weeks; while the user account page may have cache of seconds or minutes. Advanced caching could include query parameters and/or cookies.</p>
-<p>Thus the control of the caching behavoir is vastly increased, so is the complexity of managing the CloudFront distribution. In some cases, the additional complexity is necessary or even required.</p>
+<p>Thus the control of the caching behavior is vastly increased, so is the complexity of managing the CloudFront distribution. In some cases, the additional complexity is necessary or even required.</p>
 <h3 id="create-a-cloudfront-distribution">Create a CloudFront Distribution<a class="headerlink" href="#create-a-cloudfront-distribution" title="Permanent link">&para;</a></h3>
 <p>To get started, follow <a href="http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-creating-console.html#CreatingDownloadDistributionsConsoleProcedure">these instructions</a></p>
 <p>Some key parameters:</p>

@@ -1048,7 +1048,7 @@ Now you invoke the zappa manage command:</p>
 </pre></div>
 
 
-<p>And repeat this process everytime you make model changes.</p>
+<p>And repeat this process every time you make model changes.</p>
 <h2 id="create-your-django-superuser">Create your Django superuser<a class="headerlink" href="#create-your-django-superuser" title="Permanent link">&para;</a></h2>
 <p>The Django management commands were meant to be run interactively on a command line on a traditional server.  Because there is no command line with lambda, we must do some trickery to get around the input needed for the Django createsuperuser management command.</p>
 <p>Essentially we will use the <code>raw</code> flag on the invoke command to just run raw python.  The following command creates a new superuser named 'admin' with email 'admin@yourdomain.com' and password of 'horse battery stapler'</p>
