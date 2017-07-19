@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
-<html class="no-js">
+<html lang="en" class="no-js">
   <head>
     
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
       
         <meta name="description" content="A full featured walkthough of using Django on Zappa (powered by AWS Lambda in serverless environment)">
       
@@ -13,7 +14,7 @@
       
         <link rel="shortcut icon" href="../assets/images/favicon.png">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.5.4">
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
     
     
       
@@ -21,12 +22,12 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-56ade86843.js"></script>
+      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application-b1a1975878.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-f78e5cb881.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
       
     
     
@@ -91,7 +92,7 @@
           <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
 <div class="md-search" data-md-component="search">
-  <div class="md-search__overlay"></div>
+  <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
@@ -100,7 +101,7 @@
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result">
+        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
           <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
             Type to start searching
           </div>
@@ -112,9 +113,9 @@
 </div>
         
       </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <div class="md-header-nav__source">
-          
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
             
 
 
@@ -134,9 +135,9 @@
     </div>
   </a>
 
-          
+          </div>
         </div>
-      </div>
+      
     </div>
   </nav>
 </header>
@@ -504,6 +505,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../aws_network_primer/" title="Primer on AWS VPC Networking" class="md-nav__link">
+      Primer on AWS VPC Networking
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../aws_network/" title="Adventures in Networking" class="md-nav__link">
       Adventures in Networking
     </a>
@@ -717,18 +730,15 @@
 <div class="codehilite"><pre><span></span>django-admin startproject frankie .
 </pre></div>
 
-
 <h3 id="testing-the-basic-django-project">Testing the basic Django project<a class="headerlink" href="#testing-the-basic-django-project" title="Permanent link">&para;</a></h3>
 <p>At this point if you run 
 <div class="codehilite"><pre><span></span>python manage.py runserver
-</pre></div>
-</p>
+</pre></div></p>
 <p>And visit http://127.0.0.1:8000 with your browser you should see the standard Django 'It Worked!' page</p>
 <p>Now quit the server using Control-C.  You should be back at the console prompt</p>
 <h2 id="setup-zappa">Setup Zappa<a class="headerlink" href="#setup-zappa" title="Permanent link">&para;</a></h2>
 <p><div class="codehilite"><pre><span></span>zappa init
 </pre></div>
-
 You will encounter a series of prompts:</p>
 <ul>
 <li>Name of environment - just accept the default 'dev'</li>
@@ -796,12 +806,10 @@ Enjoy!,
 (ve) $
 </pre></div>
 
-
 <h3 id="testing-the-zappa-setup">Testing the Zappa Setup<a class="headerlink" href="#testing-the-zappa-setup" title="Permanent link">&para;</a></h3>
 <p>So now if we run</p>
 <div class="codehilite"><pre><span></span>zappa deploy dev
 </pre></div>
-
 
 <p>But unfortunately we encounter an error: </p>
 <p><div class="codehilite"><pre><span></span>(ve) $ zappa deploy dev
@@ -825,7 +833,6 @@ Love!,
  ~ Team Zappa!
 (ve) $
 </pre></div>
-
 Aw man, the error <strong>NoRegionError: You must specify a region.</strong> is holding us back.  Zappa is complaining that no AWS region is specified.  So we need to specify a region.  In this walkthrough we are leveraging <code>us-east-1</code> which corresponds to the same region we used above for the S3 bucket.</p>
 <p>You have options:</p>
 <ol>
@@ -834,7 +841,6 @@ Aw man, the error <strong>NoRegionError: You must specify a region.</strong> is 
 <p>Again, the drawback here is this must be set for every console</p>
 <div class="codehilite"><pre><span></span>export AWS_DEFAULT_REGION=us-east-1
 </pre></div>
-
 
 </li>
 <li>
@@ -845,7 +851,6 @@ Aw man, the error <strong>NoRegionError: You must specify a region.</strong> is 
 <span class="na">aws_secret_access_key</span> <span class="o">=</span> <span class="s">your_secret_access_key</span>
 <span class="na">region</span><span class="o">=</span><span class="s">us-east-1</span>
 </pre></div>
-
 
 </li>
 <li>
@@ -860,7 +865,6 @@ Aw man, the error <strong>NoRegionError: You must specify a region.</strong> is 
 }
 </pre></div>
 
-
 <p>Don't forget to put commas in the proper place - JSON is fiddly!</p>
 </li>
 </ol>
@@ -868,7 +872,6 @@ Aw man, the error <strong>NoRegionError: You must specify a region.</strong> is 
 <p>Now it's easy to do the initial deployment</p>
 <div class="codehilite"><pre><span></span>zappa deploy dev
 </pre></div>
-
 
 <p>Zappa will automatically create an AWS API gateway that will route HTTP requests to your lambda Django project.  You should see something like:</p>
 <div class="codehilite"><pre><span></span>(ve) $ zappa deploy dev
@@ -888,7 +891,6 @@ Deploying API Gateway..
 Deployment complete!: https://x6kb437rh.execute-api.us-east-1.amazonaws.com/dev
 </pre></div>
 
-
 <p>Brilliant!  We should be able to use a browser to visit the URL provided at the end of the script.</p>
 <p>Once we do, however, we get:</p>
 <div class="codehilite"><pre><span></span>DisallowedHost at /
@@ -896,17 +898,14 @@ Invalid HTTP_HOST header: &#39;x6kb437rh.execute-api.us-east-1.amazonaws.com&#39
 You may need to add x6kb437rh.execute-api.us-east-1.amazonaws.com&#39; to ALLOWED_HOSTS.
 </pre></div>
 
-
 <p>The built-in <a href="https://docs.djangoproject.com/en/1.10/topics/security/#host-header-validation">Django security settings</a> are kicking in and preventing bad stuff from happening.  So we need to modify our Django settings file to accommodate the <a href="http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html">default hostname that AWS API Gateway uses</a>.  Note that the AWS region is part of the hostname and thus should match your selected region.</p>
 <p>Now edit <code>frankie/settings.py</code> and change ALLOWED_HOSTS to;</p>
 <p><div class="codehilite"><pre><span></span>ALLOWED_HOSTS = [ &#39;127.0.0.1&#39;, &#39;x6kb437rh.execute-api.us-east-1.amazonaws.com&#39;, ]
 </pre></div>
-
 As an aside, for best security practices, put the full domain of the API Gateway here.  Less secure would be to use just <code>.execute-api.us-east-1.amazonaws.com</code>.  </p>
 <p>Once done, we can again deploy to AWS Lambda.  But this time, since we've already pushed the initial deploy, we use the <strong>update</strong> action on the zappa command line.</p>
 <div class="codehilite"><pre><span></span>zappa update dev
 </pre></div>
-
 
 <p>After this completes, you should be able to see your Django site in action.  Note that you will actually get a Page not found (404) response.  This indicates that your Django site is functional and working.   </p>
 <p><img alt="404" src="../images/core_404.png" /></p>
@@ -924,13 +923,11 @@ As an aside, for best security practices, put the full domain of the API Gateway
       Auto Generated API Gateway              Your Zappa Environment
 </pre></div>
 
-
 <p>While this url may be considered functional, most would regard it as extremely unfriendly to users. To improve this and even get HTTPS encryption see the section on <a href="../walk_domain/">using a Custom Domain</a>.</p>
 <h2 id="checking-up-on-the-deployment">Checking up on the deployment<a class="headerlink" href="#checking-up-on-the-deployment" title="Permanent link">&para;</a></h2>
 <p>If, at any time, you would like to get information on the deployment, the command to run is</p>
 <div class="codehilite"><pre><span></span>zappa status dev
 </pre></div>
-
 
 <p>And you will get a plethora of data about your deployment:
 <div class="codehilite"><pre><span></span>    Lambda Versions:      2
@@ -956,7 +953,6 @@ As an aside, for best security practices, put the full domain of the API Gateway
     Event Rule State:     Enabled
     Event Rule Schedule:  rate(4 minutes)
 </pre></div>
-
 It includes the API Gateway URL which is important in case you ever forget the URL</p>
                 
                   
@@ -1039,7 +1035,9 @@ It includes the API Gateway URL which is important in case you ever forget the U
       
     </div>
     
-      <script src="../assets/javascripts/application-0b7df094bf.js"></script>
+      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      
+      
       <script>app.initialize({url:{base:".."}})</script>
       
     

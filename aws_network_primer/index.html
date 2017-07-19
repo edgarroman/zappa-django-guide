@@ -1,0 +1,1186 @@
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="A full featured walkthough of using Django on Zappa (powered by AWS Lambda in serverless environment)">
+      
+      
+      
+      
+        <link rel="shortcut icon" href="../assets/images/favicon.png">
+      
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+    
+    
+      
+        <title>Primer on AWS VPC Networking - Guide to using Django with Zappa</title>
+      
+    
+    
+      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+      
+    
+    
+      
+        
+        
+        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+  
+  
+  
+    <body data-md-color-primary="deep-purple" data-md-color-accent="">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <a href=".." title="Guide to using Django with Zappa" class="md-icon md-icon--home md-header-nav__button">
+          </a>
+        
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
+          
+            
+              
+                <span class="md-header-nav__parent">
+                  AWS Setup
+                </span>
+              
+            
+            Primer on AWS VPC Networking
+          
+        </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+          
+<div class="md-search" data-md-component="search">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
+          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/edgarroman/zappa-django-guide" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      edgarroman/zappa-django-guide
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href=".." title="Home" class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../setup/" title="Walkthroughs" class="md-tabs__link">
+          Walkthroughs
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../aws_credentials/" title="AWS Setup" class="md-tabs__link md-tabs__link--active">
+          AWS Setup
+        </a>
+      
+    </li>
+  
+
+      
+        
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    
+      <i class="md-icon md-icon--home md-nav__button"></i>
+    
+    Guide to using Django with Zappa
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/edgarroman/zappa-django-guide" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      edgarroman/zappa-django-guide
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Walkthroughs
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Walkthroughs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../setup/" title="Setup your Environment" class="md-nav__link">
+      Setup your Environment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../walk_core/" title="Core Django Setup" class="md-nav__link">
+      Core Django Setup
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../walk_static/" title="Hosting Static Files" class="md-nav__link">
+      Hosting Static Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../walk_database/" title="Using a Database" class="md-nav__link">
+      Using a Database
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../walk_domain/" title="Custom Domains" class="md-nav__link">
+      Custom Domains
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../walk_app/" title="Application Adaptations" class="md-nav__link">
+      Application Adaptations
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      AWS Setup
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        AWS Setup
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../aws_credentials/" title="Managing Credentials" class="md-nav__link">
+      Managing Credentials
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Primer on AWS VPC Networking
+      </label>
+    
+    <a href="./" title="Primer on AWS VPC Networking" class="md-nav__link md-nav__link--active">
+      Primer on AWS VPC Networking
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#first-there-is-a-vpc" title="First there is a VPC" class="md-nav__link">
+    First there is a VPC
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#now-create-your-subnets" title="Now create your subnets" class="md-nav__link">
+    Now create your subnets
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#notes-on-subnet-calculations" title="Notes on subnet calculations" class="md-nav__link">
+    Notes on subnet calculations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#but-theres-more" title="But there's more" class="md-nav__link">
+    But there's more
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hooking-things-up-route-tables" title="Hooking things up: route tables" class="md-nav__link">
+    Hooking things up: route tables
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-do-we-need-multiple-route-tables" title="Why do we need multiple route tables?" class="md-nav__link">
+    Why do we need multiple route tables?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#talking-to-the-internet" title="Talking to the Internet" class="md-nav__link">
+    Talking to the Internet
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#other-aws-services" title="Other AWS Services" class="md-nav__link">
+    Other AWS Services
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connectivity-from-private-subnets" title="Connectivity from private subnets" class="md-nav__link">
+    Connectivity from private subnets
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#types-of-nat-devices" title="Types of NAT Devices" class="md-nav__link">
+    Types of NAT Devices
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-aws-services_1" title="Other AWS Services" class="md-nav__link">
+    Other AWS Services
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-topics" title="Advanced Topics" class="md-nav__link">
+    Advanced Topics
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#next-steps" title="Next Steps" class="md-nav__link">
+    Next Steps
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-lambda-works-with-vpc" title="How Lambda Works with VPC" class="md-nav__link">
+    How Lambda Works with VPC
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multiple-subnets-allowed" title="Multiple Subnets allowed" class="md-nav__link">
+    Multiple Subnets allowed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#general-behavior-and-internet-access" title="General Behavior and Internet Access" class="md-nav__link">
+    General Behavior and Internet Access
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bypassing-your-vpc-setup" title="Bypassing your VPC setup" class="md-nav__link">
+    Bypassing your VPC setup
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-considerations" title="Final considerations" class="md-nav__link">
+    Final considerations
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../aws_network/" title="Adventures in Networking" class="md-nav__link">
+      Adventures in Networking
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../aws_database/" title="Creating an RDS Database" class="md-nav__link">
+      Creating an RDS Database
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../aws_route53/" title="Working with Route53" class="md-nav__link">
+      Working with Route53
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../aws_acm/" title="AWS Credential Manager (ACM)" class="md-nav__link">
+      AWS Credential Manager (ACM)
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../additional/" title="Additional" class="md-nav__link">
+      Additional
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#first-there-is-a-vpc" title="First there is a VPC" class="md-nav__link">
+    First there is a VPC
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#now-create-your-subnets" title="Now create your subnets" class="md-nav__link">
+    Now create your subnets
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#notes-on-subnet-calculations" title="Notes on subnet calculations" class="md-nav__link">
+    Notes on subnet calculations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#but-theres-more" title="But there's more" class="md-nav__link">
+    But there's more
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hooking-things-up-route-tables" title="Hooking things up: route tables" class="md-nav__link">
+    Hooking things up: route tables
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-do-we-need-multiple-route-tables" title="Why do we need multiple route tables?" class="md-nav__link">
+    Why do we need multiple route tables?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#talking-to-the-internet" title="Talking to the Internet" class="md-nav__link">
+    Talking to the Internet
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#other-aws-services" title="Other AWS Services" class="md-nav__link">
+    Other AWS Services
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connectivity-from-private-subnets" title="Connectivity from private subnets" class="md-nav__link">
+    Connectivity from private subnets
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#types-of-nat-devices" title="Types of NAT Devices" class="md-nav__link">
+    Types of NAT Devices
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-aws-services_1" title="Other AWS Services" class="md-nav__link">
+    Other AWS Services
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-topics" title="Advanced Topics" class="md-nav__link">
+    Advanced Topics
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#next-steps" title="Next Steps" class="md-nav__link">
+    Next Steps
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-lambda-works-with-vpc" title="How Lambda Works with VPC" class="md-nav__link">
+    How Lambda Works with VPC
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multiple-subnets-allowed" title="Multiple Subnets allowed" class="md-nav__link">
+    Multiple Subnets allowed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#general-behavior-and-internet-access" title="General Behavior and Internet Access" class="md-nav__link">
+    General Behavior and Internet Access
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bypassing-your-vpc-setup" title="Bypassing your VPC setup" class="md-nav__link">
+    Bypassing your VPC setup
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-considerations" title="Final considerations" class="md-nav__link">
+    Final considerations
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="a-brief-primer-on-aws-vpc-networking-and-lambda-functions">A Brief Primer on AWS VPC Networking and Lambda functions<a class="headerlink" href="#a-brief-primer-on-aws-vpc-networking-and-lambda-functions" title="Permanent link">&para;</a></h1>
+<p>Confused on how to create your network environment in AWS?  Don't worry - you're in good company.  Configuring and using AWS VPC networking 
+is powerful, but complex.  </p>
+<p>This document attempts to create a <a href="https://en.wikipedia.org/wiki/Mental_model">mental model</a> to help readers understand the concepts and thus 
+allow more reasonable decisions to be made.  I find it helpful to draw analogies to traditional network setup within a company to assist building
+the mental model.  </p>
+<p>If you're already familiar with AWS VPC, you can skip to <a href="#how-lambda-works-with-vpc">how AWS Lambda interacts with VPC</a></p>
+<p>This document takes the general approach:</p>
+<ul>
+<li>First, discuss the concepts and talk about how they relate</li>
+<li>Link to good tutorials on how to create VPCs once the reader has a good understanding</li>
+</ul>
+<p>We won't go into exacting detail on how to do each step since there are many good tutorials already on the Interwebs.</p>
+<h2 id="first-there-is-a-vpc">First there is a VPC<a class="headerlink" href="#first-there-is-a-vpc" title="Permanent link">&para;</a></h2>
+<p>Back in the bad old days, networks were created by plugging a bunch of network cables into network hardware and were statically configured.<br />
+In AWS, the amazing thing is that you define the network dynamically by providing parameters to Amazon as a form of <a href="https://en.wikipedia.org/wiki/Software-defined_networking">Software Defined Networking</a>.  So Amazon has hardware in their datacenters but present to users a very dynamic environment is nearly indistinguishable from an old-school network.</p>
+<p>The first thing most users do is define the overall boundaries of their network using a Virtual Private Cloud or VPC.  This is roughly akin to
+drawing a circle around your infrastructure.  The old-school equivalent would be to define your company's internal network space.  This network
+space would allow your various departments to have computers that belong to this space.  Old-school companies might have several floors and departments
+so it would have to be big enough to house all these computers.  Additionally, you don't want external hackers have unfettered access to your 
+internal databases and accounting systems so most companies pick <a href="https://en.wikipedia.org/wiki/Private_network">Private Network Space</a> to
+isolate the big bad Internet from the company network.</p>
+<p>You do this in AWS VPC by defining the IP network space of the total possible IP addresses that <em>could</em> live in the VPC.  Now you may not have 
+lots and lots of computers you'll need to put into your VPC, but fortunately you are not charged by Amazon on how many IP addresses
+you have reserved, so you can err on the side of having a bit of room.</p>
+<p>Generally common practice is to use the 10.0.0.0/8 private network space.  Creating a VPC with 10.0.0.0/8 network range will allow you to use over 16 million IP addresses.  This is probably a little excessive for your first VPC, so why not start with something like 10.0.0.0/16 which gives you about 64 thousand IP addresses?  Later we'll keep dividing this network space so this is a good start.</p>
+<h3 id="now-create-your-subnets">Now create your subnets<a class="headerlink" href="#now-create-your-subnets" title="Permanent link">&para;</a></h3>
+<p>Ok, so now we've got a range of IP addresses that we can use and a potential route to the Internet.  Using our old-school network analogy,
+what a typical network engineer would do next is subdivide the network into chunks.  And the more technical term of a chunk of the 
+network is a <a href="https://en.wikipedia.org/wiki/Subnetwork">subnet</a>.  In physical world, some possible reasons do this are:</p>
+<ul>
+<li>If a building has multiple floors, maybe one subnet per floor</li>
+<li>Maybe divide a subnet for each business department (e.g. HR subnet, IT subnet, Software Development subnet)</li>
+<li>Subnet based on functionality: one subnet for the phone system, one subnet for desktop computers, one subnet for web servers</li>
+</ul>
+<p>In the VPC world, the only real reasons needed to divide up the VPC is for functionality and security.  A very common example
+would be if you want web application servers in a public subnet and database servers in a private subnet.  In this configuration,
+users on the Internet can point their browsers at your website but cannot directly access your database servers.  And you can
+create a special connection from your public subnet to your private subnet so that only the web application servers can connect
+to the database servers.  In this way, you lessen the chances that bad actors can attack your database by restricting direct access.</p>
+<h4 id="notes-on-subnet-calculations">Notes on subnet calculations<a class="headerlink" href="#notes-on-subnet-calculations" title="Permanent link">&para;</a></h4>
+<p>There are a lot of complex rules for how big and location of the subnets  within the VPC, but there are two important constraints:</p>
+<ul>
+<li>The size of the subnets must be a power of 2 - which approximately results in the number of IP addresses assigned to the subnet 
+  (e.g. 2, 4, 8, 16, 32, 64, 128, 256, etc IP addresses available)</li>
+<li>The subnets must be contiguous - which means the available IP addresses in the chunk must be sequential</li>
+</ul>
+<p>By far, the easiest way to visualize this system is to use a tool that handles all the complications for you.  I highly recommend
+the <a href="https://community.spiceworks.com/tools/subnet-calc/">Spiceworks Subnet Calculator</a></p>
+<h4 id="but-theres-more">But there's more<a class="headerlink" href="#but-theres-more" title="Permanent link">&para;</a></h4>
+<p>Just a few more notes about subnets created within your VPC.  First, each subnet exists in one availability zone within one AWS Region.
+For your experimentation, this should not be a big deal.  But once you have a production system that is designed to be highly-available,
+then you will probably have to eventually create multiple subnets that are doing the same function (e.g. hosting a database or application
+servers) to guard against the case when one availability zone is having troubles, your infrastructure still is up. See the 
+AWS documentation for more info on <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html">Regions and Availability Zones</a>.</p>
+<p>Each subnet has a built-in <a href="https://en.wikipedia.org/wiki/Access_control_list#Networking_ACLs">Access Control List (ACL)</a>.  This will let
+you control inbound and outbound network traffic at the TCP/IP level.  Thus you can create rules that allow or restrict network traffic
+that applies to the entire subnet.  This is an important distinction from a more robust firewall or security device: regardless of how
+many servers you may have in your subnet, they all share these rules.  So if a particular external IP address is permitted in the ACL,
+then all servers could generate traffic to that external IP address.  If more fine-grained control per resource
+is necessary, see <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html">VPC Security Groups</a>.</p>
+<p>Lastly, there is a <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Appendix_Limits.html#vpc-limits-vpcs-subnets">limit of 200 of subnets per VPC</a>
+ imposed by AWS at the time of this writing.</p>
+<h3 id="hooking-things-up-route-tables">Hooking things up: route tables<a class="headerlink" href="#hooking-things-up-route-tables" title="Permanent link">&para;</a></h3>
+<p>Usually you'll want various subnets to communicate -- and by default, AWS allows all traffic to flow from any subnet to any another.  So that's
+convenient but usually we want a better security posture.</p>
+<p>AWS VPC uses route tables to figure out how network traffic should be shuffled around.  A route table is a configurable object within the AWS
+console.  When you create a new VPC, the AWS system will automatically create a route table for you and assign it to your VPC.  A VPC is 
+always assigned to a route table; and that assigned route table is the 'main' route table.  But there is no star, no icon, or anything special
+in the AWS console that this is a 'main' route table -- merely the fact that when you click on the VPC, only one route table will be listed there.
+And you cannot change a VPC 'main' route table.</p>
+<p>So this 'main' route table has some special properties.  Turns out that each subnet is also assigned a route table.  And if you don't explicitly
+assign a route table on creation of the subnet, it gloms onto whatever the current 'main' route table is. So the 'main' route table is
+used as a default for all subnets that aren't assigned a specific route table.  Thus all the subnets will share a single route table by 
+default unless you take action.  By taking action, I mean you can assign a different route table to a subnet.</p>
+<h4 id="why-do-we-need-multiple-route-tables">Why do we need multiple route tables?<a class="headerlink" href="#why-do-we-need-multiple-route-tables" title="Permanent link">&para;</a></h4>
+<p>The question you may be asking yourself is why do we even need more than one route table?  The most common usage is to increase security by 
+specializing the subnets.  Since we know all the subnets are really just networks, there is no functional difference until we modify how
+network traffic flows between the subnets.  Back to the example of web app servers and databases.  We can put all the web app server 
+instances in Subnet A and the database server instances in Subnet B.  But then by restricting the routes so that Subnet B can only talk
+to Subnet A, we can consider Subnet B as 'private'.  Again, there is no sticker, no emjoi, nor icon in the AWS console that designates 
+Subnet B as 'private' except for the fact that we've associated a restricted route table.  Conversely, we can allow Internet traffic to go
+out of Subnet A by assigning a different route table; thereby creating a 'public' subnet in name only.</p>
+<h3 id="talking-to-the-internet">Talking to the Internet<a class="headerlink" href="#talking-to-the-internet" title="Permanent link">&para;</a></h3>
+<p>Usually, most applications will need to communicate with the Internet; either taking incoming network connections 
+or retrieving information. In AWS you connect your VPC to the Internet using 
+<a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Internet_Gateway.html">Internet Gateways</a>. 
+This is a special resource that is assigned to a VPC that allows network traffic to come in and out of your VPC.
+Internet Gateways are free to AWS users and can be created easily by using the VPC creation wizard or after the fact.
+An Internet Gateway can only be attached to a single VPC at a time and a VPC can only have up to one IG attached at a time.<br />
+But VPCs do not have to have Internet Gateways attached.</p>
+<p>But creating an Internet Gateway and then associating it with a VPC is only the preparation work.  In order to actually
+enable traffic into and out of a subnet, you must have a route associated with the subnet that connects the Internet Gateway.
+So for the subnet you wish to designate as 'public' you must add a route:</p>
+<ul>
+<li>Destination: <code>0.0.0.0/0</code> - This is a special indicator to the route table that works as a 'catch-all' for any network
+traffic destination not recognized</li>
+<li>Target: <code>igw-name-of-your-ig</code> - Use the AWS console identifer of the IG associated with the current VPC</li>
+</ul>
+<p>And presto!  You can now consider any subnets associated with this route table as 'public' subnets.  Any EC2 instance
+that is assigned an Elastic IP can now send and receive traffic from the Internet.  Any EC2 instances without an
+Elastic IP will not be permitted to send and receive traffic.</p>
+<h4 id="other-aws-services">Other AWS Services<a class="headerlink" href="#other-aws-services" title="Permanent link">&para;</a></h4>
+<p>Note that many of the AWS services are not associated with any VPC and thus can be considered accessible via Internet-only.
+For example, if your application living in the VPN needs to connect to the AWS Simple Queue Service (SQS), you will have to 
+enable Internet access via an Internet Gateway as described above.
+Any AWS service that does not have a <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-endpoints.html">VPC endpoint</a> capability is considered Internet only.
+At the time of this writing, only the following services have <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-endpoints.html">VPC endpoints</a>
+ (and thus would not need an Internet Gateway):</p>
+<ul>
+<li>S3</li>
+<li>DynamoDB</li>
+</ul>
+<p>In addition, some services like AWS RDS and ElastiCache can be assigned to VPC subnets 
+and thus are natively accessible within a VPC.  These services effectively provide fully 
+managed EC2 instances that provide the services and thus can be assigned to one or more VPC subnets.</p>
+<h3 id="connectivity-from-private-subnets">Connectivity from private subnets<a class="headerlink" href="#connectivity-from-private-subnets" title="Permanent link">&para;</a></h3>
+<p>Often, resources in 'private' subnets will have to communicate to the Internet.  Usually, this network
+traffic is initiated from within the subnet and only return traffic is allowed.  If outside network traffic were permitted
+to initiate communication to 'private' subnet servers, it would expose a potential security risk and thus is not allowed.</p>
+<p>The mechanism to allow servers and resources within a 'private' subnet to have outbound communication is to 
+have the network traffic sent to a special resource called a NAT device.  NAT stands for <a href="https://en.wikipedia.org/wiki/Network_address_translation">Network Address Translation</a> 
+and is generally used to hide a number of private servers or resources from any outside network.  This NAT device
+must live in a 'public' subnet with access to the Internet since it acts as a middle-man for the network traffic: 
+the private resources network traffics gets sent from the 'private' subnet to the 'public' subnet and the NAT
+device passes along the data as if the NAT device was initiating the connection.</p>
+<p>Enabling a server or resource in a 'private' subnet to communicate to the Internet consists of:</p>
+<ol>
+<li>Create the NAT Device (more on that below) in a 'public' subnet</li>
+<li>Edit the route table assigned to the 'private' subnet to have a new route:</li>
+<li>Destination: <code>0.0.0.0/0</code> - This is a special indicator to the route table that works as a 'catch-all' for any network
+traffic destination not recognized</li>
+<li>Target: <code>nat-name-of-your-nat-device</code> - Use the AWS console identifer of the NAT device in the 'public' subnet</li>
+</ol>
+<p>Note this will enable any server or resource in the 'private' subnet to use the NAT device for outbound communication.</p>
+<h4 id="types-of-nat-devices">Types of NAT Devices<a class="headerlink" href="#types-of-nat-devices" title="Permanent link">&para;</a></h4>
+<p>NAT Devices are not free and the cost to the AWS account depends on the type of device.  To assist
+the decision process, AWS has provided a guide on common types:</p>
+<ul>
+<li><a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-nat-gateway.html">NAT Gateways</a> - these
+  are AWS-managed instances that are easy to spin-up and have minimal configuration.  This is the
+  easiest option for getting started.</li>
+<li><a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_NAT_Instance.html">NAT Instances</a> - these are based on an existing AWS AMI that creates an EC2 instance that you can further customize.</li>
+</ul>
+<p>AWS even provides a <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-nat-comparison.html">comparison chart</a>
+to help you decide.</p>
+<h4 id="other-aws-services_1">Other AWS Services<a class="headerlink" href="#other-aws-services_1" title="Permanent link">&para;</a></h4>
+<p>Recall that many AWS services are not accessible directly within a VPC.  So if your applications
+depend on other AWS services such as SNS, SQS, SES, and so forth, a NAT device will be required
+at additional cost.</p>
+<h3 id="advanced-topics">Advanced Topics<a class="headerlink" href="#advanced-topics" title="Permanent link">&para;</a></h3>
+<p>There are many, many advanced configurations available with <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Introduction.html">VPC</a>:</p>
+<ul>
+<li><a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-dns.html">DNS</a></li>
+<li><a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpn-connections.html">VPN Connections</a></li>
+<li><a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html">DHCP</a></li>
+<li><a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-peering.html">VPC Peering</a></li>
+</ul>
+<p>But none of these are required to get a basic VPC setup rolling, so they are left as an exercise for
+the reader.</p>
+<h3 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h3>
+<p>I hope you have a solid mental model of the basic building block of AWS VPC and thus can understand the relationships
+between the myriad of concepts presented in the AWS documentation.  With this mental model, I recommend reading 
+carefully through the well-documented <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Scenarios.html">VPC Scenarios</a>
+ on the AWS documentation site.</p>
+<h2 id="how-lambda-works-with-vpc">How Lambda Works with VPC<a class="headerlink" href="#how-lambda-works-with-vpc" title="Permanent link">&para;</a></h2>
+<p>Now that we've covered the basics with typical resources within a VPC, it's worth discussing
+how AWS Lambda interacts with a VPC.  While it seems to be fairly straightforward, there is a surprise feature
+with Lambda that bypasses the entire network model.</p>
+<h3 id="multiple-subnets-allowed">Multiple Subnets allowed<a class="headerlink" href="#multiple-subnets-allowed" title="Permanent link">&para;</a></h3>
+<p>When creating a Lambda function, you can assign zero, one, or multiple subnets.  If no subnets are specified, then the
+Lambda function is considered external to all VPCs in the account.</p>
+<p>The reason for multiple subnets would be mostly for robustness.  When a Lambda container is started, it must be assigned an
+IP address.  It will select the IP address from one of the assigned subnets.  The exact method for selection is not documented.
+The Lambda container will run, then release the IP address.  But if you have many Lambda containers running, there is a 
+risk of using up all the available IP addresses.  In addition, since subnets are assigned a single availability zone (AZ),
+by associating subnets in a few different AZ, you can increase the chances that your Lambda function will continue to
+run even if one AZ is having troubles.</p>
+<p>The downside to assigning multiple subnets is you must ensure the routing rules are identical for both subnets otherwise
+you could create a situation where Lambda containers may behave differently based on the dynamically assigned subnet.  This
+would be very difficult to troubleshoot.</p>
+<h3 id="general-behavior-and-internet-access">General Behavior and Internet Access<a class="headerlink" href="#general-behavior-and-internet-access" title="Permanent link">&para;</a></h3>
+<p>Lambda functions running in a VPC mostly have all the same internal network access like any other resource in the subnet.
+However, Lambda functions are dynamically assigned an <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ElasticNetworkInterfaces.html">Elastic Network Interface (ENI)</a> which acts just like
+a typical IP address within the VPC.  But ENIs are not publicly routable, so the Lambda function will not be able to access
+the Internet directly.  Even if the Lambda function is assigned to a 'public' subnet with access to an Internet Gateway, it 
+will not be able to leverage the Internet Gateway.  As per <a href="http://docs.aws.amazon.com/lambda/latest/dg/vpc.html#vpc-internet">AWS Documentation</a> if you want Lambda functions to access the Internet,
+you must assign those Lambda functions to a 'private' subnet and leverage a NAT device as described above.  This includes
+the scenario when the Lambda functions needs to interact with other AWS services that are considered only available
+via the Internet.</p>
+<p>Aside from that, Lambda functions that do not require Internet access can happily operate in any of your VPC subnets.</p>
+<h3 id="bypassing-your-vpc-setup">Bypassing your VPC setup<a class="headerlink" href="#bypassing-your-vpc-setup" title="Permanent link">&para;</a></h3>
+<p>It is important to remember that Lambda functions are a separate and distinct AWS service from VPC.  VPC merely defines
+the IP network space in which a Lambda function will operate.  The heart of the Lambda service could be considered
+the ability to be triggered from an event and optionally respond to the event.  These events come from various sources
+and services within the AWS fabric.  It can be described as an 'event fabric' consisting of large number 
+of Lambda functions listening for events, processing them, and responding.<br />
+In fact, this method of communication is completely separate and distinct from network traffic.  It has its own
+security model and retry mechanism -- very much like a point-to-point network.  </p>
+<p>The implications of leveraging this 'event network' is that it can be used to effectively 'tunnel' across separate
+and distinct VPC and subnets.  It takes a little bit of work but consider:</p>
+<ul>
+<li>Lambda X deployed outside of any VPC in your account</li>
+<li>Lambda Y deployed in a 'private' subnet within the VPC</li>
+<li>RDS instance in 'private' subnet within the VPC</li>
+<li>API Gateway deployed in your account (also outside any VPC)</li>
+</ul>
+<p>If properly configured the following sequence could happen:</p>
+<ol>
+<li>API Gateway creates an event for Lambda X</li>
+<li>Lambda X gets the event, then creates an event for Lambda Y</li>
+<li>Lambda Y gets the event, then makes a query to the RDS database via traditional network mechanisms</li>
+<li>Lambda Y returns the information to Lambda X</li>
+<li>Lambda X returns the information to API Gateway</li>
+</ol>
+<p>Now this is clearly a contrived example as API Gateway could actually invoke Lambda Y directly.  But it is meant
+to illustrate that with some limitations, there are ways to get around the VPC constructs.
+A more useful scenario would be to have Lambda Y invoke the Lambda X function to gain access to 'Internet only'
+AWS services such as SQS without the need for a NAT Device.  There are many complications with this strategy:</p>
+<ul>
+<li>You now have to juggle two different authorization schemes - Lambda and traditional access methods</li>
+<li>You have doubled the number of Lambda function invocations which could lead to additional charges</li>
+<li>You have a execution limit on both the number simultaneous of Lambda functions and length of time allowed
+  per invocation</li>
+<li>You have to create and manage the event chain manually</li>
+</ul>
+<p>In my opinion, it is important to know this functionality exists, but in almost all cases, it would be more
+cost effective to leverage one of the NAT Device strategies outlined above.</p>
+<p>At the time of this writing, the following events can 
+<a href="http://docs.aws.amazon.com/lambda/latest/dg/invoking-lambda-function.html">generate events for Lambda functions</a>:</p>
+<ul>
+<li>Amazon S3</li>
+<li>Amazon DynamoDB</li>
+<li>Amazon Kinesis Streams</li>
+<li>Amazon Simple Notification Service</li>
+<li>Amazon Simple Email Service</li>
+<li>Amazon Cognito</li>
+<li>AWS CloudFormation</li>
+<li>Amazon CloudWatch Logs</li>
+<li>Amazon CloudWatch Events</li>
+<li>AWS CodeCommit</li>
+<li>Scheduled Events (powered by Amazon CloudWatch Events)</li>
+<li>AWS Config</li>
+<li>Amazon Alexa</li>
+<li>Amazon Lex</li>
+<li>Amazon API Gateway</li>
+</ul>
+<h2 id="final-considerations">Final considerations<a class="headerlink" href="#final-considerations" title="Permanent link">&para;</a></h2>
+<p>It takes some planning when planning to deploy a Zappa environment and to determine if VPC is required or necessary.
+In the <a href="../aws_network/">next section</a>, we discuss some concrete options for the walkthrough.</p>
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../aws_credentials/" title="Managing Credentials" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Managing Credentials
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../aws_network/" title="Adventures in Networking" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Adventures in Networking
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2016 - 2017 <a href="https://github.com/edgarroman">Edgar Roman</a>
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        and
+        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+      <a href="https://github.com/edgarroman" class="md-footer-social__link fa fa-github"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      
+      
+      <script>app.initialize({url:{base:".."}})</script>
+      
+    
+    
+      
+      <script>!function(e,t,a,n,o,c,i){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,c=t.createElement(a),i=t.getElementsByTagName(a)[0],c.async=1,c.src=n,i.parentNode.insertBefore(c,i)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-97437653-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview");var links=document.getElementsByTagName("a");Array.prototype.map.call(links,function(e){e.host!=document.location.host&&e.addEventListener("click",function(){var t=e.getAttribute("data-md-action")||"follow";ga("send","event","outbound",t,e.href)})});var query=document.forms.search.query;query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})</script>
+      
+    
+  </body>
+</html>

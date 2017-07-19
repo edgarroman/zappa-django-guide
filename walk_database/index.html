@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
-<html class="no-js">
+<html lang="en" class="no-js">
   <head>
     
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
       
         <meta name="description" content="A full featured walkthough of using Django on Zappa (powered by AWS Lambda in serverless environment)">
       
@@ -13,7 +14,7 @@
       
         <link rel="shortcut icon" href="../assets/images/favicon.png">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.5.4">
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
     
     
       
@@ -21,12 +22,12 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-56ade86843.js"></script>
+      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application-b1a1975878.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-f78e5cb881.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
       
     
     
@@ -91,7 +92,7 @@
           <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
 <div class="md-search" data-md-component="search">
-  <div class="md-search__overlay"></div>
+  <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
@@ -100,7 +101,7 @@
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result">
+        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
           <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
             Type to start searching
           </div>
@@ -112,9 +113,9 @@
 </div>
         
       </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <div class="md-header-nav__source">
-          
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
             
 
 
@@ -134,9 +135,9 @@
     </div>
   </a>
 
-          
+          </div>
         </div>
-      </div>
+      
     </div>
   </nav>
 </header>
@@ -579,6 +580,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../aws_network_primer/" title="Primer on AWS VPC Networking" class="md-nav__link">
+      Primer on AWS VPC Networking
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../aws_network/" title="Adventures in Networking" class="md-nav__link">
       Adventures in Networking
     </a>
@@ -931,12 +944,10 @@ in the subnet range.</p>
 <p>Note on PostGreSQL: because the psycopg2 library often involves compiling the library, I would suggest using the <a href="../setup/#approach-2-docker-with-zappa">Docker version of zappa</a> to ensure you have isolation of environments and you don't mess up your local system.</p>
 <p>Add this to your requirements.txt 
 <div class="codehilite"><pre><span></span>psycopg2
-</pre></div>
-</p>
+</pre></div></p>
 <p>and then</p>
 <div class="codehilite"><pre><span></span>pip install -r requirements.txt
 </pre></div>
-
 
 <h3 id="django-settings">Django Settings<a class="headerlink" href="#django-settings" title="Permanent link">&para;</a></h3>
 <p>Add the above settings to your settings.py.  This is pretty standard Django db stuff.</p>
@@ -953,7 +964,6 @@ in the subnet range.</p>
 }
 </pre></div>
 
-
 <h3 id="zappa-settings">Zappa Settings<a class="headerlink" href="#zappa-settings" title="Permanent link">&para;</a></h3>
 <p>Now we add the VPC configuration to our Zappa settings file so that the lambda functions can connect to the database.</p>
 <div class="codehilite"><pre><span></span>{
@@ -968,7 +978,6 @@ in the subnet range.</p>
 </span>    }
 }
 </pre></div>
-
 
 <h2 id="create-your-database">Create your Database<a class="headerlink" href="#create-your-database" title="Permanent link">&para;</a></h2>
 <p>Ok, easy so far?  Yes!  All we had to do up to this point was carefully click a mouse in the AWS console and 
@@ -999,7 +1008,6 @@ mkdir commands
 touch __init.py__
 </pre></div>
 
-
 <p>Then create a file called <code>create_db.py</code></p>
 <div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">psycopg2</span> <span class="kn">import</span> <span class="n">connect</span>
 <span class="kn">from</span> <span class="nn">psycopg2.extensions</span> <span class="kn">import</span> <span class="n">ISOLATION_LEVEL_AUTOCOMMIT</span>
@@ -1029,11 +1037,9 @@ touch __init.py__
         <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">SUCCESS</span><span class="p">(</span><span class="s1">&#39;All Done&#39;</span><span class="p">))</span>
 </pre></div>
 
-
 <h4 id="run-the-management-command">Run the management command<a class="headerlink" href="#run-the-management-command" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span>zappa dev manage create_db
 </pre></div>
-
 
 <p>If all goes well, then your database should be created.</p>
 <h2 id="init-the-database">Init the Database<a class="headerlink" href="#init-the-database" title="Permanent link">&para;</a></h2>
@@ -1042,11 +1048,9 @@ touch __init.py__
 <p><div class="codehilite"><pre><span></span>python manage.py makemigrations
 zappa update dev
 </pre></div>
-
 Now you invoke the zappa manage command:</p>
 <div class="codehilite"><pre><span></span>zappa manage dev migrate
 </pre></div>
-
 
 <p>And repeat this process every time you make model changes.</p>
 <h2 id="create-your-django-superuser">Create your Django superuser<a class="headerlink" href="#create-your-django-superuser" title="Permanent link">&para;</a></h2>
@@ -1054,7 +1058,6 @@ Now you invoke the zappa manage command:</p>
 <p>Essentially we will use the <code>raw</code> flag on the invoke command to just run raw python.  The following command creates a new superuser named 'admin' with email 'admin@yourdomain.com' and password of 'horse battery stapler'</p>
 <div class="codehilite"><pre><span></span>zappa invoke --raw dev <span class="s2">&quot;from django.contrib.auth.models import User; User.objects.create_superuser(&#39;admin&#39;, &#39;admin@yourdomain.com&#39;, &#39;horse battery stapler&#39;)&quot;</span>
 </pre></div>
-
 
 <p>Additional superusers can be added via this method or the Django admin console.</p>
 <h2 id="test-and-profit">Test and profit<a class="headerlink" href="#test-and-profit" title="Permanent link">&para;</a></h2>
@@ -1151,7 +1154,9 @@ Now you invoke the zappa manage command:</p>
       
     </div>
     
-      <script src="../assets/javascripts/application-0b7df094bf.js"></script>
+      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      
+      
       <script>app.initialize({url:{base:".."}})</script>
       
     

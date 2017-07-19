@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
-<html class="no-js">
+<html lang="en" class="no-js">
   <head>
     
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
       
         <meta name="description" content="A full featured walkthough of using Django on Zappa (powered by AWS Lambda in serverless environment)">
       
@@ -13,7 +14,7 @@
       
         <link rel="shortcut icon" href="../assets/images/favicon.png">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.5.4">
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
     
     
       
@@ -21,12 +22,12 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-56ade86843.js"></script>
+      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application-b1a1975878.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-f78e5cb881.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
       
     
     
@@ -91,7 +92,7 @@
           <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
 <div class="md-search" data-md-component="search">
-  <div class="md-search__overlay"></div>
+  <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
@@ -100,7 +101,7 @@
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result">
+        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
           <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
             Type to start searching
           </div>
@@ -112,9 +113,9 @@
 </div>
         
       </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <div class="md-header-nav__source">
-          
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
             
 
 
@@ -134,9 +135,9 @@
     </div>
   </a>
 
-          
+          </div>
         </div>
-      </div>
+      
     </div>
   </nav>
 </header>
@@ -370,6 +371,18 @@
   <li class="md-nav__item">
     <a href="../aws_credentials/" title="Managing Credentials" class="md-nav__link">
       Managing Credentials
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../aws_network_primer/" title="Primer on AWS VPC Networking" class="md-nav__link">
+      Primer on AWS VPC Networking
     </a>
   </li>
 
@@ -686,12 +699,17 @@
                 <h1 id="adventures-in-networking">Adventures in Networking<a class="headerlink" href="#adventures-in-networking" title="Permanent link">&para;</a></h1>
 <p>Presumably, since you've read this far, you're interested in more than a simple Django powered API serving static images.  You probably want something that is more interactive with users and have have advanced capabilities.  So this will require interacting with additional AWS services like RDS or DynamoDB for database services, SNS or SQS for task processing, and many more...</p>
 <p>Well, there is an important aspect about interacting with additional AWS services.  With pure AWS lambda, we have a fairly low attack surface, but when we introduce additional interactions over the network, we must consider information security risks and our network architecture.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This section assumes some familarity with the basic concepts within AWS VPC.  If you aren't comfortable with these concepts,
+then head over to a <a href="../aws_network_primer/">Primer on AWS VPC Networking</a></p>
+</div>
 <h2 id="a-simple-but-naive-approach">A simple, but naive approach<a class="headerlink" href="#a-simple-but-naive-approach" title="Permanent link">&para;</a></h2>
 <p>A simple approach would be to create an AWS RDS instance that is open to the Internet and have your lambda Django project login directly.  While this may work, this approach is fraught with peril.  Numerous vulnerabilities could exist and credentials could be discovered by brute force.  Even without gaining access to your RDS, it is trivial to launch a denial-of-service attack to ensure your Django project has no database services.</p>
 <p>Basically, do not do this.</p>
 <h2 id="thats-why-amazon-has-vpc">That's why Amazon has VPC<a class="headerlink" href="#thats-why-amazon-has-vpc" title="Permanent link">&para;</a></h2>
-<p>Introducing AWS Virtual Private Cloud (VPC).  This service provides a way of segmenting Internet traffic from your other AWS services.  This feature is incredibly valuable to securing our project.  So that bad guys have the smallest attack surface possible.  It's easy to setup a VPC - there are many webpages that will assist you.  But basically you pick an IP range and let it fly.</p>
-<p>Once a VPC is established, you can then subdivide the VPC into subnets.  Which are little non-overlapping IP chunks of the overall VPC.  Like dividing a pie into slices.  </p>
+<p>Introducing AWS Virtual Private Cloud (VPC).  This service provides a way of segmenting Internet traffic from your other AWS services.  This feature is incredibly valuable to securing our project, so that bad guys have the smallest attack surface possible.  </p>
+<p>Once a VPC is established, you can then subdivide the VPC into subnets.  Which are little non-overlapping IP chunks of the overall VPC.  Like dividing a pie into slices.</p>
 <p>It is important to realize that you have almost entire control of your IP space when you define your VPC and associated subnets.  You are creating a Software Defined Network (SDN) and you have a lot of leeway.  With this freedom comes choices and important considerations on how you design your network.</p>
 <h2 id="the-essential-vpc-and-subnet-configuration">The Essential VPC and Subnet Configuration<a class="headerlink" href="#the-essential-vpc-and-subnet-configuration" title="Permanent link">&para;</a></h2>
 <p>Here is the absolute minimum you must have to have a working Django site within a VPC:</p>
@@ -706,10 +724,14 @@
 <blockquote>
 <p>Amazon API Gateway endpoints are always public to the Internet. Proxy requests to backend operations also need to be publicly accessible on the Internet. However, you can generate a client-side SSL certificate in Amazon API Gateway to verify that requests to your backend systems were sent by API Gateway using the public key of the certificate.</p>
 </blockquote>
-<p>So API Gateways act as an 'always-on' Internet facing service that sends the HTTP requests directly to the Zappa Lambda functions - even if the Lambda functions are in a top-secret lockbox.  Note that in the above VPC setup the Lambda function is completely isolated from direct access to the Internet.  Thus the Lambda functions can't make outbound connections to anything: other servers, databases, S3, etc.</p>
-<p>Let's face it, there's no real point to going through the effort of doing this if the Lambda functions are really this isolated.  <em>But</em> the reason this information is important is because in order to leverage other AWS resources, the VPC lays the foundation to do this securely.</p>
+<p>So API Gateways act as an 'always-on' Internet facing service that sends the HTTP requests to the Zappa Lambda functions by creating 
+Lambda events.  These events can reach your zappa application even if deployed in a top-secret lockbox.  Note that in the above VPC setup the Lambda function is completely isolated from direct access to the Internet.  Thus the Lambda functions can't make outbound connections to anything: other servers, databases, S3, etc.</p>
+<p>Let's face it, there's no real point to going through the effort of doing this if the Lambda functions are really this isolated.<br />
+<em>But</em> the reason this information is important is because in order to leverage other AWS resources, 
+the VPC lays the foundation to do this securely.</p>
 <h2 id="extending-the-vpc">Extending the VPC<a class="headerlink" href="#extending-the-vpc" title="Permanent link">&para;</a></h2>
-<p>To re-iterate: we don't need a VPC network to make the Zappa Lambda-powered Django site visible on the Internet.  We need to extend the VPC so that we can add more AWS services like:</p>
+<p>To re-iterate: we don't need a VPC network to make the Zappa Lambda-powered Django site visible on the Internet.<br />
+We need to extend the VPC so that we can add more AWS services like:</p>
 <ul>
 <li>Adding an RDS database that is only accessible from our Lambda functions</li>
 <li>Adding an S3 bucket </li>
@@ -719,15 +741,18 @@
 </ul>
 <p>The important thing is that we can enable all these scenarios in a secure manner.  There are too many scenarios to go into detail here, so we will provide some guidelines.</p>
 <p>Next we learn about the common patterns of VPC usage and try to identify usage options.</p>
-<p>One warning before we go on with VPC and Lambda:  When Lambda functions fire, they must be assigned an IP address temporarily.  If you have a lot of Lambda functions firing, then you must have a lot of IP addresses available.  You can learn more <a href="http://docs.aws.amazon.com/lambda/latest/dg/vpc.html#vpc-setup-guidelines">here</a>.</p>
+<p>One warning before we go on with VPC subnet sizing and Lambda:  When Lambda functions fire, they must be assigned an IP address temporarily.  If you have a lot of Lambda functions firing, then you must have a lot of IP addresses available in your subnet.  You can learn more <a href="http://docs.aws.amazon.com/lambda/latest/dg/vpc.html#vpc-setup-guidelines">here</a>.</p>
 <h2 id="vpc-patterns">VPC Patterns<a class="headerlink" href="#vpc-patterns" title="Permanent link">&para;</a></h2>
 <p>While the actual VPC itself is very straightforward, the combination of subnets within the VPC can take many forms.  Additionally, you must consider how the subnets will communicate among themselves as well as how  they communicate with outside networks. For a more comprehensive list of options and other valuable information about VPCs, see this link: <a href="https://aws.amazon.com/answers/networking/aws-single-vpc-design/">https://aws.amazon.com/answers/networking/aws-single-vpc-design/</a></p>
 <p>The options are summarized here:</p>
 <h3 id="vpc-with-a-single-internet-accessible-subnet">VPC with a single Internet-Accessible subnet<a class="headerlink" href="#vpc-with-a-single-internet-accessible-subnet" title="Permanent link">&para;</a></h3>
-<p>This pattern places your lambda functions, your RDS, and additional SNS/SQS services in a single subnet that is Internet accessible in your VPC.  In theory you could configure your security groups to ensure only lambda functions can hit your RDS.  </p>
+<p>This pattern places your lambda functions, your RDS, and additional SNS/SQS services in a single subnet that is Internet accessible in your VPC.  In theory you could configure your security groups to ensure only lambda functions can hit your RDS.</p>
 <p>One advantage of this setup is that you can setup your local machine to connect to your RDS without a <a href="http://serverfault.com/a/648116/60094">bastion host</a>.  Just restrict access based on IP.  </p>
 <p>Important note - you will want to ensure careful inbound IP restrictions.  While it's great that you can connect to RDS with your SQL desktop client, you should setup a <a href="../(http://serverfault.com/a/648116/60094)">bastion host</a>.</p>
-<p><strong>This scenario is good for straightforward setups with a little work</strong></p>
+<p>Also note that your zappa deployment 
+<a href="../aws_network_primer/#general-behavior-and-internet-access">will not have outbound access to the Internet</a>.
+In order to do this you will have use a Public/Private setup.</p>
+<p><strong>This scenario is good for straightforward setups with a little work, but has significant limitations</strong></p>
 <h3 id="vpc-with-a-public-subnet-and-private-subnet">VPC with a Public subnet and Private subnet<a class="headerlink" href="#vpc-with-a-public-subnet-and-private-subnet" title="Permanent link">&para;</a></h3>
 <p>Arguably the most flexible and future-proof of all web application setups.  You have two subnets: one public and one private.  Your RDS and lambda functions reside in the private subnet, far away from bad guys, but also far away from your local machine.  In order to access the database from your system you will need a <a href="http://serverfault.com/a/648116/60094">bastion host</a> in the public subnet.  </p>
 <p>Another advantage of this setup is that if you ever want to add additional EC2-based services that need to interact with the Internet you can do this very easily without compromising security.  </p>
@@ -743,6 +768,7 @@
 <p><strong>Useful for the simple environment if you have an existing secure network</strong></p>
 <h2 id="subdividing-the-vpc">Subdividing the VPC<a class="headerlink" href="#subdividing-the-vpc" title="Permanent link">&para;</a></h2>
 <p>Once you get a VPC selected you must create subnets within the VPC.  When defining a subnet, you just have to pick a non-overlapping segment of the ip range.  So if you have VPC that spans IP address 10.5.0.1 to 10.5.0.254, then you pick contiguous segments within this range.</p>
+<p>See more details in <a href="../aws_network_primer/">Primer on AWS VPC Networking</a></p>
 <h2 id="examples-for-walkthroughs">Examples for Walkthroughs<a class="headerlink" href="#examples-for-walkthroughs" title="Permanent link">&para;</a></h2>
 <p>For the purposes of walkthroughs, we will leverage a simple VPC with a single subnet.  A single subnet will generally be enough to guide readers through the scenarios.</p>
 <p>We have a VPC:</p>
@@ -765,7 +791,7 @@
 <p>TODO: Show example zappa configuration here</p>
 </blockquote>
 <h2 id="note-on-redundancy">Note on Redundancy<a class="headerlink" href="#note-on-redundancy" title="Permanent link">&para;</a></h2>
-<p>While these examples are all using a single subnet for clarity, in production you will want to create multiple subnets within the VPC all with different availability zones.  This ensures if there is a failure within a single subnet, there are alternate paths.  </p>
+<p>While these examples are all using a single subnet for clarity, in production you will want to create multiple subnets within the VPC all with different availability zones.  This ensures if there is a failure within a single availability zone, there are alternate paths.  </p>
 <p>The general approach is to associate the Lambda functions with multiple subnets and the AWS resources with the same multiple subnets (e.g. RDS).</p>
                 
                   
@@ -785,7 +811,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../aws_credentials/" title="Managing Credentials" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../aws_network_primer/" title="Primer on AWS VPC Networking" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -794,7 +820,7 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Managing Credentials
+                Primer on AWS VPC Networking
               </span>
             </div>
           </a>
@@ -848,7 +874,9 @@
       
     </div>
     
-      <script src="../assets/javascripts/application-0b7df094bf.js"></script>
+      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      
+      
       <script>app.initialize({url:{base:".."}})</script>
       
     

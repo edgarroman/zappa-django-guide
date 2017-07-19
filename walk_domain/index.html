@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
-<html class="no-js">
+<html lang="en" class="no-js">
   <head>
     
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
       
         <meta name="description" content="A full featured walkthough of using Django on Zappa (powered by AWS Lambda in serverless environment)">
       
@@ -13,7 +14,7 @@
       
         <link rel="shortcut icon" href="../assets/images/favicon.png">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.5.4">
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
     
     
       
@@ -21,12 +22,12 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-56ade86843.js"></script>
+      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application-b1a1975878.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-f78e5cb881.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
       
     
     
@@ -91,7 +92,7 @@
           <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
 <div class="md-search" data-md-component="search">
-  <div class="md-search__overlay"></div>
+  <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
@@ -100,7 +101,7 @@
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result">
+        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
           <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
             Type to start searching
           </div>
@@ -112,9 +113,9 @@
 </div>
         
       </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <div class="md-header-nav__source">
-          
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
             
 
 
@@ -134,9 +135,9 @@
     </div>
   </a>
 
-          
+          </div>
         </div>
-      </div>
+      
     </div>
   </nav>
 </header>
@@ -627,6 +628,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../aws_network_primer/" title="Primer on AWS VPC Networking" class="md-nav__link">
+      Primer on AWS VPC Networking
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../aws_network/" title="Adventures in Networking" class="md-nav__link">
       Adventures in Networking
     </a>
@@ -947,11 +960,9 @@ But the URL provided by Zappa is pretty darn ugly.  Not only does it use an appa
       Auto Generated API Gateway              Your Zappa Environment 
 </pre></div>
 
-
 <p>Ideally most sites would be something like:</p>
 <div class="codehilite"><pre><span></span>https://www.zappaguide.com/
 </pre></div>
-
 
 <p>This is entirely possible with Zappa - so how do we get there?</p>
 <h2 id="lets-talk-about-https">Let's talk about HTTPS<a class="headerlink" href="#lets-talk-about-https" title="Permanent link">&para;</a></h2>
@@ -972,8 +983,7 @@ But the URL provided by Zappa is pretty darn ugly.  Not only does it use an appa
 <p>First you need a registered domain.  It doesn't matter who your domain registrar is as long as you have control over the name server records to point to a DNS provider.  Of all the services, this one is the most generic and almost any Registar will do.</p>
 <p>Let's choose an example domain for this walkthrough:
 <div class="codehilite"><pre><span></span>www.zappaguide.com
-</pre></div>
-</p>
+</pre></div></p>
 <h2 id="choices">Choices<a class="headerlink" href="#choices" title="Permanent link">&para;</a></h2>
 <p>At this point, you have a registered domain name and a working Zappa deployment.  There are two options:</p>
 <ol>
@@ -1053,7 +1063,6 @@ But the URL provided by Zappa is pretty darn ugly.  Not only does it use an appa
 }
 </pre></div>
 
-
 <p>For the <code>certificate_arn</code> use the ARN value obtained in step 2 above.  For the <code>domain</code> here we could choose either <code>www.zappaguide.com</code> or <code>zappaguide.com</code>, but not both.  In order to handle both, either a redirect must occur or you can setup another <a href="#manage-your-own-cloudfront-distribution">CloudFront Distribution manually</a>.</p>
 <h4 id="step-14-run-certify">Step 1.4: Run Certify<a class="headerlink" href="#step-14-run-certify" title="Permanent link">&para;</a></h4>
 <p>This final step triggers your local Zappa environment to reach out to AWS and configure your API Gateway to honor the domain name specified.</p>
@@ -1065,7 +1074,6 @@ Created a new domain name with supplied certificate. Please note that it can tak
 Certificate updated!
 (ve) $ 
 </pre></div>
-
 
 <p>And that should work fine going forward</p>
 <div class="admonition note">
@@ -1089,8 +1097,7 @@ Generating RSA private key, 2048 bit long modulus
 ..........+++
 e is 65537 (0x10001)
 (ve) $
-</pre></div>
-</p>
+</pre></div></p>
 <p>Be sure to protect this key because it will enable HTTPS certificates to be generated and you will not be able to update an HTTPS certificate if you lose it.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1113,7 +1120,6 @@ e is 65537 (0x10001)
 }
 </pre></div>
 
-
 <h4 id="step-24-run-certify">Step 2.4: Run Certify<a class="headerlink" href="#step-24-run-certify" title="Permanent link">&para;</a></h4>
 <p>This final step triggers your local Zappa environment to reach out to AWS and configure your API Gateway to honor the domain name specified.</p>
 <div class="codehilite"><pre><span></span>(ve) $ zappa certify dev
@@ -1124,7 +1130,6 @@ Created a new domain name with supplied certificate. Please note that it can tak
 Certificate updated!
 (ve) $ 
 </pre></div>
-
 
 <p>And that should work fine going forward.  Note that Let's Encrypt certificates only last for 3 months so you should ensure you update the certificate before the 3 months expire.</p>
 <div class="admonition note">
@@ -1141,7 +1146,6 @@ Certificate updated!
 <p>Sometimes you may encounter the dreaded '403 - Forbidden message': </p>
 <div class="codehilite"><pre><span></span>{&quot;message&quot;:&quot;Forbidden&quot;}
 </pre></div>
-
 
 <p>Often this happens when the user runs <code>zappa certify</code> but has not completed all the steps or correctly configured the zappa settings file.  The best way to handle this is generally to manually remove any partially configured custom domains from the AWS console and then try to run <code>zappa certify</code> again.  Follow these steps to remove any partial custom domain remnants.  </p>
 <h4 id="step-1-browse-to-api-gateway-custom-domain">Step 1 - Browse to API Gateway -&gt; Custom Domain<a class="headerlink" href="#step-1-browse-to-api-gateway-custom-domain" title="Permanent link">&para;</a></h4>
@@ -1256,7 +1260,9 @@ Certificate updated!
       
     </div>
     
-      <script src="../assets/javascripts/application-0b7df094bf.js"></script>
+      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      
+      
       <script>app.initialize({url:{base:".."}})</script>
       
     

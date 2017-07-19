@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
-<html class="no-js">
+<html lang="en" class="no-js">
   <head>
     
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
       
         <meta name="description" content="A full featured walkthough of using Django on Zappa (powered by AWS Lambda in serverless environment)">
       
@@ -13,7 +14,7 @@
       
         <link rel="shortcut icon" href="../assets/images/favicon.png">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.5.4">
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
     
     
       
@@ -21,12 +22,12 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-56ade86843.js"></script>
+      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application-b1a1975878.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-f78e5cb881.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
       
     
     
@@ -91,7 +92,7 @@
           <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
 <div class="md-search" data-md-component="search">
-  <div class="md-search__overlay"></div>
+  <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
@@ -100,7 +101,7 @@
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result">
+        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
           <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
             Type to start searching
           </div>
@@ -112,9 +113,9 @@
 </div>
         
       </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <div class="md-header-nav__source">
-          
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
             
 
 
@@ -134,9 +135,9 @@
     </div>
   </a>
 
-          
+          </div>
         </div>
-      </div>
+      
     </div>
   </nav>
 </header>
@@ -505,6 +506,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../aws_network_primer/" title="Primer on AWS VPC Networking" class="md-nav__link">
+      Primer on AWS VPC Networking
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../aws_network/" title="Adventures in Networking" class="md-nav__link">
       Adventures in Networking
     </a>
@@ -723,7 +736,6 @@ virtualenv ve
 <span class="nb">source</span> ve/bin/activate
 pip install django zappa
 </pre></div>
-
 And you are done.  </p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -760,8 +772,7 @@ And you are done.  </p>
 docker pull lambci/lambda:build-python2.7
 <span class="c1"># For Python 3.6 projects</span>
 docker pull lambci/lambda:build-python3.6
-</pre></div>
-</li>
+</pre></div></li>
 <li>
 <p>Create a shortcut that allows AWS credentials to pass through to the docker container</p>
 <ul>
@@ -772,7 +783,6 @@ docker pull lambci/lambda:build-python3.6
 <span class="nb">alias</span> <span class="nv">zappashell3</span><span class="o">=</span><span class="s1">&#39;docker run -ti -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION -v $(pwd):/var/task  --rm lambci/lambda:build-python3.6 bash&#39;</span>
 <span class="nb">alias</span> zappashell3 &gt;&gt; ~/.bash_profile
 </pre></div>
-
 Be sure to define the <code>$AWS_DEFAULT_REGION</code> environment variable</p>
 </li>
 <li>
@@ -782,11 +792,9 @@ Be sure to define the <code>$AWS_DEFAULT_REGION</code> environment variable</p>
 <span class="nb">alias</span> <span class="nv">zappashell3</span><span class="o">=</span><span class="s1">&#39;docker run -ti -e AWS_PROFILE=$AWS_PROFILE -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm lambci/lambda:build-python3.6 bash&#39;</span>
 <span class="nb">alias</span> zappashell3 &gt;&gt; ~/.bash_profile
 </pre></div>
-
 Note that you must either define the <code>$AWS_PROFILE</code> environment variable or edit the alias above to be hardcoded to a specific profile.  Example of hardcoding the alias:
 <div class="codehilite"><pre><span></span><span class="nb">alias</span> <span class="nv">zappashell3</span><span class="o">=</span><span class="s1">&#39;docker run -ti -e AWS_PROFILE=zappa -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm lambci/lambda:build-python3.6 bash&#39;</span>
-</pre></div>
-</p>
+</pre></div></p>
 </li>
 </ul>
 </li>
@@ -798,13 +806,11 @@ $ zappashell3
 bash-4.2# 
 </pre></div>
 
-
 <p>Next, create the <em>required</em> virtual environment, activate it, and install needed dependencies</p>
 <div class="codehilite"><pre><span></span>bash-4.2# virtualenv ve
 bash-4.2# <span class="nb">source</span> ve/bin/activate 
 <span class="o">(</span>ve<span class="o">)</span> bash-4.2# pip install -r requirements.txt
 </pre></div>
-
 
 <p>Since the virtual environment is contained in the current directory, and the current directory is mapped to your local machine, any changes you make will be persisted between Docker container instances.  But if you depend on libraries that are installed in the system (essentially anything out of the current directory and virtual environment), they will be lost when the container exits.  The solution for this is to create a custom Dockerfile (see below)</p>
 <div class="admonition warning">
@@ -832,20 +838,17 @@ bash-4.2# <span class="nb">source</span> ve/bin/activate
 <span class="k">CMD</span><span class="s"> [&quot;bash&quot;]</span>
 </pre></div>
 
-
 <h4 id="build-the-docker-image">Build the docker image<a class="headerlink" href="#build-the-docker-image" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span>$ <span class="nb">cd</span> /your_zappa_project
 $ docker built -t myzappa .
 </pre></div>
-
 
 <p>This will create a local Docker image on your system. </p>
 <h4 id="update-your-zappashell-alias">Update your zappashell alias<a class="headerlink" href="#update-your-zappashell-alias" title="Permanent link">&para;</a></h4>
 <p>To make sure it points to your new image.  Essentially replace <code>lambci/lambda:build-python3.6</code> with <code>myzappa</code>.  Example:
 <div class="codehilite"><pre><span></span><span class="nb">alias</span> <span class="nv">zappashell</span><span class="o">=</span><span class="s1">&#39;docker run -ti -e AWS_PROFILE=zappa -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm myzappa&#39;</span>
 <span class="nb">alias</span> zappashell &gt;&gt; ~/.bash_profile
-</pre></div>
-</p>
+</pre></div></p>
 <h4 id="create-the-virtual-environment">Create the Virtual Environment<a class="headerlink" href="#create-the-virtual-environment" title="Permanent link">&para;</a></h4>
 <p>Create the <em>required</em> virtual environment, activate it, and install needed dependencies</p>
 <div class="codehilite"><pre><span></span>$ zappashell
@@ -853,7 +856,6 @@ zappashell&gt; python -m venv ve
 zappashell&gt; <span class="nb">source</span> ve/bin/activate 
 <span class="o">(</span>ve<span class="o">)</span> zappa&gt; pip install -r requirements.txt
 </pre></div>
-
 
 <p>Since the virtual environment is contained in the current directory, and the current directory is mapped to your local machine, any changes you make will be persisted between Docker container instances.  But if you depend on libraries that are installed in the system (essentially anything out of the current directory and virtual environment), they will be lost when the container exits.  The solution for this is to add these installations as RUN commands in the Dockerfile.</p>
 <h3 id="using-your-environment">Using your environment<a class="headerlink" href="#using-your-environment" title="Permanent link">&para;</a></h3>
@@ -863,7 +865,6 @@ $ zappashell
 zappashell&gt; <span class="nb">source</span> ve/bin/activate
 <span class="o">(</span>ve<span class="o">)</span> zappashell&gt; 
 </pre></div>
-
 
 <p>All zappa commands can be used to deploy your project:</p>
 <div class="codehilite"><pre><span></span><span class="o">(</span>ve<span class="o">)</span> zappashell&gt; zappa info dev
@@ -949,7 +950,9 @@ zappashell&gt; <span class="nb">source</span> ve/bin/activate
       
     </div>
     
-      <script src="../assets/javascripts/application-0b7df094bf.js"></script>
+      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      
+      
       <script>app.initialize({url:{base:".."}})</script>
       
     

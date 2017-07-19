@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
-<html class="no-js">
+<html lang="en" class="no-js">
   <head>
     
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
       
         <meta name="description" content="A full featured walkthough of using Django on Zappa (powered by AWS Lambda in serverless environment)">
       
@@ -13,7 +14,7 @@
       
         <link rel="shortcut icon" href="../assets/images/favicon.png">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.5.4">
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
     
     
       
@@ -21,12 +22,12 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-56ade86843.js"></script>
+      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application-b1a1975878.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-f78e5cb881.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
       
     
     
@@ -91,7 +92,7 @@
           <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
 <div class="md-search" data-md-component="search">
-  <div class="md-search__overlay"></div>
+  <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
@@ -100,7 +101,7 @@
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result">
+        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
           <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
             Type to start searching
           </div>
@@ -112,9 +113,9 @@
 </div>
         
       </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <div class="md-header-nav__source">
-          
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
             
 
 
@@ -134,9 +135,9 @@
     </div>
   </a>
 
-          
+          </div>
         </div>
-      </div>
+      
     </div>
   </nav>
 </header>
@@ -539,6 +540,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../aws_network_primer/" title="Primer on AWS VPC Networking" class="md-nav__link">
+      Primer on AWS VPC Networking
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../aws_network/" title="Adventures in Networking" class="md-nav__link">
       Adventures in Networking
     </a>
@@ -795,14 +808,12 @@
         <span class="nt">&lt;/CORSRule&gt;</span>
     <span class="nt">&lt;/CORSConfiguration&gt;</span>
 </pre></div>
-
 <strong>Note that this CORS policy is very open and simple.  If you have a production site, you will probably want to narrow the scope of CORS or leverage a CDN.</strong></p>
 <h2 id="configure-django-project">Configure Django Project<a class="headerlink" href="#configure-django-project" title="Permanent link">&para;</a></h2>
 <h3 id="install-modules">Install modules<a class="headerlink" href="#install-modules" title="Permanent link">&para;</a></h3>
 <p>In order to re-use existing modules freely available, we will use the django-storages module to handle the management of files to and from AWS S3.  So first you must install it.  <em>Don't forget to activate your virtual environment</em> </p>
 <div class="codehilite"><pre><span></span>pip install django-storages boto
 </pre></div>
-
 
 <p>And thus you should take the corresponding package versions reported by <code>pip freeze</code> into the requirements.txt file.  At the time of this writing, the additional lines would be:</p>
 <div class="codehilite"><pre><span></span>...
@@ -811,7 +822,6 @@ django-storages==1.5.1
 ...
 </pre></div>
 
-
 <h3 id="add-django-storages-to-the-installed_apps-in-settingspy">Add Django-Storages to the INSTALLED_APPS in settings.py<a class="headerlink" href="#add-django-storages-to-the-installed_apps-in-settingspy" title="Permanent link">&para;</a></h3>
 <p>Edit your settings.py file to include django-storages.  Note it's just called 'storages' as an app.</p>
 <div class="codehilite"><pre><span></span>INSTALLED_APPS = (
@@ -819,7 +829,6 @@ django-storages==1.5.1
           &#39;storages&#39;,
      )
 </pre></div>
-
 
 <h3 id="configure-django-storages-in-settingspy">Configure Django-Storages in settings.py<a class="headerlink" href="#configure-django-storages-in-settingspy" title="Permanent link">&para;</a></h3>
 <p>Add these lines anywhere in your settings.py.  These values instruct Django-Storages to properly configure a basic setup for leveraging S3.  More information about these values can be found here: <a href="http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html">http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html</a></p>
@@ -832,18 +841,15 @@ STATIC_URL = &quot;https://%s/&quot; % AWS_S3_CUSTOM_DOMAIN
 STATICFILES_STORAGE = &#39;storages.backends.s3boto.S3BotoStorage&#39;
 </pre></div>
 
-
 <h2 id="push-your-static-files-to-the-cloud">Push your static files to the cloud<a class="headerlink" href="#push-your-static-files-to-the-cloud" title="Permanent link">&para;</a></h2>
 <p>The funny thing about zappa is that generally you have a working local environment and a working lambda environment.  In theory either location can push the static files to the cloud.  </p>
 <p>Using your local environment:</p>
 <div class="codehilite"><pre><span></span>python manage.py collectstatic --noinput
 </pre></div>
 
-
 <p>Or to instruct your zappa-powered AWS lambda environment to do it for you:</p>
 <div class="codehilite"><pre><span></span>zappa manage dev &quot;collectstatic --noinput&quot;
 </pre></div>
-
 
 <h3 id="test-with-the-admin">Test with the admin<a class="headerlink" href="#test-with-the-admin" title="Permanent link">&para;</a></h3>
 <p>Once you have pushed your static files to S3, you can visit the admin site for your Django project to test if it worked.  Appending /admin/ to your zappa project you can now browse to the admin site and watch the css being loaded just fine.</p>
@@ -858,7 +864,6 @@ STATICFILES_STORAGE = &#39;storages.backends.s3boto.S3BotoStorage&#39;
         &#39;Cache-Control&#39;: &#39;max-age=94608000&#39;,
     }
 </pre></div>
-
 
 <h2 id="helpful-links">Helpful Links<a class="headerlink" href="#helpful-links" title="Permanent link">&para;</a></h2>
 <p>These two articles were extremely helpful when writing this page:</p>
@@ -947,7 +952,9 @@ STATICFILES_STORAGE = &#39;storages.backends.s3boto.S3BotoStorage&#39;
       
     </div>
     
-      <script src="../assets/javascripts/application-0b7df094bf.js"></script>
+      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      
+      
       <script>app.initialize({url:{base:".."}})</script>
       
     
