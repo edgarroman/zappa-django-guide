@@ -4,6 +4,10 @@ Presumably, since you've read this far, you're interested in more than a simple 
 
 Well, there is an important aspect about interacting with additional AWS services.  With pure AWS lambda, we have a fairly low attack surface, but when we introduce additional interactions over the network, we must consider information security risks and our network architecture.
 
+!!! Note
+    This section assumes some familarity with the basic concepts within AWS VPC.  If you aren't comfortable with these concepts,
+    then head over to a [Primer on AWS VPC Networking](aws_network_primer.md)
+
 ## A simple, but naive approach
 
 A simple approach would be to create an AWS RDS instance that is open to the Internet and have your lambda Django project login directly.  While this may work, this approach is fraught with peril.  Numerous vulnerabilities could exist and credentials could be discovered by brute force.  Even without gaining access to your RDS, it is trivial to launch a denial-of-service attack to ensure your Django project has no database services.
@@ -12,9 +16,9 @@ Basically, do not do this.
 
 ## That's why Amazon has VPC
 
-Introducing AWS Virtual Private Cloud (VPC).  This service provides a way of segmenting Internet traffic from your other AWS services.  This feature is incredibly valuable to securing our project.  So that bad guys have the smallest attack surface possible.  It's easy to setup a VPC - there are many webpages that will assist you.  But basically you pick an IP range and let it fly.
+Introducing AWS Virtual Private Cloud (VPC).  This service provides a way of segmenting Internet traffic from your other AWS services.  This feature is incredibly valuable to securing our project, so that bad guys have the smallest attack surface possible.  
 
-Once a VPC is established, you can then subdivide the VPC into subnets.  Which are little non-overlapping IP chunks of the overall VPC.  Like dividing a pie into slices.  
+Once a VPC is established, you can then subdivide the VPC into subnets.  Which are little non-overlapping IP chunks of the overall VPC.  Like dividing a pie into slices.
 
 It is important to realize that you have almost entire control of your IP space when you define your VPC and associated subnets.  You are creating a Software Defined Network (SDN) and you have a lot of leeway.  With this freedom comes choices and important considerations on how you design your network.
 
@@ -33,14 +37,17 @@ You may be asking yourself how will traffic from the Internet reach the lambda f
 
 > Amazon API Gateway endpoints are always public to the Internet. Proxy requests to backend operations also need to be publicly accessible on the Internet. However, you can generate a client-side SSL certificate in Amazon API Gateway to verify that requests to your backend systems were sent by API Gateway using the public key of the certificate.
 
-So API Gateways act as an 'always-on' Internet facing service that sends the HTTP requests directly to the Zappa Lambda functions - even if the Lambda functions are in a top-secret lockbox.  Note that in the above VPC setup the Lambda function is completely isolated from direct access to the Internet.  Thus the Lambda functions can't make outbound connections to anything: other servers, databases, S3, etc.
+So API Gateways act as an 'always-on' Internet facing service that sends the HTTP requests to the Zappa Lambda functions by creating 
+Lambda events.  These events can reach your zappa application even if deployed in a top-secret lockbox.  Note that in the above VPC setup the Lambda function is completely isolated from direct access to the Internet.  Thus the Lambda functions can't make outbound connections to anything: other servers, databases, S3, etc.
 
-Let's face it, there's no real point to going through the effort of doing this if the Lambda functions are really this isolated.  *But* the reason this information is important is because in order to leverage other AWS resources, the VPC lays the foundation to do this securely.
-
+Let's face it, there's no real point to going through the effort of doing this if the Lambda functions are really this isolated.  
+*But* the reason this information is important is because in order to leverage other AWS resources, 
+the VPC lays the foundation to do this securely.
 
 ## Extending the VPC
 
-To re-iterate: we don't need a VPC network to make the Zappa Lambda-powered Django site visible on the Internet.  We need to extend the VPC so that we can add more AWS services like:
+To re-iterate: we don't need a VPC network to make the Zappa Lambda-powered Django site visible on the Internet.  
+We need to extend the VPC so that we can add more AWS services like:
 
 * Adding an RDS database that is only accessible from our Lambda functions
 * Adding an S3 bucket 
@@ -52,7 +59,7 @@ The important thing is that we can enable all these scenarios in a secure manner
 
 Next we learn about the common patterns of VPC usage and try to identify usage options.
 
-One warning before we go on with VPC and Lambda:  When Lambda functions fire, they must be assigned an IP address temporarily.  If you have a lot of Lambda functions firing, then you must have a lot of IP addresses available.  You can learn more [here](http://docs.aws.amazon.com/lambda/latest/dg/vpc.html#vpc-setup-guidelines).
+One warning before we go on with VPC subnet sizing and Lambda:  When Lambda functions fire, they must be assigned an IP address temporarily.  If you have a lot of Lambda functions firing, then you must have a lot of IP addresses available in your subnet.  You can learn more [here](http://docs.aws.amazon.com/lambda/latest/dg/vpc.html#vpc-setup-guidelines).
 
 ## VPC Patterns
 
@@ -62,13 +69,17 @@ The options are summarized here:
 
 ### VPC with a single Internet-Accessible subnet
 
-This pattern places your lambda functions, your RDS, and additional SNS/SQS services in a single subnet that is Internet accessible in your VPC.  In theory you could configure your security groups to ensure only lambda functions can hit your RDS.  
-    
+This pattern places your lambda functions, your RDS, and additional SNS/SQS services in a single subnet that is Internet accessible in your VPC.  In theory you could configure your security groups to ensure only lambda functions can hit your RDS.
+
 One advantage of this setup is that you can setup your local machine to connect to your RDS without a [bastion host](http://serverfault.com/a/648116/60094).  Just restrict access based on IP.  
 
 Important note - you will want to ensure careful inbound IP restrictions.  While it's great that you can connect to RDS with your SQL desktop client, you should setup a [bastion host]((http://serverfault.com/a/648116/60094)).
 
-**This scenario is good for straightforward setups with a little work**
+Also note that your zappa deployment 
+[will not have outbound access to the Internet](aws_network_primer.md#general-behavior-and-internet-access).
+In order to do this you will have use a Public/Private setup.
+
+**This scenario is good for straightforward setups with a little work, but has significant limitations**
 
 ### VPC with a Public subnet and Private subnet
 
@@ -100,6 +111,8 @@ This is actually most secure.  Since you can access any of the resources from yo
 
 Once you get a VPC selected you must create subnets within the VPC.  When defining a subnet, you just have to pick a non-overlapping segment of the ip range.  So if you have VPC that spans IP address 10.5.0.1 to 10.5.0.254, then you pick contiguous segments within this range.
 
+See more details in [Primer on AWS VPC Networking](aws_network_primer.md)
+
 ## Examples for Walkthroughs
 
 For the purposes of walkthroughs, we will leverage a simple VPC with a single subnet.  A single subnet will generally be enough to guide readers through the scenarios.
@@ -125,6 +138,6 @@ And security group:
 
 ## Note on Redundancy
 
-While these examples are all using a single subnet for clarity, in production you will want to create multiple subnets within the VPC all with different availability zones.  This ensures if there is a failure within a single subnet, there are alternate paths.  
+While these examples are all using a single subnet for clarity, in production you will want to create multiple subnets within the VPC all with different availability zones.  This ensures if there is a failure within a single availability zone, there are alternate paths.  
 
 The general approach is to associate the Lambda functions with multiple subnets and the AWS resources with the same multiple subnets (e.g. RDS).

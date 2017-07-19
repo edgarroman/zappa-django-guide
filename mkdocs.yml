@@ -18,6 +18,7 @@ pages:
 #    - 'Debugging' : 'walk_debug.md'
   - AWS Setup:
     - 'Managing Credentials' : 'aws_credentials.md'
+    - 'Primer on AWS VPC Networking' : 'aws_network_primer.md'
     - 'Adventures in Networking' : 'aws_network.md'
     - 'Creating an RDS Database' : 'aws_database.md'
     - 'Working with Route53' : 'aws_route53.md'
