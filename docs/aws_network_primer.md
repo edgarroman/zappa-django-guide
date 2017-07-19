@@ -1,4 +1,4 @@
-# A Brief Primer on AWS VPC Networking and Lambda functions
+# A Brief Primer on AWS VPC Networking (and how Lambda functions relate)
 
 Confused on how to create your network environment in AWS?  Don't worry - you're in good company.  Configuring and using AWS VPC networking 
 is powerful, but complex.  
