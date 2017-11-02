@@ -157,7 +157,7 @@ CMD ["bash"]
 
 ```sh
 $ cd /your_zappa_project
-$ docker built -t myzappa .
+$ docker build -t myzappa .
 ```
 
 This will create a local Docker image on your system. 
