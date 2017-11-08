@@ -254,7 +254,7 @@ While not a hosted service, SQLite often has a lot of value to the Django develo
 The recommended solution until AWS Linux Image is updated is:
    * Download and uncompress the `_sqlite.so` from [https://github.com/Miserlou/lambda-packages/files/1425358/_sqlite3.so.zip](https://github.com/Miserlou/lambda-packages/files/1425358/_sqlite3.so.zip)
    * Place this file in the root of your zappa project
-   * Add an `"exclude" : ["_sqlite.so"]` to your `zappa_settings.json` so that when you deploy your zappa app, it is not unnecessarily included
+   * Add an `"exclude" : ["_sqlite.so"]` to your `zappa_settings.json` so that it is not unnecessarily included when you deploy your zappa app 
 
 With this you should be able to use SQLite with both your lambda-docker environment and lambda deployments.
 
