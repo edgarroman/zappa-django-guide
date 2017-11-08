@@ -247,6 +247,17 @@ Notice that we are using the master user credentials for the RDS system.  It wou
 
 You will have to modify your custom Django management command to accommodate creation of a new user.
 
+## SQLite issues with Python 3
+
+While not a hosted service, SQLite often has a lot of value to the Django developer.  There is currently an issue with the AWS Linux Image that uses Python 3 - it does not include the SQLite python connector and thus Django cannot use the SQLite database backend.  This issue is fixed by [lambda-packages](https://github.com/Miserlou/lambda-packages/commit/f44533297e3a3c5a7ba8885f6b88a3fb1cc4cfd8) which zappa automatically detects and fixes.  However, the lambda-docker project reflects the AWS lambda environment and does not include SQLite.
+
+The recommended solution until AWS Linux Image is updated is:
+   * Download and uncompress the `_sqlite.so` from [https://github.com/Miserlou/lambda-packages/files/1425358/_sqlite3.so.zip](https://github.com/Miserlou/lambda-packages/files/1425358/_sqlite3.so.zip)
+   * Place this file in the root of your zappa project
+   * Add an `"exclude" : ["_sqlite.so"]` to your `zappa_settings.json` so that when you deploy your zappa app, it is not unnecessarily included
+
+With this you should be able to use SQLite with both your lambda-docker environment and lambda deployments.
+
 ## Additional References
 
 For MySQL tips:
