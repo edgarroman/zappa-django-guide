@@ -50,8 +50,8 @@ zappa init
 You will encounter a series of prompts:
 
 * Name of environment - just accept the default 'dev'
-* S3 bucket for deployments.  Use the value of the S3 bucket you created above.  If you follow the walkthrough then use `zappatest-code`
-* Zappa should automatically find the correct settings file so accept the default
+* S3 bucket for deployments.  If the bucket does not exist, zappa will create it for you.  You can use an existing bucket name if you'd like.  Note that this bucket just holds the zappa package temporarily while it is being transferred to AWS lambda.  The zappa package is then removed after deployment.  For the purposes of the walkthrough we are using `zappatest-code`
+* Zappa should automatically find the correct Django settings file so accept the default
 * Say 'no' to deploying globally
 * If everything looks ok, then accept the info
 
