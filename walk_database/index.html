@@ -1070,6 +1070,13 @@ Now you invoke the zappa manage command:</p>
 <p>Notice that we are using the master user credentials for the RDS system.  It would be more secure if we created a dedicated user that can only access the relevant database.  More information on that can be found here:
 <a href="https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04">https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04</a></p>
 <p>You will have to modify your custom Django management command to accommodate creation of a new user.</p>
+<h2 id="sqlite-issues-with-python-3">SQLite issues with Python 3<a class="headerlink" href="#sqlite-issues-with-python-3" title="Permanent link">&para;</a></h2>
+<p>While not a hosted service, SQLite often has a lot of value to the Django developer.  There is currently an issue with the AWS Linux Image that uses Python 3 - it does not include the SQLite python connector and thus Django cannot use the SQLite database backend.  This issue is fixed by <a href="https://github.com/Miserlou/lambda-packages/commit/f44533297e3a3c5a7ba8885f6b88a3fb1cc4cfd8">lambda-packages</a> which zappa automatically detects and fixes.  However, the lambda-docker project reflects the AWS lambda environment and does not include SQLite.</p>
+<p>The recommended solution until AWS Linux Image is updated is:
+   * Download and uncompress the <code>_sqlite.so</code> from <a href="https://github.com/Miserlou/lambda-packages/files/1425358/_sqlite3.so.zip">https://github.com/Miserlou/lambda-packages/files/1425358/_sqlite3.so.zip</a>
+   * Place this file in the root of your zappa project
+   * Add an <code>"exclude" : ["_sqlite.so"]</code> to your <code>zappa_settings.json</code> so that it is not unnecessarily included when you deploy your zappa app </p>
+<p>With this you should be able to use SQLite with both your lambda-docker environment and lambda deployments.</p>
 <h2 id="additional-references">Additional References<a class="headerlink" href="#additional-references" title="Permanent link">&para;</a></h2>
 <p>For MySQL tips:
 <a href="https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04">https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04</a></p>

@@ -742,8 +742,8 @@
 You will encounter a series of prompts:</p>
 <ul>
 <li>Name of environment - just accept the default 'dev'</li>
-<li>S3 bucket for deployments.  Use the value of the S3 bucket you created above.  If you follow the walkthrough then use <code>zappatest-code</code></li>
-<li>Zappa should automatically find the correct settings file so accept the default</li>
+<li>S3 bucket for deployments.  If the bucket does not exist, zappa will create it for you.  You can use an existing bucket name if you'd like.  Note that this bucket just holds the zappa package temporarily while it is being transferred to AWS lambda.  The zappa package is then removed after deployment.  For the purposes of the walkthrough we are using <code>zappatest-code</code></li>
+<li>Zappa should automatically find the correct Django settings file so accept the default</li>
 <li>Say 'no' to deploying globally</li>
 <li>If everything looks ok, then accept the info</li>
 </ul>
