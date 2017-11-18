@@ -32,7 +32,13 @@ You do this in AWS VPC by defining the IP network space of the total possible IP
 lots and lots of computers you'll need to put into your VPC, but fortunately you are not charged by Amazon on how many IP addresses
 you have reserved, so you can err on the side of having a bit of room.
 
-Generally common practice is to use the 10.0.0.0/8 private network space.  Creating a VPC with 10.0.0.0/8 network range will allow you to use over 16 million IP addresses.  This is probably a little excessive for your first VPC, so why not start with something like 10.0.0.0/16 which gives you about 64 thousand IP addresses?  Later we'll keep dividing this network space so this is a good start.
+The private network ranges available are defined by an Internet 'standard' called [RFC 1918](http://www.faqs.org/rfcs/rfc1918.html).  The private network spaces for IPv4 are:
+
+* `10.0.0.0 - 10.255.255.255` (10/8 prefix)
+* `172.16.0.0 - 172.31.255.255` (172.16/12 prefix)
+* `192.168.0.0 - 192.168.255.255` (192.168/16 prefix)
+
+AWS restricts creation of VPCs with a /16 CIDR mask which limits you to a VPC with 65,536 IP addresses (which is pretty big).  This is probably a little excessive for your first VPC, so why not start with something like 10.0.0.0/20 which gives you about 4 thousand IP addresses?  Later we'll keep dividing this network space so this is a good start.
 
 ### Now create your subnets
 
@@ -138,6 +144,7 @@ At the time of this writing, only the following services have [VPC endpoints](ht
 
 * S3
 * DynamoDB
+* [ElasticSearch](http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-vpc.html)
 
 In addition, some services like AWS RDS and ElastiCache can be assigned to VPC subnets 
 and thus are natively accessible within a VPC.  These services effectively provide fully 
