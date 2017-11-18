@@ -79,6 +79,14 @@ Also note that your zappa deployment
 [will not have outbound access to the Internet](aws_network_primer.md#general-behavior-and-internet-access).
 In order to do this you will have use a Public/Private setup.
 
+Some additional considerations from the AWS Documentation
+!!! quote "Some additional considerations from the [AWS Documentation](http://docs.aws.amazon.com/lambda/latest/dg/vpc.html#vpc-configuring)"
+    * We recommend that you avoid DNS resolution of public host names for your VPC. This can take several seconds to resolve, which adds several seconds of billable time on your request. For example, if your Lambda function accesses an Amazon RDS instance in your VPC, launch the instance with the no-publicly-accessible option.
+    
+    * When you add VPC configuration to a Lambda function, it can only access resources in that VPC. If a Lambda function needs to access both VPC resources and the public Internet, the VPC needs to have a Network Address Translation (NAT) instance inside the VPC.
+    
+    * When a Lambda function is configured to run within a VPC, it incurs an additional ENI start-up penalty. This means address resolution may be delayed when trying to connect to network resources.
+
 **This scenario is good for straightforward setups with a little work, but has significant limitations**
 
 ### VPC with a Public subnet and Private subnet
