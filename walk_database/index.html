@@ -377,8 +377,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-your-rds-database" title="Create your RDS Database" class="md-nav__link">
-    Create your RDS Database
+  <a href="#provision-your-rds-database-in-aws" title="Provision your RDS Database in AWS" class="md-nav__link">
+    Provision your RDS Database in AWS
   </a>
   
     <nav class="md-nav">
@@ -713,8 +713,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-your-rds-database" title="Create your RDS Database" class="md-nav__link">
-    Create your RDS Database
+  <a href="#provision-your-rds-database-in-aws" title="Provision your RDS Database in AWS" class="md-nav__link">
+    Provision your RDS Database in AWS
   </a>
   
     <nav class="md-nav">
@@ -870,7 +870,7 @@ But basically you will need the private subnet or subnets which can access the d
 <p>Of course you can be running any type of database on an EC2 instance of your choosing.  Usually an EC2 instance will be associated with one subnet, but it is possible to have multiple IP addresses in different subnets for redundancy.</p>
 <h3 id="use-another-db-service">Use another DB Service<a class="headerlink" href="#use-another-db-service" title="Permanent link">&para;</a></h3>
 <p>There as some other database services such as DynamoDB.  Depending on the capabilities of the service, you may or may need the subnet information.  </p>
-<h2 id="create-your-rds-database">Create your RDS Database<a class="headerlink" href="#create-your-rds-database" title="Permanent link">&para;</a></h2>
+<h2 id="provision-your-rds-database-in-aws">Provision your RDS Database in AWS<a class="headerlink" href="#provision-your-rds-database-in-aws" title="Permanent link">&para;</a></h2>
 <p>We'll just focus on the RDS case for this walkthough.  In fact we'll go through the walkthough using PostGreSQL.</p>
 <p>So zip on over to <a href="../aws_database/">Creating an RDS Database</a> and set up one.  You should record some key information we'll need here:</p>
 <ul>
@@ -987,8 +987,14 @@ edit some text files.  Well fun time is over - now we run into some bootstrappin
 <li>Use a db tool on your local machine via a bastion host </li>
 <li>Use the AWS command line tool</li>
 <li>Write some code to setup the database using zappa</li>
+<li>Use the utility library <a href="https://github.com/Miserlou/zappa-django-utils">zappa-django-utils</a></li>
 </ol>
-<p>Option 1 is easy if you have the db tool and the bastion host setup.  But let's explore how to do options two and three.</p>
+<p>Option 1 is easy if you have the db tool and the bastion host setup.  Option 4 is the easiest and quickest.  But let's explore how to do options two and three. </p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The quickest and easiest path is to use <a href="https://github.com/Miserlou/zappa-django-utils">zappa-django-utils</a> - especially if you are using a PostGres database.  </p>
+<p>Many of the functions here are implemented without having to write any of your own code.</p>
+</div>
 <h3 id="using-aws-command-line-tool">Using AWS command line tool<a class="headerlink" href="#using-aws-command-line-tool" title="Permanent link">&para;</a></h3>
 <p>You can only use the AWS command line tool to create the database if you are also creating the entire RDS instance.  Be sure to identify the database name to create with '<a href="http://docs.aws.amazon.com/cli/latest/reference/rds/create-db-instance.html#options">db-name</a>'</p>
 <p>Simply use the <code>aws</code> command tool using syntax similar to
