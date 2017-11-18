@@ -235,10 +235,19 @@ would be very difficult to troubleshoot.
 
 ### General Behavior and Internet Access
 
-Lambda functions running in a VPC mostly have all the same internal network access like any other resource in the subnet.
-However, Lambda functions are dynamically assigned an [Elastic Network Interface (ENI)](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ElasticNetworkInterfaces.html) which acts just like
-a typical IP address within the VPC.  But ENIs are not publicly routable, so the Lambda function will not be able to access
-the Internet directly.  Even if the Lambda function is assigned to a 'public' subnet with access to an Internet Gateway, it 
+When instantiated, Lambda functions are dynamically assigned an 
+[Elastic Network Interface (ENI)](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ElasticNetworkInterfaces.html). 
+This ENI provides the Lambda function the capability to use the VPC subnet network - like someone
+plugged in a virtual ethernet plug. 
+The ENI conforms to the typical network address for the VPC and subnet to which the Lambda function is assigned. 
+That is, if the Lambda function is instantiated in a public subnet, the ENI will be a public IP; and if the Lambda function is instantiated in a private subnet, the ENI will be a private IP. 
+And if there are other resources like an EC2 instance running in the same subnet, the Lambda function
+can interact with the EC2 instance just fine.
+
+However, there are restrictions placed upon Lambda functions when attempting to access the Internet.
+No Lambda functions running within a VPC will be able to access
+the Internet directly.  Even if the Lambda function is assigned to a 'public' subnet 
+with access to an Internet Gateway, the Lambda function 
 will not be able to leverage the Internet Gateway.  As per [AWS Documentation](http://docs.aws.amazon.com/lambda/latest/dg/vpc.html#vpc-internet) if you want Lambda functions to access the Internet,
 you must assign those Lambda functions to a 'private' subnet and leverage a NAT device as described above.  This includes
 the scenario when the Lambda functions needs to interact with other AWS services that are considered only available
