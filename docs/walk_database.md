@@ -24,7 +24,7 @@ Of course you can be running any type of database on an EC2 instance of your cho
 
 There as some other database services such as DynamoDB.  Depending on the capabilities of the service, you may or may need the subnet information.  
 
-## Create your RDS Database
+## Provision your RDS Database in AWS
 
 We'll just focus on the RDS case for this walkthough.  In fact we'll go through the walkthough using PostGreSQL.
 
@@ -127,8 +127,14 @@ Turns out that when AWS creates a PostGreSQL RDS instance for you, it doesn't cr
 1. Use a db tool on your local machine via a bastion host 
 2. Use the AWS command line tool
 2. Write some code to setup the database using zappa
+2. Use the utility library [zappa-django-utils](https://github.com/Miserlou/zappa-django-utils)
 
-Option 1 is easy if you have the db tool and the bastion host setup.  But let's explore how to do options two and three.
+Option 1 is easy if you have the db tool and the bastion host setup.  Option 4 is the easiest and quickest.  But let's explore how to do options two and three. 
+
+!!! tip
+    The quickest and easiest path is to use [zappa-django-utils](https://github.com/Miserlou/zappa-django-utils) - especially if you are using a PostGres database.  
+
+    Many of the functions here are implemented without having to write any of your own code.
 
 ### Using AWS command line tool
 
