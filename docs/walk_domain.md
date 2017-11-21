@@ -37,7 +37,7 @@ There are a number of services that are involved in this process:
 
 Combined with Zappa, these services will all be used in this walkthrough.  Note that many companies and organizations can provide these services and some, like Amazon, can provide all three.
 
-Ultimately, the AWS API Gateway will be associated with a new, dedicated CloudFront distribution that not only leverages the digital certificate to provide HTTPS, but also hides the Zappa environment path.  Finally, a DNS record will point to this new CF Distro to complete the experience for the end user.
+Ultimately, the AWS API Gateway will be associated with a new, dedicated CloudFront distribution that not only leverages the digital certificate to provide HTTPS, but also hides the Zappa environment path.  Finally, a DNS record will point to this new CloudFront Distro to complete the experience for the end user.
 
 ## Registering your Custom Domain
 
@@ -62,11 +62,9 @@ At this point, you have a registered domain name and a working Zappa deployment.
 
  2. [Manage your own CloudFront Distribution](#manage-your-own-cloudfront-distribution)
 
-    The private CloudFront distribution created with the API Gateway is fine, but sometimes you need more control.  The alternative is to create your own AWS CloudFront distribution.  By doing this, you may still associate a Custom Domain Name, still use ACM HTTPS; but you have additional control - essentially the full power of AWS CloudFront.  
-
-    This will let you configure caching timeouts for multiple paths.  So if you have a fairly static landing page, the cache timeout could be days or weeks; while the user account page may have cache of seconds or minutes.  Advanced caching could include query parameters and/or cookies.  
-
-    Thus the control of the caching behavoir is vastly increased, so is the complexity of managing the CloudFront distribution.  In some cases, the additional complexity is necessary or even required.
+    The private CloudFront distribution created with the API Gateway is fine, but sometimes you need more control. 
+    The alternative is to create your own AWS CloudFront Distribution. 
+    By doing this, you still associate a Custom Domain Name with HTTPS, but you unlock the full power of AWS CloudFront. 
 
 ## Using the built-in Zappa commands
 
@@ -75,7 +73,7 @@ Zappa has some built-in functionality that streamlines the process of associatin
 DNS Provider|CA|Notes|Instructions
 ------------|--|-----|------------
 Route53|AWS Certificate Manager| All AWS combo makes this ridiculous easy| [see below](#option-1-route53-and-acm)
-Route53|Let's Encrypt| Another good option that Zappa has smoothed the way| [see below](#option-2-route53-and-lets-encrypt)
+Route53|Let's Encrypt| An option that Zappa has smoothed the way, but may be deprecated in the future| [see below](#option-2-route53-and-lets-encrypt)
 Other DNS|ACM or Let's Encrypt| There are more manual steps| [see below](#other-service-providers)
 Other DNS|Other| You got some work to do| [see below](#other-service-providers)
 
@@ -140,6 +138,9 @@ And that should work fine going forward
     This command must be run in the US East (N. Virginia) (us-east-1).  See [AWS documentation](http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html#how-to-custom-domains-prerequisites) for more details.
 
 ### Option 2: Route53 and Let's Encrypt
+
+!!! Warning
+    As of Fall/Winter 2017, there has been discussion by Zappa developers that this option may ultimately be deprecated and removed.
 
 #### Step 2.1: Create a Hosted Zone in Route53
 
@@ -213,6 +214,9 @@ If you choose to use your own DNS provider and/or your own Certificate Authority
 
 In this case, I would recommend against using the built-in Zappa commands because of unexpected side effects.
 
+!!! Tip "What's the path of least resistance?"
+    Given these conditions, you should seriously consider a custom CloudFront Distribution.  Associating a 
+
 ## Troubleshooting
 
 Using your own domain name can be one of the most frustrating experiences, especially due to the potential for a long delay while AWS is creating/setting up the necessary components.  Here we list some of the common errors that you may get when you think everything is working.
@@ -243,11 +247,46 @@ Another mistake often seen is that when a form is submitted or another HTTP redi
 
 ## Manage Your Own CloudFront Distribution
 
-The private CloudFront distribution created with the API Gateway is fine, but sometimes you need more control. The alternative is to create your own AWS CloudFront distribution. By doing this, you may still associate a Custom Domain Name, still use ACM HTTPS; but you have additional control - essentially the full power of AWS CloudFront.
+As mentioned, sometimes you may run into the limitations of the CloudFront Distro created with API Gateway.
+Of course this depends on what requirements your project needs in your scenarios.
+The AWS CloudFront service is marketed as a Content Delivery Network (CDN), traditionally used to serve static content to users. In reality, [CloudFront](https://aws.amazon.com/cloudfront/) has rich and 
+full-featured set of capabilities to deliver
+almost any kind of data including dynamic data from a website. 
 
-This will let you configure caching timeouts for multiple paths. So if you have a fairly static landing page, the cache timeout could be days or weeks; while the user account page may have cache of seconds or minutes. Advanced caching could include query parameters and/or cookies.
+Additional functionality when you use your own CloudFront distributions include:
 
-Thus the control of the caching behavior is vastly increased, so is the complexity of managing the CloudFront distribution. In some cases, the additional complexity is necessary or even required.
+* **Aggregate Static and Dynamic Content** - If you are serving static content [from S3 or other 
+static services](walk_static), you can use a custom CloudFront Distro to have a single domain name
+for your entire website by using [multiple origins](http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/DownloadDistS3AndCustomOrigins.html).
+This sometimes simplifies technologies that are easier to configure with a single domain policy (e.g. CORS, HTTPS, etc).
+Also busy sites may get a more cost effective delivery mechanism than serving directly from S3.  This is because the CloudFront per byte
+delivery is lower than directly from S3 and a good caching strategy will allow those assets to be served from CloudFront instead of S3.
+
+* **Extensive cache control** - 
+This will let you configure caching timeouts for multiple paths. So if you have a fairly static landing page, the cache timeout could be days or weeks; while the user account page may have cache of seconds or minutes. Advanced caching could include query parameters and/or cookies.  While some
+frameworks like Django have very good cache header controls, other Python frameworks do not.
+
+* **Geo Restrictions** - CloudFront has the ability to [restrict and/or modify content based on geographic location](http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/georestrictions.html).  Using your own CloudFront Distro enables you 
+to control this feature.
+
+* **Enhanced Security** - If your application requires increased security, then you can leverage both 
+[AWS Web Application Firewall (WAF)](http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-awswaf.html)
+and [AWS Shield (Managed DDOS Protection)](https://aws.amazon.com/shield/). But you cannot use these services without creating your
+own custom CloudFront. 
+
+* **Serving Private Content** - CloudFront supports the [ability to create signed URLs and cookies](http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-choosing-signed-urls-cookies.html)
+ that allow only authorized end users to access content (e.g. videos, images, etc). 
+
+* **Deployment Flexiblity** - If your project tends to have a lot of changes and there is a possiblity that you may wish to switch between
+zappa deployments *without significant downtime* then you'll want your own CloudFront Distro.  
+Running `certify` on a new zappa deployment could take up to 40 minutes,
+and requires the the domain and ssl certs, thus causing a service outage if the domain is in use.
+Having a custom CloudFront Distro allows you to switch the origin path between
+zappa deployments with only having to consider cache timeouts. 
+
+Basically if you'd like to leverage some of the powerful features and tools not exposed by default.  See the 
+[AWS CloudFront documentation](http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html) for more information.
+
 
 ### Create a CloudFront Distribution
 
@@ -259,10 +298,10 @@ Some key parameters:
  * For Origin Domain Name, use the Zappa distribution domain name (e.g. 'bnu0zcwezd.execute-api.us-east-1.amazonaws.com')
  * For Origin Path, use the Zappa deployment name (e.g. 'dev')
  * For Object Caching:
-   * If you'd like to use Django to control the cache, select 'Use Origin Cache Headers'
-   * If you'd like to setup static cache timeouts, select 'Customize'
-      * Use the Minimum TTL, Maximum TTL, and Default TTL to specify how long (in seconds) to cache objects
-      * You can add additional paths as needed
+    * If you'd like to use Django to control the cache, select 'Use Origin Cache Headers'
+    * If you'd like to setup static cache timeouts, select 'Customize'
+        * Use the Minimum TTL, Maximum TTL, and Default TTL to specify how long (in seconds) to cache objects
+        * You can add additional paths as needed
  * Compress Objects Automatically, we recommend True
 
 ### Associate HTTPS certificate
