@@ -752,6 +752,20 @@ We need to extend the VPC so that we can add more AWS services like:</p>
 <p>Also note that your zappa deployment 
 <a href="../aws_network_primer/#general-behavior-and-internet-access">will not have outbound access to the Internet</a>.
 In order to do this you will have use a Public/Private setup.</p>
+<div class="admonition quote">
+<p class="admonition-title">Some additional considerations from the <a href="http://docs.aws.amazon.com/lambda/latest/dg/vpc.html#vpc-configuring">AWS Documentation</a></p>
+<ul>
+<li>
+<p>We recommend that you avoid DNS resolution of public host names for your VPC. This can take several seconds to resolve, which adds several seconds of billable time on your request. For example, if your Lambda function accesses an Amazon RDS instance in your VPC, launch the instance with the no-publicly-accessible option.</p>
+</li>
+<li>
+<p>When you add VPC configuration to a Lambda function, it can only access resources in that VPC. If a Lambda function needs to access both VPC resources and the public Internet, the VPC needs to have a Network Address Translation (NAT) instance inside the VPC.</p>
+</li>
+<li>
+<p>When a Lambda function is configured to run within a VPC, it incurs an additional ENI start-up penalty. This means address resolution may be delayed when trying to connect to network resources.</p>
+</li>
+</ul>
+</div>
 <p><strong>This scenario is good for straightforward setups with a little work, but has significant limitations</strong></p>
 <h3 id="vpc-with-a-public-subnet-and-private-subnet">VPC with a Public subnet and Private subnet<a class="headerlink" href="#vpc-with-a-public-subnet-and-private-subnet" title="Permanent link">&para;</a></h3>
 <p>Arguably the most flexible and future-proof of all web application setups.  You have two subnets: one public and one private.  Your RDS and lambda functions reside in the private subnet, far away from bad guys, but also far away from your local machine.  In order to access the database from your system you will need a <a href="http://serverfault.com/a/648116/60094">bastion host</a> in the public subnet.  </p>
