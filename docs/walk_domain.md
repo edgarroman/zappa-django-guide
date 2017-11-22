@@ -215,7 +215,10 @@ If you choose to use your own DNS provider and/or your own Certificate Authority
 In this case, I would recommend against using the built-in Zappa commands because of unexpected side effects.
 
 !!! Tip "What's the path of least resistance?"
-    Given these conditions, you should seriously consider a custom CloudFront Distribution.  Associating a 
+    Given these conditions, you should seriously consider a 
+    [custom CloudFront Distribution](#manage-your-own-cloudfront-distribution).  Managing
+    your own CloudFront Distribution is not a lot of work, there are many benefits, and the available
+    documentation is more abundant and complete.
 
 ## Troubleshooting
 
@@ -280,7 +283,7 @@ own custom CloudFront.
 * **Deployment Flexiblity** - If your project tends to have a lot of changes and there is a possiblity that you may wish to switch between
 zappa deployments *without significant downtime* then you'll want your own CloudFront Distro.  
 Running `certify` on a new zappa deployment could take up to 40 minutes,
-and requires the the domain and ssl certs, thus causing a service outage if the domain is in use.
+and requires the domain and ssl certs, thus causing a service outage if the domain is in use.
 Having a custom CloudFront Distro allows you to switch the origin path between
 zappa deployments with only having to consider cache timeouts. 
 
