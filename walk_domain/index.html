@@ -1146,7 +1146,10 @@ Certificate updated!
 <p>In this case, I would recommend against using the built-in Zappa commands because of unexpected side effects.</p>
 <div class="admonition tip">
 <p class="admonition-title">What's the path of least resistance?</p>
-<p>Given these conditions, you should seriously consider a custom CloudFront Distribution.  Associating a </p>
+<p>Given these conditions, you should seriously consider a 
+<a href="#manage-your-own-cloudfront-distribution">custom CloudFront Distribution</a>.  Managing
+your own CloudFront Distribution is not a lot of work, there are many benefits, and the available
+documentation is more abundant and complete.</p>
 </div>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <p>Using your own domain name can be one of the most frustrating experiences, especially due to the potential for a long delay while AWS is creating/setting up the necessary components.  Here we list some of the common errors that you may get when you think everything is working.</p>
@@ -1202,7 +1205,7 @@ own custom CloudFront. </p>
 <p><strong>Deployment Flexiblity</strong> - If your project tends to have a lot of changes and there is a possiblity that you may wish to switch between
 zappa deployments <em>without significant downtime</em> then you'll want your own CloudFront Distro.<br />
 Running <code>certify</code> on a new zappa deployment could take up to 40 minutes,
-and requires the the domain and ssl certs, thus causing a service outage if the domain is in use.
+and requires the domain and ssl certs, thus causing a service outage if the domain is in use.
 Having a custom CloudFront Distro allows you to switch the origin path between
 zappa deployments with only having to consider cache timeouts. </p>
 </li>
