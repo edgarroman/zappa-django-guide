@@ -113,9 +113,10 @@ Using your local environment:
 python manage.py collectstatic --noinput
 ```
 
-Or to instruct your zappa-powered AWS lambda environment to do it for you:
+Or to instruct your zappa-powered AWS lambda environment to do it for you (don't forget to push your code changes first)
 
 ```
+zappa update dev
 zappa manage dev "collectstatic --noinput"
 ```
 
