@@ -847,8 +847,9 @@ STATICFILES_STORAGE = &#39;storages.backends.s3boto.S3BotoStorage&#39;
 <div class="codehilite"><pre><span></span>python manage.py collectstatic --noinput
 </pre></div>
 
-<p>Or to instruct your zappa-powered AWS lambda environment to do it for you:</p>
-<div class="codehilite"><pre><span></span>zappa manage dev &quot;collectstatic --noinput&quot;
+<p>Or to instruct your zappa-powered AWS lambda environment to do it for you (don't forget to push your code changes first)</p>
+<div class="codehilite"><pre><span></span>zappa update dev
+zappa manage dev &quot;collectstatic --noinput&quot;
 </pre></div>
 
 <h3 id="test-with-the-admin">Test with the admin<a class="headerlink" href="#test-with-the-admin" title="Permanent link">&para;</a></h3>
