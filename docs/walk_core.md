@@ -14,7 +14,7 @@ What will not work (yet - see other walkthroughs for this functionality)
 
 * Static Files will not be served (More on that [here](walk_static.md))
 * There is no database connection available (not even SQLite)
-* No HTTPS support
+* Custom domain names (More on that [here](walk_domain.md))
 
 ## Setup AWS Account Credentials
 
@@ -264,7 +264,7 @@ https://bnu0zcwezd.execute-api.us-east-1.amazonaws.com/dev/
       Auto Generated API Gateway              Your Zappa Environment
 ```
 
-While this url may be considered functional, most would regard it as extremely unfriendly to users. To improve this and even get HTTPS encryption see the section on [using a Custom Domain](walk_domain.md).
+While this url may be considered functional, most would regard it as extremely unfriendly to users. To improve this and use your own custom domain name see the section on [using a Custom Domain](walk_domain.md).
 
 ## Checking up on the deployment
 
