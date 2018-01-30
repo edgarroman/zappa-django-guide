@@ -719,7 +719,7 @@
 <ul>
 <li>Static Files will not be served (More on that <a href="../walk_static/">here</a>)</li>
 <li>There is no database connection available (not even SQLite)</li>
-<li>No HTTPS support</li>
+<li>Custom domain names (More on that <a href="../walk_domain/">here</a>)</li>
 </ul>
 <h2 id="setup-aws-account-credentials">Setup AWS Account Credentials<a class="headerlink" href="#setup-aws-account-credentials" title="Permanent link">&para;</a></h2>
 <p>Make sure you setup access to your AWS account from your local command line.  See: <a href="../aws_credentials/#setup-local-account-credentials">Setup Local Account Credentials</a></p>
@@ -923,7 +923,7 @@ As an aside, for best security practices, put the full domain of the API Gateway
       Auto Generated API Gateway              Your Zappa Environment
 </pre></div>
 
-<p>While this url may be considered functional, most would regard it as extremely unfriendly to users. To improve this and even get HTTPS encryption see the section on <a href="../walk_domain/">using a Custom Domain</a>.</p>
+<p>While this url may be considered functional, most would regard it as extremely unfriendly to users. To improve this and use your own custom domain name see the section on <a href="../walk_domain/">using a Custom Domain</a>.</p>
 <h2 id="checking-up-on-the-deployment">Checking up on the deployment<a class="headerlink" href="#checking-up-on-the-deployment" title="Permanent link">&para;</a></h2>
 <p>If, at any time, you would like to get information on the deployment, the command to run is</p>
 <div class="codehilite"><pre><span></span>zappa status dev
