@@ -158,10 +158,10 @@ python manage.py startapp axe
 cd axe
 mkdir management
 cd management
-touch __init.py__
+touch __init__.py
 mkdir commands
 cd commands
-touch __init.py__
+touch __init__.py
 ```
 
 Then create a file called `create_db.py`
