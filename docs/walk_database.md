@@ -194,6 +194,7 @@ class Command(BaseCommand):
         
         self.stdout.write(self.style.SUCCESS('All Done'))
 ```
+Then register app axe to settings.py.
 
 #### Run the management command
 
