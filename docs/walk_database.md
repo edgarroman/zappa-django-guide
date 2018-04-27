@@ -194,7 +194,7 @@ class Command(BaseCommand):
         
         self.stdout.write(self.style.SUCCESS('All Done'))
 ```
-Then register app axe to settings.py.
+Then register app axe to settings.py and update files in aws using this command: zappa update dev.
 
 #### Run the management command
 
