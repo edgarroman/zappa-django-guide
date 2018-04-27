@@ -198,7 +198,7 @@ class Command(BaseCommand):
 #### Run the management command
 
 ```sh
-zappa dev manage create_db
+zappa manage dev create_db
 ```
 
 If all goes well, then your database should be created.
