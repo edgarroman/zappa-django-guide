@@ -184,7 +184,7 @@ class Command(BaseCommand):
         host = settings.DATABASES['default']['HOST']
 
         con = None
-        con = connect(dbname='postgres', user=user, host = host, password=password)
+        con = connect(dbname=dbname, user=user, host = host, password=password)
         dbname = dbname
         con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         cur = con.cursor()
