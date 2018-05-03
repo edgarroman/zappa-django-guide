@@ -1,6 +1,6 @@
 # Adventures in Networking
 
-Presumably, since you've read this far, you're interested in more than a simple Django powered API serving static images.  You probably want something that is more interactive with users and have have advanced capabilities.  So this will require interacting with additional AWS services like RDS or DynamoDB for database services, SNS or SQS for task processing, and many more...
+Presumably, since you've read this far, you're interested in more than a simple Django powered API serving static images.  You probably want something that is more interactive with users and have advanced capabilities.  So this will require interacting with additional AWS services like RDS or DynamoDB for database services, SNS or SQS for task processing, and many more...
 
 Well, there is an important aspect about interacting with additional AWS services.  With pure AWS lambda, we have a fairly low attack surface, but when we introduce additional interactions over the network, we must consider information security risks and our network architecture.
 
