@@ -1008,14 +1008,14 @@ python manage.py startapp axe
 <span class="nb">cd</span> axe
 mkdir management
 <span class="nb">cd</span> management
-touch __init.py__
+touch __init__.py
 mkdir commands
 <span class="nb">cd</span> commands
-touch __init.py__
+touch __init__.py
 </pre></div>
 
 <p>Then create a file called <code>create_db.py</code></p>
-<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">psycopg2</span> <span class="kn">import</span> <span class="n">connect</span>
+<p><div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">psycopg2</span> <span class="kn">import</span> <span class="n">connect</span>
 <span class="kn">from</span> <span class="nn">psycopg2.extensions</span> <span class="kn">import</span> <span class="n">ISOLATION_LEVEL_AUTOCOMMIT</span>
 <span class="kn">from</span> <span class="nn">django.core.management.base</span> <span class="kn">import</span> <span class="n">BaseCommand</span><span class="p">,</span> <span class="n">CommandError</span>
 <span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
@@ -1032,8 +1032,7 @@ touch __init.py__
         <span class="n">host</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">DATABASES</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">][</span><span class="s1">&#39;HOST&#39;</span><span class="p">]</span>
 
         <span class="n">con</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="n">con</span> <span class="o">=</span> <span class="n">connect</span><span class="p">(</span><span class="n">dbname</span><span class="o">=</span><span class="s1">&#39;postgres&#39;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">host</span> <span class="o">=</span> <span class="n">host</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
-        <span class="n">dbname</span> <span class="o">=</span> <span class="n">dbname</span>
+        <span class="n">con</span> <span class="o">=</span> <span class="n">connect</span><span class="p">(</span><span class="n">dbname</span><span class="o">=</span><span class="s1">&#39;postgres&#39;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
         <span class="n">con</span><span class="o">.</span><span class="n">set_isolation_level</span><span class="p">(</span><span class="n">ISOLATION_LEVEL_AUTOCOMMIT</span><span class="p">)</span>
         <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
         <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;CREATE DATABASE &#39;</span> <span class="o">+</span> <span class="n">dbname</span><span class="p">)</span>
@@ -1042,9 +1041,9 @@ touch __init.py__
 
         <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">SUCCESS</span><span class="p">(</span><span class="s1">&#39;All Done&#39;</span><span class="p">))</span>
 </pre></div>
-
+Then register app axe to settings.py and update files in aws using this command: zappa update dev.</p>
 <h4 id="run-the-management-command">Run the management command<a class="headerlink" href="#run-the-management-command" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>zappa dev manage create_db
+<div class="codehilite"><pre><span></span>zappa manage dev create_db
 </pre></div>
 
 <p>If all goes well, then your database should be created.</p>

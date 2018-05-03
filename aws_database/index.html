@@ -413,9 +413,43 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Creating an RDS Database
+      </label>
+    
     <a href="./" title="Creating an RDS Database" class="md-nav__link md-nav__link--active">
       Creating an RDS Database
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#adding-second-private-subnet-to-vpc" title="Adding second private subnet to VPC" class="md-nav__link">
+    Adding second private subnet to VPC
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-an-rds-instance" title="Creating an RDS instance" class="md-nav__link">
+    Creating an RDS instance
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -478,6 +512,27 @@
     
   
   
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#adding-second-private-subnet-to-vpc" title="Adding second private subnet to VPC" class="md-nav__link">
+    Adding second private subnet to VPC
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-an-rds-instance" title="Creating an RDS instance" class="md-nav__link">
+    Creating an RDS instance
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -490,7 +545,12 @@
                 
                 
                 <h1 id="creating-an-rds-database">Creating an RDS Database<a class="headerlink" href="#creating-an-rds-database" title="Permanent link">&para;</a></h1>
-<p>instructions on how to create a PostGreSQL database here</p>
+<p>There are a number of RDS engines available - https://aws.amazon.com/rds/getting-started/. Another choice is to opt out for DynamoDB - https://aws.amazon.com/rds/getting-started/ </p>
+<h2 id="adding-second-private-subnet-to-vpc">Adding second private subnet to VPC<a class="headerlink" href="#adding-second-private-subnet-to-vpc" title="Permanent link">&para;</a></h2>
+<p>RDS requires additional subnet to create an instance. Follow step 3 <strong>Create Additional Subnets</strong>
+ at https://docs.aws.amazon.com/AmazonECS/latest/developerguide/create-public-private-vpc.html to add one to your existing VPC. Choose an <strong>Availability Zone</strong> different from the first one and <strong>IPv4 CIDR block</strong> 10.0.2.0/24.</p>
+<h2 id="creating-an-rds-instance">Creating an RDS instance<a class="headerlink" href="#creating-an-rds-instance" title="Permanent link">&para;</a></h2>
+<p>Follow this guide https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.CreatingConnecting.PostgreSQL.html keeping in mind parameters we created before.</p>
                 
                   
                 
