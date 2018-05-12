@@ -1,6 +1,6 @@
 # Creating an RDS Database
 
-There are a number of RDS engines available - https://aws.amazon.com/rds/getting-started/. Another choice is to opt out for DynamoDB - https://aws.amazon.com/rds/getting-started/ 
+There are a number of RDS engines available - https://aws.amazon.com/rds/getting-started/. Another choice is to opt for DynamoDB - https://aws.amazon.com/dynamodb/getting-started/
 
 ## Adding second private subnet to VPC
 
