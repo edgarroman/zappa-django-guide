@@ -772,12 +772,12 @@
         },
         {
             "location": "/aws_database/",
-            "text": "Creating an RDS Database\n\u00b6\n\n\nThere are a number of RDS engines available - https://aws.amazon.com/rds/getting-started/. Another choice is to opt out for DynamoDB - https://aws.amazon.com/rds/getting-started/ \n\n\nAdding second private subnet to VPC\n\u00b6\n\n\nRDS requires additional subnet to create an instance. Follow step 3 \nCreate Additional Subnets\n\n at https://docs.aws.amazon.com/AmazonECS/latest/developerguide/create-public-private-vpc.html to add one to your existing VPC. Choose an \nAvailability Zone\n different from the first one and \nIPv4 CIDR block\n 10.0.2.0/24.\n\n\nCreating an RDS instance\n\u00b6\n\n\nFollow this guide https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.CreatingConnecting.PostgreSQL.html keeping in mind parameters we created before.",
+            "text": "Creating an RDS Database\n\u00b6\n\n\nThere are a number of RDS engines available - https://aws.amazon.com/rds/getting-started/. Another choice is to opt for DynamoDB - https://aws.amazon.com/dynamodb/getting-started/\n\n\nAdding second private subnet to VPC\n\u00b6\n\n\nRDS requires additional subnet to create an instance. Follow step 3 \nCreate Additional Subnets\n\n at https://docs.aws.amazon.com/AmazonECS/latest/developerguide/create-public-private-vpc.html to add one to your existing VPC. Choose an \nAvailability Zone\n different from the first one and \nIPv4 CIDR block\n 10.0.2.0/24.\n\n\nCreating an RDS instance\n\u00b6\n\n\nFollow this guide https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.CreatingConnecting.PostgreSQL.html keeping in mind parameters we created before.",
             "title": "Creating an RDS Database"
         },
         {
             "location": "/aws_database/#creating-an-rds-database",
-            "text": "There are a number of RDS engines available - https://aws.amazon.com/rds/getting-started/. Another choice is to opt out for DynamoDB - https://aws.amazon.com/rds/getting-started/",
+            "text": "There are a number of RDS engines available - https://aws.amazon.com/rds/getting-started/. Another choice is to opt for DynamoDB - https://aws.amazon.com/dynamodb/getting-started/",
             "title": "Creating an RDS Database"
         },
         {
