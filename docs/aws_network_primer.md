@@ -136,7 +136,7 @@ Elastic IP will not be permitted to send and receive traffic.
 #### Other AWS Services
 
 Note that many of the AWS services are not associated with any VPC and thus can be considered accessible via Internet-only.
-For example, if your application living in the VPN needs to connect to the AWS Simple Queue Service (SQS), you will have to 
+For example, if your application living in the VPC needs to connect to the AWS Simple Queue Service (SQS), you will have to 
 enable Internet access via an Internet Gateway as described above.
 Any AWS service that does not have a [VPC endpoint](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-endpoints.html) capability is considered Internet only.
 At the time of this writing, only the following services have [VPC endpoints](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-endpoints.html)
