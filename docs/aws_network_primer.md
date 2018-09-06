@@ -313,6 +313,7 @@ At the time of this writing, the following events can
 * Amazon Alexa
 * Amazon Lex
 * Amazon API Gateway
+* Amazon Simple Queue Service
 
 ## Final considerations
 
