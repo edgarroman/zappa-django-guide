@@ -161,7 +161,7 @@ You have options:
     export AWS_DEFAULT_REGION=us-east-1
     ```
    
-2. Add default region in your `~/.awd/credentials` file
+2. Add default region in your `~/.aws/credentials` file
 
 	 Better but this will affect all AWS scripts and programs on your machine.
 	
