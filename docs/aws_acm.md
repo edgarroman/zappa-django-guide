@@ -1,4 +1,4 @@
-# AWS Credential Manager (ACM)
+# AWS Certificate Manager (ACM)
 
 This page lists various activites that may be necessary to perform when leveraging Zappa
 
