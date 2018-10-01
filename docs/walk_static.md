@@ -65,7 +65,7 @@ Go to your S3 bucket properties, and under "Permissions", click on "Add CORS Con
 In order to re-use existing modules freely available, we will use the django-storages module to handle the management of files to and from AWS S3.  So first you must install it.  *Don't forget to activate your virtual environment* 
 
 ```
-pip install django-storages boto
+pip install django-storages[boto3]
 ```
 
 And thus you should take the corresponding package versions reported by `pip freeze` into the requirements.txt file.  At the time of this writing, the additional lines would be:
@@ -99,7 +99,7 @@ AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
 
-STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 ```
 
@@ -137,9 +137,8 @@ As mentioned above you probably want to ensure a valid CORS policy is in place f
 In addition there are many default HTTP headers that can be served with your static files to ensure proper caching and so forth.  The example format in your settings.py file is:
 
 ```
-    AWS_HEADERS = {  
-        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
-        'Cache-Control': 'max-age=94608000',
+    AWS_S3_OBJECT_PARAMETERS = {  
+        'CacheControl': 'max-age=94608000',
     }
 ```
 
