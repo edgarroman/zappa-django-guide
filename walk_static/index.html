@@ -388,15 +388,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#add-django-storages-to-the-installed_apps-in-settingspy" title="Add Django-Storages to the INSTALLED_APPS in settings.py" class="md-nav__link">
-    Add Django-Storages to the INSTALLED_APPS in settings.py
+  <a href="#add-django-s3-storage-to-the-installed_apps-in-settingspy" title="Add Django-S3-Storage to the INSTALLED_APPS in settings.py" class="md-nav__link">
+    Add Django-S3-Storage to the INSTALLED_APPS in settings.py
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#configure-django-storages-in-settingspy" title="Configure Django-Storages in settings.py" class="md-nav__link">
-    Configure Django-Storages in settings.py
+  <a href="#configure-django-s3-storage-in-settingspy" title="Configure Django-S3-Storage in settings.py" class="md-nav__link">
+    Configure Django-S3-Storage in settings.py
   </a>
   
 </li>
@@ -436,13 +436,6 @@
         <li class="md-nav__item">
   <a href="#additional-http-settings" title="Additional HTTP Settings" class="md-nav__link">
     Additional HTTP Settings
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#helpful-links" title="Helpful Links" class="md-nav__link">
-    Helpful Links
   </a>
   
 </li>
@@ -698,15 +691,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#add-django-storages-to-the-installed_apps-in-settingspy" title="Add Django-Storages to the INSTALLED_APPS in settings.py" class="md-nav__link">
-    Add Django-Storages to the INSTALLED_APPS in settings.py
+  <a href="#add-django-s3-storage-to-the-installed_apps-in-settingspy" title="Add Django-S3-Storage to the INSTALLED_APPS in settings.py" class="md-nav__link">
+    Add Django-S3-Storage to the INSTALLED_APPS in settings.py
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#configure-django-storages-in-settingspy" title="Configure Django-Storages in settings.py" class="md-nav__link">
-    Configure Django-Storages in settings.py
+  <a href="#configure-django-s3-storage-in-settingspy" title="Configure Django-S3-Storage in settings.py" class="md-nav__link">
+    Configure Django-S3-Storage in settings.py
   </a>
   
 </li>
@@ -746,13 +739,6 @@
         <li class="md-nav__item">
   <a href="#additional-http-settings" title="Additional HTTP Settings" class="md-nav__link">
     Additional HTTP Settings
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#helpful-links" title="Helpful Links" class="md-nav__link">
-    Helpful Links
   </a>
   
 </li>
@@ -811,34 +797,38 @@
 <strong>Note that this CORS policy is very open and simple.  If you have a production site, you will probably want to narrow the scope of CORS or leverage a CDN.</strong></p>
 <h2 id="configure-django-project">Configure Django Project<a class="headerlink" href="#configure-django-project" title="Permanent link">&para;</a></h2>
 <h3 id="install-modules">Install modules<a class="headerlink" href="#install-modules" title="Permanent link">&para;</a></h3>
-<p>In order to re-use existing modules freely available, we will use the django-storages module to handle the management of files to and from AWS S3.  So first you must install it.  <em>Don't forget to activate your virtual environment</em> </p>
-<div class="codehilite"><pre><span></span>pip install django-storages[boto3]
+<p>In order to re-use existing modules freely available, we will use the <a href="https://github.com/etianen/django-s3-storage">django-s3-storage</a> package to handle the management of files to and from AWS S3.  So first you must install it.  <em>Don't forget to activate your virtual environment</em> </p>
+<div class="codehilite"><pre><span></span>pip install django-s3-storage
 </pre></div>
 
 <p>And thus you should take the corresponding package versions reported by <code>pip freeze</code> into the requirements.txt file.  At the time of this writing, the additional lines would be:</p>
 <div class="codehilite"><pre><span></span>...
-boto==2.45.0
-django-storages==1.5.1
+django-s3-storage==0.12.4
 ...
 </pre></div>
 
-<h3 id="add-django-storages-to-the-installed_apps-in-settingspy">Add Django-Storages to the INSTALLED_APPS in settings.py<a class="headerlink" href="#add-django-storages-to-the-installed_apps-in-settingspy" title="Permanent link">&para;</a></h3>
-<p>Edit your settings.py file to include django-storages.  Note it's just called 'storages' as an app.</p>
+<h3 id="add-django-s3-storage-to-the-installed_apps-in-settingspy">Add Django-S3-Storage to the INSTALLED_APPS in settings.py<a class="headerlink" href="#add-django-s3-storage-to-the-installed_apps-in-settingspy" title="Permanent link">&para;</a></h3>
+<p>Edit your settings.py file to include django-s3-storage.  Note it's  called 'django_s3_storage' as an app.</p>
 <div class="codehilite"><pre><span></span>INSTALLED_APPS = (
           ...,
-          &#39;storages&#39;,
+          &#39;django_s3_storage&#39;,
      )
 </pre></div>
 
-<h3 id="configure-django-storages-in-settingspy">Configure Django-Storages in settings.py<a class="headerlink" href="#configure-django-storages-in-settingspy" title="Permanent link">&para;</a></h3>
-<p>Add these lines anywhere in your settings.py.  These values instruct Django-Storages to properly configure a basic setup for leveraging S3.  More information about these values can be found here: <a href="http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html">http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html</a></p>
-<div class="codehilite"><pre><span></span>AWS_STORAGE_BUCKET_NAME = &#39;zappa-static&#39;
+<h3 id="configure-django-s3-storage-in-settingspy">Configure Django-S3-Storage in settings.py<a class="headerlink" href="#configure-django-s3-storage-in-settingspy" title="Permanent link">&para;</a></h3>
+<p>Add these lines anywhere in your settings.py.  These values instruct django-s3-storage to properly configure a basic setup for leveraging S3.  </p>
+<div class="codehilite"><pre><span></span>YOUR_S3_BUCKET = &quot;zappa-static&quot;
 
-AWS_S3_CUSTOM_DOMAIN = &#39;%s.s3.amazonaws.com&#39; % AWS_STORAGE_BUCKET_NAME
+STATICFILES_STORAGE = &quot;django_s3_storage.storage.StaticS3Storage&quot;
+AWS_S3_BUCKET_NAME_STATIC = YOUR_S3_BUCKET
 
+# These next two lines will serve the static files directly 
+# from the s3 bucket
+AWS_S3_CUSTOM_DOMAIN = &#39;%s.s3.amazonaws.com&#39; % YOUR_S3_BUCKET
 STATIC_URL = &quot;https://%s/&quot; % AWS_S3_CUSTOM_DOMAIN
 
-STATICFILES_STORAGE = &#39;storages.backends.s3boto3.S3Boto3Storage&#39;
+# OR...if you create a fancy custom domain for your static files use:
+#AWS_S3_PUBLIC_URL_STATIC = &quot;https://static.zappaguide.com/&quot;
 </pre></div>
 
 <h2 id="push-your-static-files-to-the-cloud">Push your static files to the cloud<a class="headerlink" href="#push-your-static-files-to-the-cloud" title="Permanent link">&para;</a></h2>
@@ -860,17 +850,10 @@ zappa manage dev &quot;collectstatic --noinput&quot;
 <h2 id="additional-http-settings">Additional HTTP Settings<a class="headerlink" href="#additional-http-settings" title="Permanent link">&para;</a></h2>
 <p>As mentioned above you probably want to ensure a valid CORS policy is in place for anything resembling production.</p>
 <p>In addition there are many default HTTP headers that can be served with your static files to ensure proper caching and so forth.  The example format in your settings.py file is:</p>
-<div class="codehilite"><pre><span></span>    AWS_S3_OBJECT_PARAMETERS = {  
-        &#39;CacheControl&#39;: &#39;max-age=94608000&#39;,
-    }
+<div class="codehilite"><pre><span></span>AWS_S3_MAX_AGE_SECONDS_STATIC = &quot;94608000&quot;
 </pre></div>
 
-<h2 id="helpful-links">Helpful Links<a class="headerlink" href="#helpful-links" title="Permanent link">&para;</a></h2>
-<p>These two articles were extremely helpful when writing this page:</p>
-<ul>
-<li><a href="https://www.caktusgroup.com/blog/2014/11/10/Using-Amazon-S3-to-store-your-Django-sites-static-and-media-files/">https://www.caktusgroup.com/blog/2014/11/10/Using-Amazon-S3-to-store-your-Django-sites-static-and-media-files/</a></li>
-<li><a href="http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html">http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html</a></li>
-</ul>
+<p>See the <a href="https://github.com/etianen/django-s3-storage">django-s3-storage</a> for more settings.</p>
                 
                   
                 
