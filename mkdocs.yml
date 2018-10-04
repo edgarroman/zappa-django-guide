@@ -22,7 +22,7 @@ pages:
     - 'Adventures in Networking' : 'aws_network.md'
     - 'Creating an RDS Database' : 'aws_database.md'
     - 'Working with Route53' : 'aws_route53.md'
-    - 'AWS Credential Manager (ACM)' : 'aws_acm.md'
+    - 'AWS Certificate Manager (ACM)' : 'aws_acm.md'
   - Additional: 'additional.md'
 theme: 'material'
 extra:
