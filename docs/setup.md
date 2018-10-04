@@ -139,7 +139,7 @@ Create a local Dockerfile for your project so you can easily modify needed libra
 ```Docker
 FROM lambci/lambda:build-python3.6
 
-MAINTAINER "Your Name" <your@email.com>
+LABEL maintainer="<your@email.com>"
 
 WORKDIR /var/task
 
