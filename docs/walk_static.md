@@ -62,18 +62,17 @@ Go to your S3 bucket properties, and under "Permissions", click on "Add CORS Con
 
 ### Install modules
 
-In order to re-use existing modules freely available, we will use the django-storages module to handle the management of files to and from AWS S3.  So first you must install it.  *Don't forget to activate your virtual environment* 
+In order to re-use existing modules freely available, we will use the [django-s3-storages](https://github.com/etianen/django-s3-storage) package to handle the management of files to and from AWS S3.  So first you must install it.  *Don't forget to activate your virtual environment* 
 
 ```
-pip install django-storages[boto3]
+pip install django-s3-storages
 ```
 
 And thus you should take the corresponding package versions reported by `pip freeze` into the requirements.txt file.  At the time of this writing, the additional lines would be:
 
 ```
 ...
-boto==2.45.0
-django-storages==1.5.1
+django-s3-storage==0.12.4
 ...
 ```
 
@@ -84,7 +83,7 @@ Edit your settings.py file to include django-storages.  Note it's just called 's
 ```
 INSTALLED_APPS = (
           ...,
-          'storages',
+          'django_s3_storage',
      )
 ```
 
@@ -93,13 +92,18 @@ INSTALLED_APPS = (
 Add these lines anywhere in your settings.py.  These values instruct Django-Storages to properly configure a basic setup for leveraging S3.  More information about these values can be found here: [http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html](http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html)
 
 ```
-AWS_STORAGE_BUCKET_NAME = 'zappa-static'
+YOUR_S3_BUCKET = "zappa-static"
 
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+STATICFILES_STORAGE = "django_s3_storage.storage.StaticS3Storage"
+AWS_S3_BUCKET_NAME_STATIC = YOUR_S3_BUCKET
 
+# These next two lines will serve the static files directly 
+# from the s3 bucket
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % YOUR_S3_BUCKET
 STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
 
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# OR...if you create a fancy custom domain for your static files use:
+#AWS_S3_PUBLIC_URL_STATIC = "https://static.zappaguide.com/"
 
 ```
 
@@ -137,11 +141,10 @@ As mentioned above you probably want to ensure a valid CORS policy is in place f
 In addition there are many default HTTP headers that can be served with your static files to ensure proper caching and so forth.  The example format in your settings.py file is:
 
 ```
-    AWS_S3_OBJECT_PARAMETERS = {  
-        'CacheControl': 'max-age=94608000',
-    }
+    AWS_S3_MAX_AGE_SECONDS_STATIC = "94608000"
 ```
 
+See the [django-s3-storages](https://github.com/etianen/django-s3-storage) for more settings.
 
 ## Helpful Links
 
