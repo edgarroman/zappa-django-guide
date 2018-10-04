@@ -62,10 +62,10 @@ Go to your S3 bucket properties, and under "Permissions", click on "Add CORS Con
 
 ### Install modules
 
-In order to re-use existing modules freely available, we will use the [django-s3-storages](https://github.com/etianen/django-s3-storage) package to handle the management of files to and from AWS S3.  So first you must install it.  *Don't forget to activate your virtual environment* 
+In order to re-use existing modules freely available, we will use the [django-s3-storage](https://github.com/etianen/django-s3-storage) package to handle the management of files to and from AWS S3.  So first you must install it.  *Don't forget to activate your virtual environment* 
 
 ```
-pip install django-s3-storages
+pip install django-s3-storage
 ```
 
 And thus you should take the corresponding package versions reported by `pip freeze` into the requirements.txt file.  At the time of this writing, the additional lines would be:
@@ -76,9 +76,9 @@ django-s3-storage==0.12.4
 ...
 ```
 
-### Add Django-Storages to the INSTALLED_APPS in settings.py
+### Add Django-S3-Storage to the INSTALLED_APPS in settings.py
 
-Edit your settings.py file to include django-storages.  Note it's just called 'storages' as an app.
+Edit your settings.py file to include django-s3-storage.  Note it's  called 'django_s3_storage' as an app.
 
 ```
 INSTALLED_APPS = (
@@ -87,9 +87,9 @@ INSTALLED_APPS = (
      )
 ```
 
-### Configure Django-Storages in settings.py
+### Configure Django-S3-Storage in settings.py
 
-Add these lines anywhere in your settings.py.  These values instruct Django-Storages to properly configure a basic setup for leveraging S3.  More information about these values can be found here: [http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html](http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html)
+Add these lines anywhere in your settings.py.  These values instruct django-s3-storage to properly configure a basic setup for leveraging S3.  
 
 ```
 YOUR_S3_BUCKET = "zappa-static"
@@ -141,14 +141,8 @@ As mentioned above you probably want to ensure a valid CORS policy is in place f
 In addition there are many default HTTP headers that can be served with your static files to ensure proper caching and so forth.  The example format in your settings.py file is:
 
 ```
-    AWS_S3_MAX_AGE_SECONDS_STATIC = "94608000"
+AWS_S3_MAX_AGE_SECONDS_STATIC = "94608000"
 ```
 
-See the [django-s3-storages](https://github.com/etianen/django-s3-storage) for more settings.
+See the [django-s3-storage](https://github.com/etianen/django-s3-storage) for more settings.
 
-## Helpful Links
-
-These two articles were extremely helpful when writing this page:
-
-* [https://www.caktusgroup.com/blog/2014/11/10/Using-Amazon-S3-to-store-your-Django-sites-static-and-media-files/](https://www.caktusgroup.com/blog/2014/11/10/Using-Amazon-S3-to-store-your-Django-sites-static-and-media-files/)
-* [http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html](http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html)
