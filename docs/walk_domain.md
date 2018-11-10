@@ -21,7 +21,7 @@ This is entirely possible with Zappa - so how do we get there?
 
 Perhaps you're wondering why we are introducting the concept of HTTPS when the topic of this walkthough is using a custom domain.  Zappa provides an automated way of creating the necessary custom domain mappings as a part of using encryption.  Thus many of the techiques described in this walkthough will ultimately end up with a custom domain along with HTTPS.  
 
-In an effort to make the process straightforward, we are therefore bundling HTTPS as part of the walkthough.  Philosophical arguments for HTTPS are made [elsewhere](https://developers.google.com/web/fundamentals/security/encrypt-in-transit/why-https).  But with free services like "Let's Encrypt" and AWS Certificate Manner (free for API Gateways) there is no additional cost burden to leverage HTTPS certificates.
+In an effort to make the process straightforward, we are therefore bundling HTTPS as part of the walkthough.  Philosophical arguments for HTTPS are made [elsewhere](https://developers.google.com/web/fundamentals/security/encrypt-in-transit/why-https).  But with free services like "Let's Encrypt" and AWS Certificate Manager (free for API Gateways) there is no additional cost burden to leverage HTTPS certificates.
 
 Note that we refer to HTTPS instead of SSL and or TLS where [appropriate](https://security.stackexchange.com/a/5127).
 
