@@ -4,7 +4,7 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2018-10-04</lastmod>
+     <lastmod>2018-11-14</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -13,37 +13,37 @@
         
     <url>
      <loc>/setup/</loc>
-     <lastmod>2018-10-04</lastmod>
+     <lastmod>2018-11-14</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/walk_core/</loc>
-     <lastmod>2018-10-04</lastmod>
+     <lastmod>2018-11-14</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/walk_static/</loc>
-     <lastmod>2018-10-04</lastmod>
+     <lastmod>2018-11-14</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/walk_database/</loc>
-     <lastmod>2018-10-04</lastmod>
+     <lastmod>2018-11-14</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/walk_domain/</loc>
-     <lastmod>2018-10-04</lastmod>
+     <lastmod>2018-11-14</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/walk_app/</loc>
-     <lastmod>2018-10-04</lastmod>
+     <lastmod>2018-11-14</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -53,37 +53,37 @@
         
     <url>
      <loc>/aws_credentials/</loc>
-     <lastmod>2018-10-04</lastmod>
+     <lastmod>2018-11-14</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/aws_network_primer/</loc>
-     <lastmod>2018-10-04</lastmod>
+     <lastmod>2018-11-14</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/aws_network/</loc>
-     <lastmod>2018-10-04</lastmod>
+     <lastmod>2018-11-14</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/aws_database/</loc>
-     <lastmod>2018-10-04</lastmod>
+     <lastmod>2018-11-14</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/aws_route53/</loc>
-     <lastmod>2018-10-04</lastmod>
+     <lastmod>2018-11-14</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/aws_acm/</loc>
-     <lastmod>2018-10-04</lastmod>
+     <lastmod>2018-11-14</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -92,7 +92,7 @@
     
     <url>
      <loc>/additional/</loc>
-     <lastmod>2018-10-04</lastmod>
+     <lastmod>2018-11-14</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
