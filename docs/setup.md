@@ -80,23 +80,23 @@ docker pull lambci/lambda:build-python3.6
 * Create a shortcut that allows AWS credentials to pass through to the docker container
     * If you use [environment variables for AWS Credentials](aws_credentials#setup-local-account-credentials) then use:
 ```sh
-alias zappashell2='docker run -ti -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION -v $(pwd):/var/task  --rm lambci/lambda:build-python2.7 bash'
+alias zappashell2='docker run -ti -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION -v "$(pwd):/var/task"  --rm lambci/lambda:build-python2.7 bash'
 alias zappashell2 >> ~/.bash_profile
-alias zappashell3='docker run -ti -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION -v $(pwd):/var/task  --rm lambci/lambda:build-python3.6 bash'
+alias zappashell3='docker run -ti -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION -v "$(pwd):/var/task"  --rm lambci/lambda:build-python3.6 bash'
 alias zappashell3 >> ~/.bash_profile
 ```
     Be sure to define the `$AWS_DEFAULT_REGION` environment variable
 
     * If you use a [credentials file for AWS Credentials](aws_credentials#setup-local-account-credentials) then use:
 ```sh
-alias zappashell2='docker run -ti -e AWS_PROFILE=$AWS_PROFILE -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm lambci/lambda:build-python2.7 bash'
+alias zappashell2='docker run -ti -e AWS_PROFILE=$AWS_PROFILE -v "$(pwd):/var/task" -v ~/.aws/:/root/.aws  --rm lambci/lambda:build-python2.7 bash'
 alias zappashell2 >> ~/.bash_profile
-alias zappashell3='docker run -ti -e AWS_PROFILE=$AWS_PROFILE -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm lambci/lambda:build-python3.6 bash'
+alias zappashell3='docker run -ti -e AWS_PROFILE=$AWS_PROFILE -v "$(pwd):/var/task" -v ~/.aws/:/root/.aws  --rm lambci/lambda:build-python3.6 bash'
 alias zappashell3 >> ~/.bash_profile
 ```
     Note that you must either define the `$AWS_PROFILE` environment variable or edit the alias above to be hardcoded to a specific profile.  Example of hardcoding the alias:
 ```sh
-alias zappashell3='docker run -ti -e AWS_PROFILE=zappa -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm lambci/lambda:build-python3.6 bash'
+alias zappashell3='docker run -ti -e AWS_PROFILE=zappa -v "$(pwd):/var/task" -v ~/.aws/:/root/.aws  --rm lambci/lambda:build-python3.6 bash'
 ```
 
 ### Taking a test drive
@@ -166,7 +166,7 @@ This will create a local Docker image on your system.
 
 To make sure it points to your new image.  Essentially replace `lambci/lambda:build-python3.6` with `myzappa`.  Example:
 ```sh
-alias zappashell='docker run -ti -e AWS_PROFILE=zappa -v $(pwd):/var/task -v ~/.aws/:/root/.aws  --rm myzappa'
+alias zappashell='docker run -ti -e AWS_PROFILE=zappa -v "$(pwd):/var/task" -v ~/.aws/:/root/.aws  --rm myzappa'
 alias zappashell >> ~/.bash_profile
 ```
 
