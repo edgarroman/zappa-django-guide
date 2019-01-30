@@ -4,7 +4,7 @@ This page lists various activites that may be necessary to perform when leveragi
 
 ## Request a Certificate
 
-ACM provides digital certificates for free but the certificates can only be used with [Elasic Load Balancing and Amazon CloudFront](https://docs.aws.amazon.com/console/acm/supported-services).
+ACM provides digital certificates for free but the certificates can only be used with [Elastic Load Balancing and Amazon CloudFront](https://docs.aws.amazon.com/console/acm/supported-services).
 
 !!! Warning
     To use ACM with Zappa, you must create or import the certificate in the US East (N. Virginia) (us-east-1).  See [AWS documentation](http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html#how-to-custom-domains-prerequisites) for more details.
