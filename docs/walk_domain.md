@@ -134,6 +134,9 @@ And that should work fine going forward
 !!! Note
     Amazon official documentation states that this step could take up to 40 minutes to initialize the certificate.
 
+!!! Note
+    The cloudfront distro associated with the zappa API gateway is hidden from the CF distro tool and is exclusively associated with the API gateway. In addition, you cannot configure any settings on it.
+
 !!! Warning
     This command must be run in the US East (N. Virginia) (us-east-1).  See [AWS documentation](http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html#how-to-custom-domains-prerequisites) for more details.
 
