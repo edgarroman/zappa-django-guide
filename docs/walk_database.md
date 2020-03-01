@@ -22,7 +22,7 @@ Of course you can be running any type of database on an EC2 instance of your cho
 
 ### Use another DB Service
 
-There as some other database services such as DynamoDB.  Depending on the capabilities of the service, you may or may need the subnet information.  
+There as some other database services such as DynamoDB.  Depending on the capabilities of the service, you may or may not need the subnet information.  
 
 ## Provision your RDS Database in AWS
 
