@@ -197,7 +197,7 @@ zappashell> source ve/bin/activate
 All zappa commands can be used to deploy your project:
 
 ```sh
-(ve) zappashell> zappa info dev
+(ve) zappashell> zappa status dev
 ```
 
 
