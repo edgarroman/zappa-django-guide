@@ -259,7 +259,14 @@ While not a hosted service, SQLite often has a lot of value to the Django develo
 
 ### Django 2.2 and above
 
-The [solution recommended by zappa's creator](https://github.com/Miserlou/zappa-django-utils/blob/64e93f408375f181f54a00d81ec8667004142322/README.md#usage) is to use [django-s3-sqlite](https://github.com/FlipperPA/django-s3-sqlite), as these newer versions of Django require a version of SQLite (3.8.3+) newer than Lambda's SQLite 3.7.17 installation.
+The [solution recommended by zappa's creator](https://github.com/Miserlou/zappa-django-utils/blob/64e93f408375f181f54a00d81ec8667004142322/README.md#usage) is to use [`django-s3-sqlite`](https://github.com/FlipperPA/django-s3-sqlite), as these newer versions of Django require a version of SQLite (3.8.3+) newer than Lambda's SQLite 3.7.17 installation.
+
+When using `django-s3-sqlite`, in addition to bundling the `_sqlite3.so` binary as suggested there is the option of using the [`pysqlite3-binary` package](https://github.com/coleifer/pysqlite3). This package includes a recent version of this binary as a wheel, and requires overriding the existing `sqlite3` with `pysqlite` inside `settings.py` (credit to [defulmere's gist](https://gist.github.com/defulmere/8b9695e415a44271061cc8e272f3c300) for the idea):
+
+```python
+import sys
+sys.modules['sqlite3'] = __import__('pysqlite3')
+```
 
 ### Django 2.1 or below
 
