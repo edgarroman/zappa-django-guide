@@ -255,14 +255,22 @@ You will have to modify your custom Django management command to accommodate cre
 
 ## SQLite issues with Python 3
 
-While not a hosted service, SQLite often has a lot of value to the Django developer.  There is currently an issue with the AWS Linux Image that uses Python 3 - it does not include the SQLite python connector and thus Django cannot use the SQLite database backend.  This issue is fixed by [lambda-packages](https://github.com/Miserlou/lambda-packages/commit/f44533297e3a3c5a7ba8885f6b88a3fb1cc4cfd8) which zappa automatically detects and fixes.  However, the lambda-docker project reflects the AWS lambda environment and does not include SQLite.
+While not a hosted service, SQLite often has a lot of value to the Django developer. There is currently an issue with using Python with SQLite on AWS Lambda - while an old version of SQLite is included with Lambda ([3.7.17](https://cloudbriefly.com/post/exploring-the-aws-lambda-execution-environment/) as of June 2020), the Python runtimes do not include Python's SQLite library and thus Django cannot use its built-in SQLite database backend.
 
-The recommended solution until AWS Linux Image is updated is:
+### Django 2.2 and above
+
+The [solution recommended by zappa's creator](https://github.com/Miserlou/zappa-django-utils/blob/64e93f408375f181f54a00d81ec8667004142322/README.md#usage) is to use [django-s3-sqlite](https://github.com/FlipperPA/django-s3-sqlite), as these newer versions of Django require a version of SQLite (3.8.3+) newer than Lambda's SQLite 3.7.17 installation.
+
+### Django 2.1 or below
+
+For older versions of Django Zappa automatically fixes this issue using [lambda-packages](https://github.com/Miserlou/lambda-packages/commit/f44533297e3a3c5a7ba8885f6b88a3fb1cc4cfd8), which re-installs Python support for SQLite.  However, the docker-lambda project reflects the AWS Lambda environment and does not include Python's SQLite library (see https://github.com/lambci/docker-lambda/issues/81#issuecomment-386031642).
+
+The recommended solution until Lambda's Python runtimes are updated to fix this issue is:
    * Download and uncompress the `_sqlite.so` from [https://github.com/Miserlou/lambda-packages/files/1425358/_sqlite3.so.zip](https://github.com/Miserlou/lambda-packages/files/1425358/_sqlite3.so.zip)
    * Place this file in the root of your zappa project
    * Add an `"exclude" : ["_sqlite.so"]` to your `zappa_settings.json` so that it is not unnecessarily included when you deploy your zappa app 
 
-With this you should be able to use SQLite with both your lambda-docker environment and lambda deployments.
+With this you should be able to use SQLite with both your docker-lambda environment and lambda deployments.
 
 ## Additional References
 
