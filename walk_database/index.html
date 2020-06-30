@@ -869,7 +869,7 @@ But basically you will need the private subnet or subnets which can access the d
 <h3 id="host-your-own">Host Your Own<a class="headerlink" href="#host-your-own" title="Permanent link">&para;</a></h3>
 <p>Of course you can be running any type of database on an EC2 instance of your choosing.  Usually an EC2 instance will be associated with one subnet, but it is possible to have multiple IP addresses in different subnets for redundancy.</p>
 <h3 id="use-another-db-service">Use another DB Service<a class="headerlink" href="#use-another-db-service" title="Permanent link">&para;</a></h3>
-<p>There as some other database services such as DynamoDB.  Depending on the capabilities of the service, you may or may need the subnet information.  </p>
+<p>There as some other database services such as DynamoDB.  Depending on the capabilities of the service, you may or may not need the subnet information.  </p>
 <h2 id="provision-your-rds-database-in-aws">Provision your RDS Database in AWS<a class="headerlink" href="#provision-your-rds-database-in-aws" title="Permanent link">&para;</a></h2>
 <p>We'll just focus on the RDS case for this walkthough.  In fact we'll go through the walkthough using PostGreSQL.</p>
 <p>So zip on over to <a href="../aws_database/">Creating an RDS Database</a> and set up one.  You should record some key information we'll need here:</p>
@@ -1076,12 +1076,21 @@ Now you invoke the zappa manage command:</p>
 <a href="https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04">https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04</a></p>
 <p>You will have to modify your custom Django management command to accommodate creation of a new user.</p>
 <h2 id="sqlite-issues-with-python-3">SQLite issues with Python 3<a class="headerlink" href="#sqlite-issues-with-python-3" title="Permanent link">&para;</a></h2>
-<p>While not a hosted service, SQLite often has a lot of value to the Django developer.  There is currently an issue with the AWS Linux Image that uses Python 3 - it does not include the SQLite python connector and thus Django cannot use the SQLite database backend.  This issue is fixed by <a href="https://github.com/Miserlou/lambda-packages/commit/f44533297e3a3c5a7ba8885f6b88a3fb1cc4cfd8">lambda-packages</a> which zappa automatically detects and fixes.  However, the lambda-docker project reflects the AWS lambda environment and does not include SQLite.</p>
-<p>The recommended solution until AWS Linux Image is updated is:
+<p>While not a hosted service, SQLite often has a lot of value to the Django developer. There is currently an issue with using Python with SQLite on AWS Lambda - while an old version of SQLite is included with Lambda (3.7.17: see <a href="https://cloudbriefly.com/post/exploring-the-aws-lambda-execution-environment/">https://cloudbriefly.com/post/exploring-the-aws-lambda-execution-environment/</a> for more details), the Python runtimes do not include Python's SQLite library and thus Django cannot use its built-in SQLite database backend.</p>
+<h3 id="django-22-and-above">Django 2.2 and above<a class="headerlink" href="#django-22-and-above" title="Permanent link">&para;</a></h3>
+<p>The <a href="https://github.com/Miserlou/zappa-django-utils/blob/64e93f408375f181f54a00d81ec8667004142322/README.md#usage">solution recommended by zappa's creator</a> is to use <a href="https://github.com/FlipperPA/django-s3-sqlite"><code>django-s3-sqlite</code></a>, as these newer versions of Django require a version of SQLite (3.8.3+) newer than Lambda's SQLite 3.7.17 installation.</p>
+<p>When using <code>django-s3-sqlite</code>, in addition to bundling the <code>_sqlite3.so</code> binary as suggested there is the option of using the <a href="https://github.com/coleifer/pysqlite3"><code>pysqlite3-binary</code> package</a>. This package includes a recent version of this binary as a wheel, and requires overriding the existing <code>sqlite3</code> with <code>pysqlite</code> inside <code>settings.py</code> (credit to <a href="https://gist.github.com/defulmere/8b9695e415a44271061cc8e272f3c300">defulmere's gist</a> for the idea):</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s1">&#39;sqlite3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="s1">&#39;pysqlite3&#39;</span><span class="p">)</span>
+</pre></div>
+
+<h3 id="django-21-or-below">Django 2.1 or below<a class="headerlink" href="#django-21-or-below" title="Permanent link">&para;</a></h3>
+<p>For older versions of Django Zappa automatically fixes this issue using <a href="https://github.com/Miserlou/lambda-packages/commit/f44533297e3a3c5a7ba8885f6b88a3fb1cc4cfd8">lambda-packages</a>, which re-installs Python support for SQLite.  However, the docker-lambda project reflects the AWS Lambda environment and does not include Python's SQLite library (see <a href="https://github.com/lambci/docker-lambda/issues/81#issuecomment-386031642">https://github.com/lambci/docker-lambda/issues/81#issuecomment-386031642</a>).</p>
+<p>The recommended solution until Lambda's Python runtimes are updated to fix this issue is:
    * Download and uncompress the <code>_sqlite.so</code> from <a href="https://github.com/Miserlou/lambda-packages/files/1425358/_sqlite3.so.zip">https://github.com/Miserlou/lambda-packages/files/1425358/_sqlite3.so.zip</a>
    * Place this file in the root of your zappa project
    * Add an <code>"exclude" : ["_sqlite.so"]</code> to your <code>zappa_settings.json</code> so that it is not unnecessarily included when you deploy your zappa app </p>
-<p>With this you should be able to use SQLite with both your lambda-docker environment and lambda deployments.</p>
+<p>With this you should be able to use SQLite with both your docker-lambda environment and lambda deployments.</p>
 <h2 id="additional-references">Additional References<a class="headerlink" href="#additional-references" title="Permanent link">&para;</a></h2>
 <p>For MySQL tips:
 <a href="https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04">https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04</a></p>
