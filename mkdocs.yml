@@ -2,42 +2,43 @@ site_name: Guide to using Django with Zappa
 repo_name: 'edgarroman/zappa-django-guide'
 repo_url: https://github.com/edgarroman/zappa-django-guide
 site_description: A full featured walkthough of using Django on Zappa (powered by AWS Lambda in serverless environment)
-copyright: Copyright &copy; 2016 - 2017 <a href="https://github.com/edgarroman">Edgar Roman</a>
+copyright: Copyright &copy; <script>document.write(new Date().getFullYear())</script> <a href="https://github.com/edgarroman">Edgar Roman</a>
 
-pages:
-  - Home: 'index.md'
-  - Walkthroughs:
-    - 'Setup your Environment' : 'setup.md'
-    - 'Core Django Setup' : 'walk_core.md'
-    - 'Hosting Static Files' : 'walk_static.md'
-    - 'Using a Database' : 'walk_database.md'
-    - 'Custom Domains' : 'walk_domain.md'
-    - 'Application Adaptations' : 'walk_app.md'
-#    - 'Wrangling Media Files' : 'walk_media.md'
-#    - 'Tasks and Events' : 'walk_scheduling.md'
-#    - 'Debugging' : 'walk_debug.md'
-  - AWS Setup:
-    - 'Managing Credentials' : 'aws_credentials.md'
-    - 'Primer on AWS VPC Networking' : 'aws_network_primer.md'
-    - 'Adventures in Networking' : 'aws_network.md'
-    - 'Creating an RDS Database' : 'aws_database.md'
-    - 'Working with Route53' : 'aws_route53.md'
-    - 'AWS Certificate Manager (ACM)' : 'aws_acm.md'
-  - Additional: 'additional.md'
+nav:
+    - Home: 'index.md'
+    - Walkthroughs:
+          - 'Setup your Environment': 'setup.md'
+          - 'Core Django Setup': 'walk_core.md'
+          - 'Hosting Static Files': 'walk_static.md'
+          - 'Using a Database': 'walk_database.md'
+          - 'Custom Domains': 'walk_domain.md'
+          - 'Application Adaptations': 'walk_app.md'
+    #    - 'Wrangling Media Files' : 'walk_media.md'
+    #    - 'Tasks and Events' : 'walk_scheduling.md'
+    #    - 'Debugging' : 'walk_debug.md'
+    - AWS Setup:
+          - 'Managing Credentials': 'aws_credentials.md'
+          - 'Primer on AWS VPC Networking': 'aws_network_primer.md'
+          - 'Adventures in Networking': 'aws_network.md'
+          - 'Creating an RDS Database': 'aws_database.md'
+          - 'Working with Route53': 'aws_route53.md'
+          - 'AWS Certificate Manager (ACM)': 'aws_acm.md'
+    - Additional: 'additional.md'
 theme: 'material'
 extra:
-  palette:
-    primary: 'deep purple'
-  feature:
-      tabs: true
-  social:
-      - type: github
-        link: https://github.com/edgarroman
+    palette:
+        primary: 'deep purple'
+    #    feature:
+    #        tabs: true
+    social:
+        - icon: fontawesome/brands/github
+          link: https://github.com/edgarroman
 markdown_extensions:
-  - codehilite
-  - pymdownx.superfences
-  - admonition
-  - toc(permalink=true)
+    - codehilite
+    - pymdownx.superfences
+    - admonition
+    - toc:
+          permalink: true
 google_analytics:
-  - 'UA-97437653-1'
-  - 'auto'
+    - 'UA-97437653-1'
+    - 'auto'
