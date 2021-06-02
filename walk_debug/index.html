@@ -16,7 +16,7 @@
     
     
       
-        <title>Managing Credentials - Guide to using Django with Zappa</title>
+        <title>Not yet written - Guide to using Django with Zappa</title>
       
     
     
@@ -65,7 +65,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#managing-aws-credentials" class="md-skip">
+        <a href="#not-yet-written" class="md-skip">
           Skip to content
         </a>
       
@@ -95,7 +95,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Managing Credentials
+              Not yet written
             
           </span>
         </div>
@@ -316,14 +316,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
       
       <label class="md-nav__link" for="__nav_3">
         AWS Setup
@@ -339,71 +337,11 @@
             
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Managing Credentials
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../aws_credentials/" class="md-nav__link">
         Managing Credentials
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#getting-started-with-aws-and-zappa" class="md-nav__link">
-    Getting Started with AWS and Zappa
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#setup-local-account-credentials" class="md-nav__link">
-    Setup Local Account Credentials
-  </a>
-  
-    <nav class="md-nav" aria-label="Setup Local Account Credentials">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#useful-links-for-windows-or-more-information" class="md-nav__link">
-    Useful links for Windows or more information:
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -508,41 +446,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#getting-started-with-aws-and-zappa" class="md-nav__link">
-    Getting Started with AWS and Zappa
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#setup-local-account-credentials" class="md-nav__link">
-    Setup Local Account Credentials
-  </a>
-  
-    <nav class="md-nav" aria-label="Setup Local Account Credentials">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#useful-links-for-windows-or-more-information" class="md-nav__link">
-    Useful links for Windows or more information:
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -553,53 +456,13 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/edgarroman/zappa-django-guide/edit/master/docs/aws_credentials.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/edgarroman/zappa-django-guide/edit/master/docs/walk_debug.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="managing-aws-credentials">Managing AWS Credentials<a class="headerlink" href="#managing-aws-credentials" title="Permanent link">&para;</a></h1>
-<h2 id="getting-started-with-aws-and-zappa">Getting Started with AWS and Zappa<a class="headerlink" href="#getting-started-with-aws-and-zappa" title="Permanent link">&para;</a></h2>
-<p>Details in this section are light because this information is documented well elsewhere on the web.</p>
-<ul>
-<li>Create AWS Account if you haven't already</li>
-<li>Create an S3 bucket.<br />
-   For purposes of this walkthrough I have used the bucket name of <code>zappatest-code</code> in the 'US Standard' region.  This bucket will be used by zappa as a mechanism to upload your project into the lambda environment.  Thus it will generally be empty except during the brief time you are deploying the project.</li>
-<li>Create an IAM User with API keys
-   Easier said than done.  The quick and easy way of doing this is to create a user with a policy that allows a very broad set of permissions.  However, this is not great from a security perspective. There is an <a href="https://github.com/Miserlou/Zappa/issues/244">ongoing discussion</a> about the exact set of permissions needed.</li>
-</ul>
-<p>Now we need to allow scripts and local programs to get the credentials created above.  You have some options for this:</p>
-<h2 id="setup-local-account-credentials">Setup Local Account Credentials<a class="headerlink" href="#setup-local-account-credentials" title="Permanent link">&para;</a></h2>
-<ol>
-<li>
-<p>Set <a href="https://github.com/Miserlou/Zappa/issues/244">environment variables</a></p>
-<p>This is very easy but must be done for each bash console you are using.</p>
-<div class="highlight"><pre><span></span><code>export AWS_ACCESS_KEY_ID=&lt;your key here&gt;
-export AWS_SECRET_ACCESS_KEY=&lt;your secret access key here&gt;
-</code></pre></div>
-</li>
-<li>
-<p>Create a local credentials file (<code>~/.aws/credentials</code> on Linux, or OS X)</p>
-<p>Probably a better long term solution since you can store multiple 
- sets of keys for different environments using profiles.  In addition, you can provide multiple profiles that provides some isolation between AWS accounts and/or roles.  The alternate profile example shown below is called 'zappa'</p>
-<div class="highlight"><pre><span></span><code>[default]
-aws_access_key_id = your_access_key_id
-aws_secret_access_key = your_secret_access_key
-
-[zappa]
-aws_access_key_id = your_access_key_id_specific_to_zappa
-aws_secret_access_key = your_secret_access_key_specific_to_zappa
-</code></pre></div>
-<p>Since you have multiple profiles, it is recommended that you use an environment variable to distinguish which profile is desired to be active.  Shown here is an example of using the 'zappa' profile:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">AWS_PROFILE</span><span class="o">=</span>zappa
-</code></pre></div>
-</li>
-</ol>
-<h3 id="useful-links-for-windows-or-more-information">Useful links for Windows or more information:<a class="headerlink" href="#useful-links-for-windows-or-more-information" title="Permanent link">&para;</a></h3>
-<ul>
-<li>http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html</li>
-<li>http://boto3.readthedocs.io/en/latest/guide/configuration.html#configuring-credentials</li>
-</ul>
+                <h1 id="not-yet-written">Not yet written<a class="headerlink" href="#not-yet-written" title="Permanent link">&para;</a></h1>
+<p>https://docs.aws.amazon.com/lambda/latest/dg/dlq.html</p>
                 
               
               
@@ -615,39 +478,6 @@ aws_secret_access_key = your_secret_access_key_specific_to_zappa
       
         
 <footer class="md-footer">
-  
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
-      
-        <a href="../walk_app/" class="md-footer__link md-footer__link--prev" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Application Adaptations
-            </div>
-          </div>
-        </a>
-      
-      
-        <a href="../aws_network_primer/" class="md-footer__link md-footer__link--next" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Primer on AWS VPC Networking
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">

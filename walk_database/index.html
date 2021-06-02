@@ -1,40 +1,18 @@
 
-
-
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="no-js">
   <head>
     
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
-      <meta http-equiv="x-ua-compatible" content="ie=edge">
       
         <meta name="description" content="A full featured walkthough of using Django on Zappa (powered by AWS Lambda in serverless environment)">
       
       
       
       
-        <meta name="lang:clipboard.copy" content="Copy to clipboard">
-      
-        <meta name="lang:clipboard.copied" content="Copied to clipboard">
-      
-        <meta name="lang:search.language" content="en">
-      
-        <meta name="lang:search.pipeline.stopwords" content="True">
-      
-        <meta name="lang:search.pipeline.trimmer" content="True">
-      
-        <meta name="lang:search.result.none" content="No matching documents">
-      
-        <meta name="lang:search.result.one" content="1 matching document">
-      
-        <meta name="lang:search.result.other" content="# matching documents">
-      
-        <meta name="lang:search.tokenizer" content="[\s\-]+">
-      
-      <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-0.17.3, mkdocs-material-2.7.3">
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.6">
     
     
       
@@ -42,107 +20,112 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.8d40d89b.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.875de78c.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.f1a3b89f.min.css">
+        
       
     
     
-      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
     
-    
-      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
       
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
-        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
       
-      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
+    
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-97437653-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
     
     
   </head>
   
-    <body dir="ltr">
   
-    <svg class="md-svg">
-      <defs>
-        
-        
-          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
-    viewBox="0 0 416 448" id="github">
-  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
-        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
-        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
-        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
-        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
-        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
-        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
-        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
-        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
-        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
-        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
-        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
-        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
-        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
-        99.5z" />
-</svg>
-        
-      </defs>
-    </svg>
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search" autocomplete="off">
-    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
     
-      <a href="#using-a-database" tabindex="1" class="md-skip">
-        Skip to content
-      </a>
     
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#using-a-database" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
     
       <header class="md-header" data-md-component="header">
-  <nav class="md-header-nav md-grid">
-    <div class="md-flex">
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <a href=".." title="Guide to using Django with Zappa" class="md-header-nav__button md-logo">
-          
-            <i class="md-icon"></i>
-          
-        </a>
-      </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
-      </div>
-      <div class="md-flex__cell md-flex__cell--stretch">
-        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Guide to using Django with Zappa" class="md-header__button md-logo" aria-label="Guide to using Django with Zappa" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Guide to using Django with Zappa
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
             
-              <span class="md-header-nav__topic">
-                Guide to using Django with Zappa
-              </span>
-              <span class="md-header-nav__topic">
-                Using a Database
-              </span>
+              Using a Database
             
-          
+          </span>
         </div>
       </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        
-          
-            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
-            
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
 <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="search"></label>
+  <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
-      <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
-        &#xE5CD;
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
       </button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result">
+        <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            Type to start searching
+            Initializing search
           </div>
           <ol class="md-search-result__list"></ol>
         </div>
@@ -150,80 +133,62 @@
     </div>
   </div>
 </div>
-          
+    
+    
+      <div class="md-header__source">
         
-      </div>
-      
-        <div class="md-flex__cell md-flex__cell--shrink">
-          <div class="md-header-nav__source">
-            
-
-
-  
-
-
-  <a href="https://github.com/edgarroman/zappa-django-guide/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/edgarroman/zappa-django-guide/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
     
-      <div class="md-source__icon">
-        <svg viewBox="0 0 24 24" width="24" height="24">
-          <use xlink:href="#github" width="24" height="24"></use>
-        </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    edgarroman/zappa-django-guide
+  </div>
+</a>
       </div>
     
-    <div class="md-source__repository">
-      edgarroman/zappa-django-guide
-    </div>
-  </a>
-
-          </div>
-        </div>
-      
-    </div>
   </nav>
 </header>
     
-    <div class="md-container">
+    <div class="md-container" data-md-component="container">
+      
       
         
       
-      
-      <main class="md-main">
-        <div class="md-main__inner md-grid" data-md-component="container">
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
           
             
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" data-md-level="0">
-  <label class="md-nav__title md-nav__title--site" for="drawer">
-    <span class="md-nav__button md-logo">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Guide to using Django with Zappa" class="md-nav__button md-logo" aria-label="Guide to using Django with Zappa" data-md-component="logo">
       
-        <i class="md-icon"></i>
-      
-    </span>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
     Guide to using Django with Zappa
   </label>
   
     <div class="md-nav__source">
       
-
-
-  
-
-
-  <a href="https://github.com/edgarroman/zappa-django-guide/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/edgarroman/zappa-django-guide/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
     
-      <div class="md-source__icon">
-        <svg viewBox="0 0 24 24" width="24" height="24">
-          <use xlink:href="#github" width="24" height="24"></use>
-        </svg>
-      </div>
-    
-    <div class="md-source__repository">
-      edgarroman/zappa-django-guide
-    </div>
-  </a>
-
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    edgarroman/zappa-django-guide
+  </div>
+</a>
     </div>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -232,12 +197,15 @@
       
       
 
-
-  <li class="md-nav__item">
-    <a href=".." title="Home" class="md-nav__link">
-      Home
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
 
     
       
@@ -245,121 +213,131 @@
       
 
   
-
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+  
+  
     
-    <label class="md-nav__link" for="nav-2">
-      Walkthroughs
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
         Walkthroughs
+        <span class="md-nav__icon md-icon"></span>
       </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+      <nav class="md-nav" aria-label="Walkthroughs" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Walkthroughs
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../setup/" title="Setup your Environment" class="md-nav__link">
-      Setup your Environment
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../walk_core/" title="Core Django Setup" class="md-nav__link">
-      Core Django Setup
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../walk_static/" title="Hosting Static Files" class="md-nav__link">
-      Hosting Static Files
-    </a>
-  </li>
-
-        
-          
-          
-          
-
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        Setup your Environment
+      </a>
+    </li>
   
 
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../walk_core/" class="md-nav__link">
+        Core Django Setup
+      </a>
+    </li>
+  
 
-  <li class="md-nav__item md-nav__item--active">
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../walk_static/" class="md-nav__link">
+        Hosting Static Files
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
     
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
       
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="toc">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Using a Database
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Using a Database
-      </label>
-    
-    <a href="./" title="Using a Database" class="md-nav__link md-nav__link--active">
-      Using a Database
-    </a>
-    
+      </a>
       
-<nav class="md-nav md-nav--secondary">
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
   
   
     
   
   
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" title="Prerequisites" class="md-nav__link">
+  <a href="#prerequisites" class="md-nav__link">
     Prerequisites
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#options-for-databases" title="Options for Databases" class="md-nav__link">
+  <a href="#options-for-databases" class="md-nav__link">
     Options for Databases
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Options for Databases">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#use-aws-rds" title="Use AWS RDS" class="md-nav__link">
+  <a href="#use-aws-rds" class="md-nav__link">
     Use AWS RDS
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#host-your-own" title="Host Your Own" class="md-nav__link">
+  <a href="#host-your-own" class="md-nav__link">
     Host Your Own
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#use-another-db-service" title="Use another DB Service" class="md-nav__link">
+  <a href="#use-another-db-service" class="md-nav__link">
     Use another DB Service
   </a>
   
@@ -371,22 +349,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#provision-your-rds-database-in-aws" title="Provision your RDS Database in AWS" class="md-nav__link">
+  <a href="#provision-your-rds-database-in-aws" class="md-nav__link">
     Provision your RDS Database in AWS
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Provision your RDS Database in AWS">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#configure-rds-security-group" title="Configure RDS security group" class="md-nav__link">
+  <a href="#configure-rds-security-group" class="md-nav__link">
     Configure RDS security group
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#summary-data" title="Summary Data" class="md-nav__link">
+  <a href="#summary-data" class="md-nav__link">
     Summary Data
   </a>
   
@@ -398,29 +376,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#setup-your-configuration" title="Setup your Configuration" class="md-nav__link">
+  <a href="#setup-your-configuration" class="md-nav__link">
     Setup your Configuration
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Setup your Configuration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#edit-requirements" title="Edit requirements" class="md-nav__link">
+  <a href="#edit-requirements" class="md-nav__link">
     Edit requirements
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#django-settings" title="Django Settings" class="md-nav__link">
+  <a href="#django-settings" class="md-nav__link">
     Django Settings
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#zappa-settings" title="Zappa Settings" class="md-nav__link">
+  <a href="#zappa-settings" class="md-nav__link">
     Zappa Settings
   </a>
   
@@ -432,37 +410,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-your-database" title="Create your Database" class="md-nav__link">
+  <a href="#create-your-database" class="md-nav__link">
     Create your Database
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Create your Database">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#using-aws-command-line-tool" title="Using AWS command line tool" class="md-nav__link">
+  <a href="#using-aws-command-line-tool" class="md-nav__link">
     Using AWS command line tool
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#setup-the-database-using-zappa" title="Setup the Database using zappa" class="md-nav__link">
+  <a href="#setup-the-database-using-zappa" class="md-nav__link">
     Setup the Database using zappa
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Setup the Database using zappa">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#create-a-management-command-in-your-django-project" title="Create a management command in your Django Project" class="md-nav__link">
+  <a href="#create-a-management-command-in-your-django-project" class="md-nav__link">
     Create a management command in your Django Project
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#run-the-management-command" title="Run the management command" class="md-nav__link">
+  <a href="#run-the-management-command" class="md-nav__link">
     Run the management command
   </a>
   
@@ -479,172 +457,179 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#init-the-database" title="Init the Database" class="md-nav__link">
+  <a href="#init-the-database" class="md-nav__link">
     Init the Database
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-your-django-superuser" title="Create your Django superuser" class="md-nav__link">
+  <a href="#create-your-django-superuser" class="md-nav__link">
     Create your Django superuser
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#test-and-profit" title="Test and profit" class="md-nav__link">
+  <a href="#test-and-profit" class="md-nav__link">
     Test and profit
   </a>
   
 </li>
       
-      
-      
-      
-      
     </ul>
   
 </nav>
-    
-  </li>
+      
+    </li>
+  
 
-        
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../walk_domain/" class="md-nav__link">
+        Custom Domains
+      </a>
+    </li>
+  
+
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../walk_app/" class="md-nav__link">
+        Application Adaptations
+      </a>
+    </li>
+  
+
           
-
-
-  <li class="md-nav__item">
-    <a href="../walk_domain/" title="Custom Domains" class="md-nav__link">
-      Custom Domains
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../walk_app/" title="Application Adaptations" class="md-nav__link">
-      Application Adaptations
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
+  
+  
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
-    
-    <label class="md-nav__link" for="nav-3">
-      AWS Setup
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
         AWS Setup
+        <span class="md-nav__icon md-icon"></span>
       </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+      <nav class="md-nav" aria-label="AWS Setup" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          AWS Setup
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws_credentials/" class="md-nav__link">
+        Managing Credentials
+      </a>
+    </li>
+  
+
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws_network_primer/" class="md-nav__link">
+        Primer on AWS VPC Networking
+      </a>
+    </li>
+  
+
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws_network/" class="md-nav__link">
+        Adventures in Networking
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../aws_credentials/" title="Managing Credentials" class="md-nav__link">
-      Managing Credentials
-    </a>
-  </li>
-
-        
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws_database/" class="md-nav__link">
+        Creating an RDS Database
+      </a>
+    </li>
+  
+
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws_route53/" class="md-nav__link">
+        Working with Route53
+      </a>
+    </li>
+  
+
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws_acm/" class="md-nav__link">
+        AWS Certificate Manager (ACM)
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../aws_network_primer/" title="Primer on AWS VPC Networking" class="md-nav__link">
-      Primer on AWS VPC Networking
-    </a>
-  </li>
-
-        
           
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../aws_network/" title="Adventures in Networking" class="md-nav__link">
-      Adventures in Networking
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../aws_database/" title="Creating an RDS Database" class="md-nav__link">
-      Creating an RDS Database
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../aws_route53/" title="Working with Route53" class="md-nav__link">
-      Working with Route53
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../aws_acm/" title="AWS Certificate Manager (ACM)" class="md-nav__link">
-      AWS Certificate Manager (ACM)
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../additional/" title="Additional" class="md-nav__link">
-      Additional
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../additional/" class="md-nav__link">
+        Additional
+      </a>
+    </li>
+  
 
     
   </ul>
@@ -654,50 +639,55 @@
               </div>
             
             
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
-<nav class="md-nav md-nav--secondary">
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
   
   
     
   
   
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" title="Prerequisites" class="md-nav__link">
+  <a href="#prerequisites" class="md-nav__link">
     Prerequisites
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#options-for-databases" title="Options for Databases" class="md-nav__link">
+  <a href="#options-for-databases" class="md-nav__link">
     Options for Databases
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Options for Databases">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#use-aws-rds" title="Use AWS RDS" class="md-nav__link">
+  <a href="#use-aws-rds" class="md-nav__link">
     Use AWS RDS
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#host-your-own" title="Host Your Own" class="md-nav__link">
+  <a href="#host-your-own" class="md-nav__link">
     Host Your Own
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#use-another-db-service" title="Use another DB Service" class="md-nav__link">
+  <a href="#use-another-db-service" class="md-nav__link">
     Use another DB Service
   </a>
   
@@ -709,22 +699,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#provision-your-rds-database-in-aws" title="Provision your RDS Database in AWS" class="md-nav__link">
+  <a href="#provision-your-rds-database-in-aws" class="md-nav__link">
     Provision your RDS Database in AWS
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Provision your RDS Database in AWS">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#configure-rds-security-group" title="Configure RDS security group" class="md-nav__link">
+  <a href="#configure-rds-security-group" class="md-nav__link">
     Configure RDS security group
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#summary-data" title="Summary Data" class="md-nav__link">
+  <a href="#summary-data" class="md-nav__link">
     Summary Data
   </a>
   
@@ -736,29 +726,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#setup-your-configuration" title="Setup your Configuration" class="md-nav__link">
+  <a href="#setup-your-configuration" class="md-nav__link">
     Setup your Configuration
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Setup your Configuration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#edit-requirements" title="Edit requirements" class="md-nav__link">
+  <a href="#edit-requirements" class="md-nav__link">
     Edit requirements
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#django-settings" title="Django Settings" class="md-nav__link">
+  <a href="#django-settings" class="md-nav__link">
     Django Settings
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#zappa-settings" title="Zappa Settings" class="md-nav__link">
+  <a href="#zappa-settings" class="md-nav__link">
     Zappa Settings
   </a>
   
@@ -770,37 +760,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-your-database" title="Create your Database" class="md-nav__link">
+  <a href="#create-your-database" class="md-nav__link">
     Create your Database
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Create your Database">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#using-aws-command-line-tool" title="Using AWS command line tool" class="md-nav__link">
+  <a href="#using-aws-command-line-tool" class="md-nav__link">
     Using AWS command line tool
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#setup-the-database-using-zappa" title="Setup the Database using zappa" class="md-nav__link">
+  <a href="#setup-the-database-using-zappa" class="md-nav__link">
     Setup the Database using zappa
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Setup the Database using zappa">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#create-a-management-command-in-your-django-project" title="Create a management command in your Django Project" class="md-nav__link">
+  <a href="#create-a-management-command-in-your-django-project" class="md-nav__link">
     Create a management command in your Django Project
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#run-the-management-command" title="Run the management command" class="md-nav__link">
+  <a href="#run-the-management-command" class="md-nav__link">
     Run the management command
   </a>
   
@@ -817,29 +807,25 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#init-the-database" title="Init the Database" class="md-nav__link">
+  <a href="#init-the-database" class="md-nav__link">
     Init the Database
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-your-django-superuser" title="Create your Django superuser" class="md-nav__link">
+  <a href="#create-your-django-superuser" class="md-nav__link">
     Create your Django superuser
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#test-and-profit" title="Test and profit" class="md-nav__link">
+  <a href="#test-and-profit" class="md-nav__link">
     Test and profit
   </a>
   
 </li>
-      
-      
-      
-      
       
     </ul>
   
@@ -849,38 +835,40 @@
               </div>
             
           
-          <div class="md-content">
+          <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/edgarroman/zappa-django-guide/edit/master/docs/walk_database.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/edgarroman/zappa-django-guide/edit/master/docs/walk_database.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
                 
                 
                 <h1 id="using-a-database">Using a Database<a class="headerlink" href="#using-a-database" title="Permanent link">&para;</a></h1>
 <p>This walkthough documents the steps necessary to connect your application to a hosted database.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
-<p>This walkthough requires the <a href="../walk_core/">Core Django Setup</a> to be completed.  Also, it is important 
-to have your network setup properly so check out <a href="../aws_network/">Adventures in Networking</a>.  </p>
+<p>This walkthough requires the <a href="../walk_core/">Core Django Setup</a> to be completed. Also, it is important
+to have your network setup properly so check out <a href="../aws_network/">Adventures in Networking</a>.</p>
 <p>We will assume you have chosen the VPC pattern: "VPC with a Public subnet and Private subnet"
 But basically you will need the private subnet or subnets which can access the database.</p>
 <h2 id="options-for-databases">Options for Databases<a class="headerlink" href="#options-for-databases" title="Permanent link">&para;</a></h2>
 <h3 id="use-aws-rds">Use AWS RDS<a class="headerlink" href="#use-aws-rds" title="Permanent link">&para;</a></h3>
-<p>This is probably the easiest to get up and running.  AWS takes care of the messy details of managing the host and provides database-as-a-service (if that's a real thing).  In addition, AWS RDS supports mySQL and PostGreSQL, both which are highly compatible with Django.  </p>
+<p>This is probably the easiest to get up and running. AWS takes care of the messy details of managing the host and provides database-as-a-service (if that's a real thing). In addition, AWS RDS supports mySQL and PostGreSQL, both which are highly compatible with Django.</p>
 <h3 id="host-your-own">Host Your Own<a class="headerlink" href="#host-your-own" title="Permanent link">&para;</a></h3>
-<p>Of course you can be running any type of database on an EC2 instance of your choosing.  Usually an EC2 instance will be associated with one subnet, but it is possible to have multiple IP addresses in different subnets for redundancy.</p>
+<p>Of course you can be running any type of database on an EC2 instance of your choosing. Usually an EC2 instance will be associated with one subnet, but it is possible to have multiple IP addresses in different subnets for redundancy.</p>
 <h3 id="use-another-db-service">Use another DB Service<a class="headerlink" href="#use-another-db-service" title="Permanent link">&para;</a></h3>
-<p>There as some other database services such as DynamoDB.  Depending on the capabilities of the service, you may or may not need the subnet information.  </p>
+<p>There as some other database services such as DynamoDB. Depending on the capabilities of the service, you may or may not need the subnet information.</p>
 <h2 id="provision-your-rds-database-in-aws">Provision your RDS Database in AWS<a class="headerlink" href="#provision-your-rds-database-in-aws" title="Permanent link">&para;</a></h2>
-<p>We'll just focus on the RDS case for this walkthough.  In fact we'll go through the walkthough using PostGreSQL.</p>
-<p>So zip on over to <a href="../aws_database/">Creating an RDS Database</a> and set up one.  You should record some key information we'll need here:</p>
+<p>We'll just focus on the RDS case for this walkthough. In fact we'll go through the walkthough using PostGreSQL.</p>
+<p>So zip on over to <a href="../aws_database/">Creating an RDS Database</a> and set up one. You should record some key information we'll need here:</p>
 <ul>
 <li>The subnets (there should be at least two) in which we can access the database</li>
 <li>The endpoint (hostname) of the database and the port</li>
 <li>The username and password for the root user</li>
 </ul>
 <h3 id="configure-rds-security-group">Configure RDS security group<a class="headerlink" href="#configure-rds-security-group" title="Permanent link">&para;</a></h3>
-<p>By default newly created RDS Security Groups <a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html">have no inbound access</a>.  So you need
-to make sure your RDS Security group has open TCP connections from your subnets associated with the lambdas.  </p>
+<p>By default newly created RDS Security Groups <a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html">have no inbound access</a>. So you need
+to make sure your RDS Security group has open TCP connections from your subnets associated with the lambdas.</p>
 <p>So your inbound rules on the RDS security may look like:</p>
 <table>
 <thead>
@@ -903,7 +891,7 @@ to make sure your RDS Security group has open TCP connections from your subnets 
 <p>We open the whole range associated with the security group because when a lambda container is created, it could take any free address
 in the subnet range.</p>
 <h3 id="summary-data">Summary Data<a class="headerlink" href="#summary-data" title="Permanent link">&para;</a></h3>
-<p>Note that at this point you don't yet have a database installed on your RDS instance.  So let's just pick a name we will use for the walkthough.  </p>
+<p>Note that at this point you don't yet have a database installed on your RDS instance. So let's just pick a name we will use for the walkthough.</p>
 <p>Here is our sample data:</p>
 <table>
 <thead>
@@ -942,16 +930,15 @@ in the subnet range.</p>
 <h2 id="setup-your-configuration">Setup your Configuration<a class="headerlink" href="#setup-your-configuration" title="Permanent link">&para;</a></h2>
 <h3 id="edit-requirements">Edit requirements<a class="headerlink" href="#edit-requirements" title="Permanent link">&para;</a></h3>
 <p>Note on PostGreSQL: because the psycopg2 library often involves compiling the library, I would suggest using the <a href="../setup/#approach-2-docker-with-zappa">Docker version of zappa</a> to ensure you have isolation of environments and you don't mess up your local system.</p>
-<p>Add this to your requirements.txt 
-<div class="codehilite"><pre><span></span>psycopg2
-</pre></div></p>
+<p>Add this to your requirements.txt</p>
+<div class="highlight"><pre><span></span><code>psycopg2
+</code></pre></div>
 <p>and then</p>
-<div class="codehilite"><pre><span></span>pip install -r requirements.txt
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>pip install -r requirements.txt
+</code></pre></div>
 <h3 id="django-settings">Django Settings<a class="headerlink" href="#django-settings" title="Permanent link">&para;</a></h3>
-<p>Add the above settings to your settings.py.  This is pretty standard Django db stuff.</p>
-<div class="codehilite"><pre><span></span>DATABASES = {
+<p>Add the above settings to your settings.py. This is pretty standard Django db stuff.</p>
+<div class="highlight"><pre><span></span><code>DATABASES = {
     &#39;default&#39;: {
         &#39;ENGINE&#39;: &#39;django.db.backends.postgresql_psycopg2&#39;,
         &#39;NAME&#39;: &#39;zappadbname&#39;,
@@ -962,13 +949,12 @@ in the subnet range.</p>
     }
 
 }
-</pre></div>
-
+</code></pre></div>
 <h3 id="zappa-settings">Zappa Settings<a class="headerlink" href="#zappa-settings" title="Permanent link">&para;</a></h3>
 <p>Now we add the VPC configuration to our Zappa settings file so that the lambda functions can connect to the database.</p>
-<div class="codehilite"><pre><span></span>{
+<div class="highlight"><pre><span></span><code>{
     &quot;dev&quot;: {
-        &quot;django_settings&quot;: &quot;frankie.settings&quot;, 
+        &quot;django_settings&quot;: &quot;frankie.settings&quot;,
         &quot;s3_bucket&quot;: &quot;zappatest-code&quot;,
         &quot;aws_region&quot;: &quot;us-east-1&quot;,
 <span class="hll">        &quot;vpc_config&quot; : {
@@ -977,33 +963,32 @@ in the subnet range.</p>
 </span><span class="hll">        }
 </span>    }
 }
-</pre></div>
-
+</code></pre></div>
 <h2 id="create-your-database">Create your Database<a class="headerlink" href="#create-your-database" title="Permanent link">&para;</a></h2>
-<p>Ok, easy so far?  Yes!  All we had to do up to this point was carefully click a mouse in the AWS console and 
-edit some text files.  Well fun time is over - now we run into some bootstrapping problems.  Fortunately, we only have to do this once each time we need a new database.</p>
-<p>Turns out that when AWS creates a PostGreSQL RDS instance for you, it doesn't create a database.  So you have to do it yourself.  There are many options, but two methods could be:</p>
+<p>Ok, easy so far? Yes! All we had to do up to this point was carefully click a mouse in the AWS console and
+edit some text files. Well fun time is over - now we run into some bootstrapping problems. Fortunately, we only have to do this once each time we need a new database.</p>
+<p>Turns out that when AWS creates a PostGreSQL RDS instance for you, it doesn't create a database. So you have to do it yourself. There are many options, but two methods could be:</p>
 <ol>
-<li>Use a db tool on your local machine via a bastion host </li>
+<li>Use a db tool on your local machine via a bastion host</li>
 <li>Use the AWS command line tool</li>
 <li>Write some code to setup the database using zappa</li>
 <li>Use the utility library <a href="https://github.com/Miserlou/zappa-django-utils">zappa-django-utils</a></li>
 </ol>
-<p>Option 1 is easy if you have the db tool and the bastion host setup.  Option 4 is the easiest and quickest.  But let's explore how to do options two and three. </p>
+<p>Option 1 is easy if you have the db tool and the bastion host setup. Option 4 is the easiest and quickest. But let's explore how to do options two and three.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>The quickest and easiest path is to use <a href="https://github.com/Miserlou/zappa-django-utils">zappa-django-utils</a> - especially if you are using a PostGres database.  </p>
+<p>The quickest and easiest path is to use <a href="https://github.com/Miserlou/zappa-django-utils">zappa-django-utils</a> - especially if you are using a PostGres database.</p>
 <p>Many of the functions here are implemented without having to write any of your own code.</p>
 </div>
 <h3 id="using-aws-command-line-tool">Using AWS command line tool<a class="headerlink" href="#using-aws-command-line-tool" title="Permanent link">&para;</a></h3>
-<p>You can only use the AWS command line tool to create the database if you are also creating the entire RDS instance.  Be sure to identify the database name to create with '<a href="http://docs.aws.amazon.com/cli/latest/reference/rds/create-db-instance.html#options">db-name</a>'</p>
+<p>You can only use the AWS command line tool to create the database if you are also creating the entire RDS instance. Be sure to identify the database name to create with '<a href="http://docs.aws.amazon.com/cli/latest/reference/rds/create-db-instance.html#options">db-name</a>'</p>
 <p>Simply use the <code>aws</code> command tool using syntax similar to
 <a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateInstance.html#USER_CreateInstance.CLI">http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateInstance.html#USER_CreateInstance.CLI</a></p>
 <h3 id="setup-the-database-using-zappa">Setup the Database using zappa<a class="headerlink" href="#setup-the-database-using-zappa" title="Permanent link">&para;</a></h3>
-<p>Well, there is no easy way to get this done but here is a possible option: create a management command that can be run in the zappa environment.  </p>
+<p>Well, there is no easy way to get this done but here is a possible option: create a management command that can be run in the zappa environment.</p>
 <h4 id="create-a-management-command-in-your-django-project">Create a management command in your Django Project<a class="headerlink" href="#create-a-management-command-in-your-django-project" title="Permanent link">&para;</a></h4>
 <p>Follow these steps to create a management command environment (make sure your virtualenv is fired up)</p>
-<div class="codehilite"><pre><span></span><span class="nb">cd</span> frankie
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> frankie
 python manage.py startapp axe
 <span class="nb">cd</span> axe
 mkdir management
@@ -1012,10 +997,9 @@ touch __init__.py
 mkdir commands
 <span class="nb">cd</span> commands
 touch __init__.py
-</pre></div>
-
+</code></pre></div>
 <p>Then create a file called <code>create_db.py</code></p>
-<p><div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">psycopg2</span> <span class="kn">import</span> <span class="n">connect</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">psycopg2</span> <span class="kn">import</span> <span class="n">connect</span>
 <span class="kn">from</span> <span class="nn">psycopg2.extensions</span> <span class="kn">import</span> <span class="n">ISOLATION_LEVEL_AUTOCOMMIT</span>
 <span class="kn">from</span> <span class="nn">django.core.management.base</span> <span class="kn">import</span> <span class="n">BaseCommand</span><span class="p">,</span> <span class="n">CommandError</span>
 <span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
@@ -1031,7 +1015,7 @@ touch __init__.py
         <span class="n">password</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">DATABASES</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">][</span><span class="s1">&#39;PASSWORD&#39;</span><span class="p">]</span>
         <span class="n">host</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">DATABASES</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">][</span><span class="s1">&#39;HOST&#39;</span><span class="p">]</span>
 
-        <span class="n">con</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">con</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">con</span> <span class="o">=</span> <span class="n">connect</span><span class="p">(</span><span class="n">dbname</span><span class="o">=</span><span class="s1">&#39;postgres&#39;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
         <span class="n">con</span><span class="o">.</span><span class="n">set_isolation_level</span><span class="p">(</span><span class="n">ISOLATION_LEVEL_AUTOCOMMIT</span><span class="p">)</span>
         <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
@@ -1040,30 +1024,27 @@ touch __init__.py
         <span class="n">con</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">SUCCESS</span><span class="p">(</span><span class="s1">&#39;All Done&#39;</span><span class="p">))</span>
-</pre></div>
-Then register app axe to settings.py and update files in aws using this command: zappa update dev.</p>
+</code></pre></div>
+<p>Then register app axe to settings.py and update files in aws using this command: zappa update dev.</p>
 <h4 id="run-the-management-command">Run the management command<a class="headerlink" href="#run-the-management-command" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>zappa manage dev create_db
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>zappa manage dev create_db
+</code></pre></div>
 <p>If all goes well, then your database should be created.</p>
 <h2 id="init-the-database">Init the Database<a class="headerlink" href="#init-the-database" title="Permanent link">&para;</a></h2>
-<p>At this point you should have an empty database ready for your Django application to fill up with schema. If this were a traditional server, you would merely run the <code>migrate</code> command.  But you can't because there is no command line.  Thus we have to modify them to adjust to the new environment.</p>
-<p>So create your migrations and push the updated code.  </p>
-<p><div class="codehilite"><pre><span></span>python manage.py makemigrations
+<p>At this point you should have an empty database ready for your Django application to fill up with schema. If this were a traditional server, you would merely run the <code>migrate</code> command. But you can't because there is no command line. Thus we have to modify them to adjust to the new environment.</p>
+<p>So create your migrations and push the updated code.</p>
+<div class="highlight"><pre><span></span><code>python manage.py makemigrations
 zappa update dev
-</pre></div>
-Now you invoke the zappa manage command:</p>
-<div class="codehilite"><pre><span></span>zappa manage dev migrate
-</pre></div>
-
+</code></pre></div>
+<p>Now you invoke the zappa manage command:</p>
+<div class="highlight"><pre><span></span><code>zappa manage dev migrate
+</code></pre></div>
 <p>And repeat this process every time you make model changes.</p>
 <h2 id="create-your-django-superuser">Create your Django superuser<a class="headerlink" href="#create-your-django-superuser" title="Permanent link">&para;</a></h2>
-<p>The Django management commands were meant to be run interactively on a command line on a traditional server.  Because there is no command line with lambda, we must do some trickery to get around the input needed for the Django createsuperuser management command.</p>
-<p>Essentially we will use the <code>raw</code> flag on the invoke command to just run raw python.  The following command creates a new superuser named 'admin' with email 'admin@yourdomain.com' and password of 'horse battery stapler'</p>
-<div class="codehilite"><pre><span></span>zappa invoke --raw dev <span class="s2">&quot;from django.contrib.auth.models import User; User.objects.create_superuser(&#39;admin&#39;, &#39;admin@yourdomain.com&#39;, &#39;horse battery stapler&#39;)&quot;</span>
-</pre></div>
-
+<p>The Django management commands were meant to be run interactively on a command line on a traditional server. Because there is no command line with lambda, we must do some trickery to get around the input needed for the Django createsuperuser management command.</p>
+<p>Essentially we will use the <code>raw</code> flag on the invoke command to just run raw python. The following command creates a new superuser named 'admin' with email 'admin@yourdomain.com' and password of 'horse battery stapler'</p>
+<div class="highlight"><pre><span></span><code>zappa invoke --raw dev <span class="s2">&quot;from django.contrib.auth.models import User; User.objects.create_superuser(&#39;admin&#39;, &#39;admin@yourdomain.com&#39;, &#39;horse battery stapler&#39;)&quot;</span>
+</code></pre></div>
 <p>Additional superusers can be added via this method or the Django admin console.</p>
 <h2 id="test-and-profit">Test and profit<a class="headerlink" href="#test-and-profit" title="Permanent link">&para;</a></h2>
 <p>At this point you should be able to log into your Django admin:
@@ -1072,7 +1053,7 @@ Now you invoke the zappa manage command:</p>
 <p>[https://www.isc.upenn.edu/accessing-mysql-databases-aws-python-lambda-function]</p>
 <h1 id="further-topics">Further Topics<a class="headerlink" href="#further-topics" title="Permanent link">&para;</a></h1>
 <h2 id="security">Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h2>
-<p>Notice that we are using the master user credentials for the RDS system.  It would be more secure if we created a dedicated user that can only access the relevant database.  More information on that can be found here:
+<p>Notice that we are using the master user credentials for the RDS system. It would be more secure if we created a dedicated user that can only access the relevant database. More information on that can be found here:
 <a href="https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04">https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04</a></p>
 <p>You will have to modify your custom Django management command to accommodate creation of a new user.</p>
 <h2 id="sqlite-issues-with-python-3">SQLite issues with Python 3<a class="headerlink" href="#sqlite-issues-with-python-3" title="Permanent link">&para;</a></h2>
@@ -1080,22 +1061,12 @@ Now you invoke the zappa manage command:</p>
 <h3 id="django-22-and-above">Django 2.2 and above<a class="headerlink" href="#django-22-and-above" title="Permanent link">&para;</a></h3>
 <p>The <a href="https://github.com/Miserlou/zappa-django-utils/blob/64e93f408375f181f54a00d81ec8667004142322/README.md#usage">solution recommended by zappa's creator</a> is to use <a href="https://github.com/FlipperPA/django-s3-sqlite"><code>django-s3-sqlite</code></a>, as these newer versions of Django require a version of SQLite (3.8.3+) newer than Lambda's SQLite 3.7.17 installation.</p>
 <p>When using <code>django-s3-sqlite</code>, in addition to bundling the <code>_sqlite3.so</code> binary as suggested there is the option of using the <a href="https://github.com/coleifer/pysqlite3"><code>pysqlite3-binary</code> package</a>. This package includes a recent version of this binary as a wheel, and requires overriding the existing <code>sqlite3</code> with <code>pysqlite</code> inside <code>settings.py</code> (credit to <a href="https://gist.github.com/defulmere/8b9695e415a44271061cc8e272f3c300">defulmere's gist</a> for the idea):</p>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s1">&#39;sqlite3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="s1">&#39;pysqlite3&#39;</span><span class="p">)</span>
-</pre></div>
-
-<h3 id="django-21-or-below">Django 2.1 or below<a class="headerlink" href="#django-21-or-below" title="Permanent link">&para;</a></h3>
-<p>For older versions of Django Zappa automatically fixes this issue using <a href="https://github.com/Miserlou/lambda-packages/commit/f44533297e3a3c5a7ba8885f6b88a3fb1cc4cfd8">lambda-packages</a>, which re-installs Python support for SQLite.  However, the docker-lambda project reflects the AWS Lambda environment and does not include Python's SQLite library (see <a href="https://github.com/lambci/docker-lambda/issues/81#issuecomment-386031642">https://github.com/lambci/docker-lambda/issues/81#issuecomment-386031642</a>).</p>
-<p>The recommended solution until Lambda's Python runtimes are updated to fix this issue is:
-   * Download and uncompress the <code>_sqlite.so</code> from <a href="https://github.com/Miserlou/lambda-packages/files/1425358/_sqlite3.so.zip">https://github.com/Miserlou/lambda-packages/files/1425358/_sqlite3.so.zip</a>
-   * Place this file in the root of your zappa project
-   * Add an <code>"exclude" : ["_sqlite.so"]</code> to your <code>zappa_settings.json</code> so that it is not unnecessarily included when you deploy your zappa app </p>
-<p>With this you should be able to use SQLite with both your docker-lambda environment and lambda deployments.</p>
+</code></pre></div>
 <h2 id="additional-references">Additional References<a class="headerlink" href="#additional-references" title="Permanent link">&para;</a></h2>
 <p>For MySQL tips:
 <a href="https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04">https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04</a></p>
-                
-                  
                 
               
               
@@ -1106,85 +1077,85 @@ Now you invoke the zappa manage command:</p>
             </article>
           </div>
         </div>
+        
       </main>
       
         
 <footer class="md-footer">
   
-    <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid">
-        
-          <a href="../walk_static/" title="Hosting Static Files" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
-            </div>
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Previous
-                </span>
-                Hosting Static Files
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../walk_static/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
               </span>
+              Hosting Static Files
             </div>
-          </a>
-        
-        
-          <a href="../walk_domain/" title="Custom Domains" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                Custom Domains
+          </div>
+        </a>
+      
+      
+        <a href="../walk_domain/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
               </span>
+              Custom Domains
             </div>
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
-          </a>
-        
-      </nav>
-    </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2016 - 2017 <a href="https://github.com/edgarroman">Edgar Roman</a>
+            Copyright &copy; <script>document.write(new Date().getFullYear())</script> <a href="https://github.com/edgarroman">Edgar Roman</a>
           </div>
         
-        powered by
-        <a href="http://www.mkdocs.org">MkDocs</a>
-        and
-        <a href="https://squidfunk.github.io/mkdocs-material/">
-          Material for MkDocs</a>
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
       </div>
       
-        
   <div class="md-footer-social">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
-      <a href="https://github.com/edgarroman" class="md-footer-social__link fa fa-github"></a>
+      
+      
+        
+        
+      
+      <a href="https://github.com/edgarroman" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
     
   </div>
 
-      
     </div>
   </div>
 </footer>
       
     </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.d351de03.min.js", "version": null}</script>
     
-      <script src="../assets/javascripts/application.b438e6c5.js"></script>
-      
-      <script>app.initialize({version:"0.17.3",url:{base:".."}})</script>
-      
     
-    
-      
-        <script>!function(e,a,t,n,o,c,i){e.GoogleAnalyticsObject=o,e.ga=e.ga||function(){(e.ga.q=e.ga.q||[]).push(arguments)},e.ga.l=1*new Date,c=a.createElement(t),i=a.getElementsByTagName(t)[0],c.async=1,c.src="https://www.google-analytics.com/analytics.js",i.parentNode.insertBefore(c,i)}(window,document,"script",0,"ga"),ga("create","UA-97437653-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview");var links=document.getElementsByTagName("a");if(Array.prototype.map.call(links,function(e){e.host!=document.location.host&&e.addEventListener("click",function(){var a=e.getAttribute("data-md-action")||"follow";ga("send","event","outbound",a,e.href)})}),document.forms.search){var query=document.forms.search.query;query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}</script>
+      <script src="../assets/javascripts/bundle.34eae1b6.min.js"></script>
       
     
   </body>

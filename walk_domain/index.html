@@ -1,40 +1,18 @@
 
-
-
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="no-js">
   <head>
     
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
-      <meta http-equiv="x-ua-compatible" content="ie=edge">
       
         <meta name="description" content="A full featured walkthough of using Django on Zappa (powered by AWS Lambda in serverless environment)">
       
       
       
       
-        <meta name="lang:clipboard.copy" content="Copy to clipboard">
-      
-        <meta name="lang:clipboard.copied" content="Copied to clipboard">
-      
-        <meta name="lang:search.language" content="en">
-      
-        <meta name="lang:search.pipeline.stopwords" content="True">
-      
-        <meta name="lang:search.pipeline.trimmer" content="True">
-      
-        <meta name="lang:search.result.none" content="No matching documents">
-      
-        <meta name="lang:search.result.one" content="1 matching document">
-      
-        <meta name="lang:search.result.other" content="# matching documents">
-      
-        <meta name="lang:search.tokenizer" content="[\s\-]+">
-      
-      <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-0.17.3, mkdocs-material-2.7.3">
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.6">
     
     
       
@@ -42,107 +20,112 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.8d40d89b.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.875de78c.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.f1a3b89f.min.css">
+        
       
     
     
-      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
     
-    
-      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
       
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
-        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
       
-      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
+    
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-97437653-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
     
     
   </head>
   
-    <body dir="ltr">
   
-    <svg class="md-svg">
-      <defs>
-        
-        
-          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
-    viewBox="0 0 416 448" id="github">
-  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
-        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
-        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
-        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
-        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
-        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
-        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
-        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
-        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
-        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
-        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
-        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
-        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
-        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
-        99.5z" />
-</svg>
-        
-      </defs>
-    </svg>
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search" autocomplete="off">
-    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
     
-      <a href="#using-a-custom-domain" tabindex="1" class="md-skip">
-        Skip to content
-      </a>
     
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#using-a-custom-domain" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
     
       <header class="md-header" data-md-component="header">
-  <nav class="md-header-nav md-grid">
-    <div class="md-flex">
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <a href=".." title="Guide to using Django with Zappa" class="md-header-nav__button md-logo">
-          
-            <i class="md-icon"></i>
-          
-        </a>
-      </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
-      </div>
-      <div class="md-flex__cell md-flex__cell--stretch">
-        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Guide to using Django with Zappa" class="md-header__button md-logo" aria-label="Guide to using Django with Zappa" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Guide to using Django with Zappa
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
             
-              <span class="md-header-nav__topic">
-                Guide to using Django with Zappa
-              </span>
-              <span class="md-header-nav__topic">
-                Custom Domains
-              </span>
+              Custom Domains
             
-          
+          </span>
         </div>
       </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        
-          
-            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
-            
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
 <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="search"></label>
+  <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
-      <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
-        &#xE5CD;
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
       </button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result">
+        <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            Type to start searching
+            Initializing search
           </div>
           <ol class="md-search-result__list"></ol>
         </div>
@@ -150,80 +133,62 @@
     </div>
   </div>
 </div>
-          
+    
+    
+      <div class="md-header__source">
         
-      </div>
-      
-        <div class="md-flex__cell md-flex__cell--shrink">
-          <div class="md-header-nav__source">
-            
-
-
-  
-
-
-  <a href="https://github.com/edgarroman/zappa-django-guide/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/edgarroman/zappa-django-guide/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
     
-      <div class="md-source__icon">
-        <svg viewBox="0 0 24 24" width="24" height="24">
-          <use xlink:href="#github" width="24" height="24"></use>
-        </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    edgarroman/zappa-django-guide
+  </div>
+</a>
       </div>
     
-    <div class="md-source__repository">
-      edgarroman/zappa-django-guide
-    </div>
-  </a>
-
-          </div>
-        </div>
-      
-    </div>
   </nav>
 </header>
     
-    <div class="md-container">
+    <div class="md-container" data-md-component="container">
+      
       
         
       
-      
-      <main class="md-main">
-        <div class="md-main__inner md-grid" data-md-component="container">
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
           
             
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" data-md-level="0">
-  <label class="md-nav__title md-nav__title--site" for="drawer">
-    <span class="md-nav__button md-logo">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Guide to using Django with Zappa" class="md-nav__button md-logo" aria-label="Guide to using Django with Zappa" data-md-component="logo">
       
-        <i class="md-icon"></i>
-      
-    </span>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
     Guide to using Django with Zappa
   </label>
   
     <div class="md-nav__source">
       
-
-
-  
-
-
-  <a href="https://github.com/edgarroman/zappa-django-guide/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/edgarroman/zappa-django-guide/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
     
-      <div class="md-source__icon">
-        <svg viewBox="0 0 24 24" width="24" height="24">
-          <use xlink:href="#github" width="24" height="24"></use>
-        </svg>
-      </div>
-    
-    <div class="md-source__repository">
-      edgarroman/zappa-django-guide
-    </div>
-  </a>
-
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    edgarroman/zappa-django-guide
+  </div>
+</a>
     </div>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -232,12 +197,15 @@
       
       
 
-
-  <li class="md-nav__item">
-    <a href=".." title="Home" class="md-nav__link">
-      Home
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
 
     
       
@@ -245,169 +213,179 @@
       
 
   
-
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+  
+  
     
-    <label class="md-nav__link" for="nav-2">
-      Walkthroughs
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
         Walkthroughs
+        <span class="md-nav__icon md-icon"></span>
       </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+      <nav class="md-nav" aria-label="Walkthroughs" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Walkthroughs
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../setup/" title="Setup your Environment" class="md-nav__link">
-      Setup your Environment
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../walk_core/" title="Core Django Setup" class="md-nav__link">
-      Core Django Setup
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../walk_static/" title="Hosting Static Files" class="md-nav__link">
-      Hosting Static Files
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../walk_database/" title="Using a Database" class="md-nav__link">
-      Using a Database
-    </a>
-  </li>
-
-        
-          
-          
-          
-
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        Setup your Environment
+      </a>
+    </li>
   
 
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../walk_core/" class="md-nav__link">
+        Core Django Setup
+      </a>
+    </li>
+  
 
-  <li class="md-nav__item md-nav__item--active">
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../walk_static/" class="md-nav__link">
+        Hosting Static Files
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../walk_database/" class="md-nav__link">
+        Using a Database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
     
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
       
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="toc">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Custom Domains
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Custom Domains
-      </label>
-    
-    <a href="./" title="Custom Domains" class="md-nav__link md-nav__link--active">
-      Custom Domains
-    </a>
-    
+      </a>
       
-<nav class="md-nav md-nav--secondary">
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
   
   
     
   
   
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#lets-talk-about-https" title="Let's talk about HTTPS" class="md-nav__link">
+  <a href="#lets-talk-about-https" class="md-nav__link">
     Let's talk about HTTPS
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#overview-of-the-process" title="Overview of the process" class="md-nav__link">
+  <a href="#overview-of-the-process" class="md-nav__link">
     Overview of the process
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#registering-your-custom-domain" title="Registering your Custom Domain" class="md-nav__link">
+  <a href="#registering-your-custom-domain" class="md-nav__link">
     Registering your Custom Domain
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#choices" title="Choices" class="md-nav__link">
+  <a href="#choices" class="md-nav__link">
     Choices
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-the-built-in-zappa-commands" title="Using the built-in Zappa commands" class="md-nav__link">
+  <a href="#using-the-built-in-zappa-commands" class="md-nav__link">
     Using the built-in Zappa commands
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Using the built-in Zappa commands">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#option-1-route53-and-acm" title="Option 1: Route53 and ACM" class="md-nav__link">
+  <a href="#option-1-route53-and-acm" class="md-nav__link">
     Option 1: Route53 and ACM
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Option 1: Route53 and ACM">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#step-11-create-a-hosted-zone-in-route53" title="Step 1.1: Create a Hosted Zone in Route53" class="md-nav__link">
+  <a href="#step-11-create-a-hosted-zone-in-route53" class="md-nav__link">
     Step 1.1: Create a Hosted Zone in Route53
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-12-create-your-digital-certificate-in-acm" title="Step 1.2: Create your digital certificate in ACM" class="md-nav__link">
+  <a href="#step-12-create-your-digital-certificate-in-acm" class="md-nav__link">
     Step 1.2: Create your digital certificate in ACM
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-13-edit-the-zappa-settings-file" title="Step 1.3: Edit the Zappa Settings File" class="md-nav__link">
+  <a href="#step-13-edit-the-zappa-settings-file" class="md-nav__link">
     Step 1.3: Edit the Zappa Settings File
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-14-run-certify" title="Step 1.4: Run Certify" class="md-nav__link">
+  <a href="#step-14-run-certify" class="md-nav__link">
     Step 1.4: Run Certify
   </a>
   
@@ -419,36 +397,36 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#option-2-route53-and-lets-encrypt" title="Option 2: Route53 and Let's Encrypt" class="md-nav__link">
+  <a href="#option-2-route53-and-lets-encrypt" class="md-nav__link">
     Option 2: Route53 and Let's Encrypt
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Option 2: Route53 and Let's Encrypt">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#step-21-create-a-hosted-zone-in-route53" title="Step 2.1: Create a Hosted Zone in Route53" class="md-nav__link">
+  <a href="#step-21-create-a-hosted-zone-in-route53" class="md-nav__link">
     Step 2.1: Create a Hosted Zone in Route53
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-22-create-an-aws-rsa-key" title="Step 2.2: Create an AWS RSA Key" class="md-nav__link">
+  <a href="#step-22-create-an-aws-rsa-key" class="md-nav__link">
     Step 2.2: Create an AWS RSA Key
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-23-edit-the-zappa-settings-file" title="Step 2.3: Edit the Zappa Settings File" class="md-nav__link">
+  <a href="#step-23-edit-the-zappa-settings-file" class="md-nav__link">
     Step 2.3: Edit the Zappa Settings File
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-24-run-certify" title="Step 2.4: Run Certify" class="md-nav__link">
+  <a href="#step-24-run-certify" class="md-nav__link">
     Step 2.4: Run Certify
   </a>
   
@@ -460,7 +438,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#other-service-providers" title="Other Service Providers" class="md-nav__link">
+  <a href="#other-service-providers" class="md-nav__link">
     Other Service Providers
   </a>
   
@@ -472,37 +450,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#troubleshooting" title="Troubleshooting" class="md-nav__link">
+  <a href="#troubleshooting" class="md-nav__link">
     Troubleshooting
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Troubleshooting">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#403-forbidden" title="403 - Forbidden!" class="md-nav__link">
+  <a href="#403-forbidden" class="md-nav__link">
     403 - Forbidden!
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="403 - Forbidden!">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#step-1-browse-to-api-gateway-custom-domain" title="Step 1 - Browse to API Gateway -&gt; Custom Domain" class="md-nav__link">
+  <a href="#step-1-browse-to-api-gateway-custom-domain" class="md-nav__link">
     Step 1 - Browse to API Gateway -&gt; Custom Domain
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-2-remove-the-custom-domain-mapping" title="Step 2 - Remove the Custom Domain Mapping" class="md-nav__link">
+  <a href="#step-2-remove-the-custom-domain-mapping" class="md-nav__link">
     Step 2 - Remove the Custom Domain Mapping
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-3-re-run-zappa-certify" title="Step 3 - Re-run zappa certify" class="md-nav__link">
+  <a href="#step-3-re-run-zappa-certify" class="md-nav__link">
     Step 3 - Re-run zappa certify
   </a>
   
@@ -514,7 +492,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#django-is-redirecting-to-the-raw-url" title="Django is redirecting to the raw url" class="md-nav__link">
+  <a href="#django-is-redirecting-to-the-raw-url" class="md-nav__link">
     Django is redirecting to the raw url
   </a>
   
@@ -526,29 +504,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#manage-your-own-cloudfront-distribution" title="Manage Your Own CloudFront Distribution" class="md-nav__link">
+  <a href="#manage-your-own-cloudfront-distribution" class="md-nav__link">
     Manage Your Own CloudFront Distribution
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Manage Your Own CloudFront Distribution">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#create-a-cloudfront-distribution" title="Create a CloudFront Distribution" class="md-nav__link">
+  <a href="#create-a-cloudfront-distribution" class="md-nav__link">
     Create a CloudFront Distribution
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#associate-https-certificate" title="Associate HTTPS certificate" class="md-nav__link">
+  <a href="#associate-https-certificate" class="md-nav__link">
     Associate HTTPS certificate
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#then-create-additional-origins" title="Then create additional 'Origins'" class="md-nav__link">
+  <a href="#then-create-additional-origins" class="md-nav__link">
     Then create additional 'Origins'
   </a>
   
@@ -559,140 +537,147 @@
   
 </li>
       
-      
-      
-      
-      
     </ul>
   
 </nav>
-    
-  </li>
+      
+    </li>
+  
 
-        
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../walk_app/" class="md-nav__link">
+        Application Adaptations
+      </a>
+    </li>
+  
+
           
-          
-
-
-  <li class="md-nav__item">
-    <a href="../walk_app/" title="Application Adaptations" class="md-nav__link">
-      Application Adaptations
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
+  
+  
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
-    
-    <label class="md-nav__link" for="nav-3">
-      AWS Setup
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
         AWS Setup
+        <span class="md-nav__icon md-icon"></span>
       </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+      <nav class="md-nav" aria-label="AWS Setup" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          AWS Setup
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws_credentials/" class="md-nav__link">
+        Managing Credentials
+      </a>
+    </li>
+  
+
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws_network_primer/" class="md-nav__link">
+        Primer on AWS VPC Networking
+      </a>
+    </li>
+  
+
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws_network/" class="md-nav__link">
+        Adventures in Networking
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../aws_credentials/" title="Managing Credentials" class="md-nav__link">
-      Managing Credentials
-    </a>
-  </li>
-
-        
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws_database/" class="md-nav__link">
+        Creating an RDS Database
+      </a>
+    </li>
+  
+
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws_route53/" class="md-nav__link">
+        Working with Route53
+      </a>
+    </li>
+  
+
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws_acm/" class="md-nav__link">
+        AWS Certificate Manager (ACM)
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../aws_network_primer/" title="Primer on AWS VPC Networking" class="md-nav__link">
-      Primer on AWS VPC Networking
-    </a>
-  </li>
-
-        
           
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../aws_network/" title="Adventures in Networking" class="md-nav__link">
-      Adventures in Networking
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../aws_database/" title="Creating an RDS Database" class="md-nav__link">
-      Creating an RDS Database
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../aws_route53/" title="Working with Route53" class="md-nav__link">
-      Working with Route53
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../aws_acm/" title="AWS Certificate Manager (ACM)" class="md-nav__link">
-      AWS Certificate Manager (ACM)
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../additional/" title="Additional" class="md-nav__link">
-      Additional
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../additional/" class="md-nav__link">
+        Additional
+      </a>
+    </li>
+  
 
     
   </ul>
@@ -702,86 +687,91 @@
               </div>
             
             
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
-<nav class="md-nav md-nav--secondary">
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
   
   
     
   
   
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#lets-talk-about-https" title="Let's talk about HTTPS" class="md-nav__link">
+  <a href="#lets-talk-about-https" class="md-nav__link">
     Let's talk about HTTPS
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#overview-of-the-process" title="Overview of the process" class="md-nav__link">
+  <a href="#overview-of-the-process" class="md-nav__link">
     Overview of the process
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#registering-your-custom-domain" title="Registering your Custom Domain" class="md-nav__link">
+  <a href="#registering-your-custom-domain" class="md-nav__link">
     Registering your Custom Domain
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#choices" title="Choices" class="md-nav__link">
+  <a href="#choices" class="md-nav__link">
     Choices
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-the-built-in-zappa-commands" title="Using the built-in Zappa commands" class="md-nav__link">
+  <a href="#using-the-built-in-zappa-commands" class="md-nav__link">
     Using the built-in Zappa commands
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Using the built-in Zappa commands">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#option-1-route53-and-acm" title="Option 1: Route53 and ACM" class="md-nav__link">
+  <a href="#option-1-route53-and-acm" class="md-nav__link">
     Option 1: Route53 and ACM
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Option 1: Route53 and ACM">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#step-11-create-a-hosted-zone-in-route53" title="Step 1.1: Create a Hosted Zone in Route53" class="md-nav__link">
+  <a href="#step-11-create-a-hosted-zone-in-route53" class="md-nav__link">
     Step 1.1: Create a Hosted Zone in Route53
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-12-create-your-digital-certificate-in-acm" title="Step 1.2: Create your digital certificate in ACM" class="md-nav__link">
+  <a href="#step-12-create-your-digital-certificate-in-acm" class="md-nav__link">
     Step 1.2: Create your digital certificate in ACM
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-13-edit-the-zappa-settings-file" title="Step 1.3: Edit the Zappa Settings File" class="md-nav__link">
+  <a href="#step-13-edit-the-zappa-settings-file" class="md-nav__link">
     Step 1.3: Edit the Zappa Settings File
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-14-run-certify" title="Step 1.4: Run Certify" class="md-nav__link">
+  <a href="#step-14-run-certify" class="md-nav__link">
     Step 1.4: Run Certify
   </a>
   
@@ -793,36 +783,36 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#option-2-route53-and-lets-encrypt" title="Option 2: Route53 and Let's Encrypt" class="md-nav__link">
+  <a href="#option-2-route53-and-lets-encrypt" class="md-nav__link">
     Option 2: Route53 and Let's Encrypt
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Option 2: Route53 and Let's Encrypt">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#step-21-create-a-hosted-zone-in-route53" title="Step 2.1: Create a Hosted Zone in Route53" class="md-nav__link">
+  <a href="#step-21-create-a-hosted-zone-in-route53" class="md-nav__link">
     Step 2.1: Create a Hosted Zone in Route53
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-22-create-an-aws-rsa-key" title="Step 2.2: Create an AWS RSA Key" class="md-nav__link">
+  <a href="#step-22-create-an-aws-rsa-key" class="md-nav__link">
     Step 2.2: Create an AWS RSA Key
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-23-edit-the-zappa-settings-file" title="Step 2.3: Edit the Zappa Settings File" class="md-nav__link">
+  <a href="#step-23-edit-the-zappa-settings-file" class="md-nav__link">
     Step 2.3: Edit the Zappa Settings File
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-24-run-certify" title="Step 2.4: Run Certify" class="md-nav__link">
+  <a href="#step-24-run-certify" class="md-nav__link">
     Step 2.4: Run Certify
   </a>
   
@@ -834,7 +824,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#other-service-providers" title="Other Service Providers" class="md-nav__link">
+  <a href="#other-service-providers" class="md-nav__link">
     Other Service Providers
   </a>
   
@@ -846,37 +836,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#troubleshooting" title="Troubleshooting" class="md-nav__link">
+  <a href="#troubleshooting" class="md-nav__link">
     Troubleshooting
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Troubleshooting">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#403-forbidden" title="403 - Forbidden!" class="md-nav__link">
+  <a href="#403-forbidden" class="md-nav__link">
     403 - Forbidden!
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="403 - Forbidden!">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#step-1-browse-to-api-gateway-custom-domain" title="Step 1 - Browse to API Gateway -&gt; Custom Domain" class="md-nav__link">
+  <a href="#step-1-browse-to-api-gateway-custom-domain" class="md-nav__link">
     Step 1 - Browse to API Gateway -&gt; Custom Domain
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-2-remove-the-custom-domain-mapping" title="Step 2 - Remove the Custom Domain Mapping" class="md-nav__link">
+  <a href="#step-2-remove-the-custom-domain-mapping" class="md-nav__link">
     Step 2 - Remove the Custom Domain Mapping
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-3-re-run-zappa-certify" title="Step 3 - Re-run zappa certify" class="md-nav__link">
+  <a href="#step-3-re-run-zappa-certify" class="md-nav__link">
     Step 3 - Re-run zappa certify
   </a>
   
@@ -888,7 +878,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#django-is-redirecting-to-the-raw-url" title="Django is redirecting to the raw url" class="md-nav__link">
+  <a href="#django-is-redirecting-to-the-raw-url" class="md-nav__link">
     Django is redirecting to the raw url
   </a>
   
@@ -900,29 +890,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#manage-your-own-cloudfront-distribution" title="Manage Your Own CloudFront Distribution" class="md-nav__link">
+  <a href="#manage-your-own-cloudfront-distribution" class="md-nav__link">
     Manage Your Own CloudFront Distribution
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Manage Your Own CloudFront Distribution">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#create-a-cloudfront-distribution" title="Create a CloudFront Distribution" class="md-nav__link">
+  <a href="#create-a-cloudfront-distribution" class="md-nav__link">
     Create a CloudFront Distribution
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#associate-https-certificate" title="Associate HTTPS certificate" class="md-nav__link">
+  <a href="#associate-https-certificate" class="md-nav__link">
     Associate HTTPS certificate
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#then-create-additional-origins" title="Then create additional 'Origins'" class="md-nav__link">
+  <a href="#then-create-additional-origins" class="md-nav__link">
     Then create additional 'Origins'
   </a>
   
@@ -933,10 +923,6 @@
   
 </li>
       
-      
-      
-      
-      
     </ul>
   
 </nav>
@@ -945,25 +931,25 @@
               </div>
             
           
-          <div class="md-content">
+          <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/edgarroman/zappa-django-guide/edit/master/docs/walk_domain.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/edgarroman/zappa-django-guide/edit/master/docs/walk_domain.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
                 
                 
                 <h1 id="using-a-custom-domain">Using a Custom Domain<a class="headerlink" href="#using-a-custom-domain" title="Permanent link">&para;</a></h1>
 <p>If you've followed the walkthroughs thus far, you've at least created a working <a href="../walk_core/">Django site using Zappa</a>
 But the URL provided by Zappa is pretty darn ugly.  Not only does it use an apparent random domain name, but the Zappa environment is used as the path.  For example:</p>
-<div class="codehilite"><pre><span></span>https://bnu0zcwezd.execute-api.us-east-1.amazonaws.com/dev/
+<div class="highlight"><pre><span></span><code>https://bnu0zcwezd.execute-api.us-east-1.amazonaws.com/dev/
         ^^^^^^^^^^^^^^^^^^^^^^                         ^^^
       Auto Generated API Gateway              Your Zappa Environment 
-</pre></div>
-
+</code></pre></div>
 <p>Ideally most sites would be something like:</p>
-<div class="codehilite"><pre><span></span>https://www.zappaguide.com/
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>https://www.zappaguide.com/
+</code></pre></div>
 <p>This is entirely possible with Zappa - so how do we get there?</p>
 <h2 id="lets-talk-about-https">Let's talk about HTTPS<a class="headerlink" href="#lets-talk-about-https" title="Permanent link">&para;</a></h2>
 <p>Perhaps you're wondering why we are introducting the concept of HTTPS when the topic of this walkthough is using a custom domain.  Zappa provides an automated way of creating the necessary custom domain mappings as a part of using encryption.  Thus many of the techiques described in this walkthough will ultimately end up with a custom domain along with HTTPS.  </p>
@@ -982,8 +968,8 @@ But the URL provided by Zappa is pretty darn ugly.  Not only does it use an appa
 <h2 id="registering-your-custom-domain">Registering your Custom Domain<a class="headerlink" href="#registering-your-custom-domain" title="Permanent link">&para;</a></h2>
 <p>First you need a registered domain.  It doesn't matter who your domain registrar is as long as you have control over the name server records to point to a DNS provider.  Of all the services, this one is the most generic and almost any Registar will do.</p>
 <p>Let's choose an example domain for this walkthrough:
-<div class="codehilite"><pre><span></span>www.zappaguide.com
-</pre></div></p>
+<div class="highlight"><pre><span></span><code>www.zappaguide.com
+</code></pre></div></p>
 <h2 id="choices">Choices<a class="headerlink" href="#choices" title="Permanent link">&para;</a></h2>
 <p>At this point, you have a registered domain name and a working Zappa deployment.  There are two options:</p>
 <ol>
@@ -1048,7 +1034,7 @@ By doing this, you still associate a Custom Domain Name with HTTPS, but you unlo
 <p>Be sure to record the ARN for the newly issued certificate.</p>
 <h4 id="step-13-edit-the-zappa-settings-file">Step 1.3: Edit the Zappa Settings File<a class="headerlink" href="#step-13-edit-the-zappa-settings-file" title="Permanent link">&para;</a></h4>
 <p>Now we add the following to our Zappa settings file.  These settings prepare Zappa to configure our API gateway properly.</p>
-<div class="codehilite"><pre><span></span>{
+<div class="highlight"><pre><span></span><code>{
     &quot;dev&quot;: {
         &quot;django_settings&quot;: &quot;frankie.settings&quot;, 
         &quot;s3_bucket&quot;: &quot;zappatest-code&quot;,
@@ -1061,20 +1047,18 @@ By doing this, you still associate a Custom Domain Name with HTTPS, but you unlo
 </span><span class="hll">        &quot;domain&quot;: &quot;www.zappaguide.com&quot;,
 </span>    }
 }
-</pre></div>
-
+</code></pre></div>
 <p>For the <code>certificate_arn</code> use the ARN value obtained in step 2 above.  For the <code>domain</code> here we could choose either <code>www.zappaguide.com</code> or <code>zappaguide.com</code>, but not both.  In order to handle both, either a redirect must occur or you can setup another <a href="#manage-your-own-cloudfront-distribution">CloudFront Distribution manually</a>.</p>
 <h4 id="step-14-run-certify">Step 1.4: Run Certify<a class="headerlink" href="#step-14-run-certify" title="Permanent link">&para;</a></h4>
 <p>This final step triggers your local Zappa environment to reach out to AWS and configure your API Gateway to honor the domain name specified.</p>
-<div class="codehilite"><pre><span></span>(ve) $ zappa certify dev
+<div class="highlight"><pre><span></span><code>(ve) $ zappa certify dev
 Calling certify for environment dev..
 Are you sure you want to certify? [y/n] y
 Certifying domain www.zappaguide.com..
 Created a new domain name with supplied certificate. Please note that it can take up to 40 minutes for this domain to be created and propagated through AWS, but it requires no further work on your part.
 Certificate updated!
 (ve) $ 
-</pre></div>
-
+</code></pre></div>
 <p>And that should work fine going forward</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1099,13 +1083,13 @@ Certificate updated!
 <h4 id="step-22-create-an-aws-rsa-key">Step 2.2: Create an AWS RSA Key<a class="headerlink" href="#step-22-create-an-aws-rsa-key" title="Permanent link">&para;</a></h4>
 <p>Zappa will interact automatically with Let's Encrypt on your behalf, but first you must create an RSA key to identify your account to Let's Encrypt.</p>
 <p>To generate it, simply run:
-<div class="codehilite"><pre><span></span>(ve) $ openssl genrsa -out le-account.key 2048 
+<div class="highlight"><pre><span></span><code>(ve) $ openssl genrsa -out le-account.key 2048 
 Generating RSA private key, 2048 bit long modulus
 ...........................................................................................................................+++
 ..........+++
 e is 65537 (0x10001)
 (ve) $
-</pre></div></p>
+</code></pre></div></p>
 <p>Be sure to protect this key because it will enable HTTPS certificates to be generated and you will not be able to update an HTTPS certificate if you lose it.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1113,7 +1097,7 @@ e is 65537 (0x10001)
 </div>
 <h4 id="step-23-edit-the-zappa-settings-file">Step 2.3: Edit the Zappa Settings File<a class="headerlink" href="#step-23-edit-the-zappa-settings-file" title="Permanent link">&para;</a></h4>
 <p>Now we add the following to our Zappa settings file.  These settings prepare Zappa to configure our API gateway properly.</p>
-<div class="codehilite"><pre><span></span>{
+<div class="highlight"><pre><span></span><code>{
     &quot;dev&quot;: {
         &quot;django_settings&quot;: &quot;frankie.settings&quot;, 
         &quot;s3_bucket&quot;: &quot;zappatest-code&quot;,
@@ -1126,19 +1110,17 @@ e is 65537 (0x10001)
 </span><span class="hll">        &quot;domain&quot;: &quot;www.zappaguide.com&quot;,
 </span>    }
 }
-</pre></div>
-
+</code></pre></div>
 <h4 id="step-24-run-certify">Step 2.4: Run Certify<a class="headerlink" href="#step-24-run-certify" title="Permanent link">&para;</a></h4>
 <p>This final step triggers your local Zappa environment to reach out to AWS and configure your API Gateway to honor the domain name specified.</p>
-<div class="codehilite"><pre><span></span>(ve) $ zappa certify dev
+<div class="highlight"><pre><span></span><code>(ve) $ zappa certify dev
 Calling certify for environment dev..
 Are you sure you want to certify? [y/n] y
 Certifying domain www.zappaguide.com..
 Created a new domain name with supplied certificate. Please note that it can take up to 40 minutes for this domain to be created and propagated through AWS, but it requires no further work on your part.
 Certificate updated!
 (ve) $ 
-</pre></div>
-
+</code></pre></div>
 <p>And that should work fine going forward.  Note that Let's Encrypt certificates only last for 3 months so you should ensure you update the certificate before the 3 months expire.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1159,9 +1141,8 @@ documentation is more abundant and complete.</p>
 <p>Using your own domain name can be one of the most frustrating experiences, especially due to the potential for a long delay while AWS is creating/setting up the necessary components.  Here we list some of the common errors that you may get when you think everything is working.</p>
 <h3 id="403-forbidden">403 - Forbidden!<a class="headerlink" href="#403-forbidden" title="Permanent link">&para;</a></h3>
 <p>Sometimes you may encounter the dreaded '403 - Forbidden message': </p>
-<div class="codehilite"><pre><span></span>{&quot;message&quot;:&quot;Forbidden&quot;}
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>{&quot;message&quot;:&quot;Forbidden&quot;}
+</code></pre></div>
 <p>Often this happens when the user runs <code>zappa certify</code> but has not completed all the steps or correctly configured the zappa settings file.  The best way to handle this is generally to manually remove any partially configured custom domains from the AWS console and then try to run <code>zappa certify</code> again.  Follow these steps to remove any partial custom domain remnants.  </p>
 <h4 id="step-1-browse-to-api-gateway-custom-domain">Step 1 - Browse to API Gateway -&gt; Custom Domain<a class="headerlink" href="#step-1-browse-to-api-gateway-custom-domain" title="Permanent link">&para;</a></h4>
 <p><img alt="API Gateway -&gt; Custom Domain" src="../images/domain_trouble_custom_domain.png" /></p>
@@ -1179,7 +1160,7 @@ almost any kind of data including dynamic data from a website. </p>
 <p>Additional functionality when you use your own CloudFront distributions include:</p>
 <ul>
 <li>
-<p><strong>Aggregate Static and Dynamic Content</strong> - If you are serving static content <a href="../walk_static">from S3 or other 
+<p><strong>Aggregate Static and Dynamic Content</strong> - If you are serving static content <a href="walk_static">from S3 or other 
 static services</a>, you can use a custom CloudFront Distro to have a single domain name
 for your entire website by using <a href="http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/DownloadDistS3AndCustomOrigins.html">multiple origins</a>.
 This sometimes simplifies technologies that are easier to configure with a single domain policy (e.g. CORS, HTTPS, etc).
@@ -1239,8 +1220,6 @@ zappa deployments with only having to consider cache timeouts. </p>
 <h3 id="then-create-additional-origins">Then create additional 'Origins'<a class="headerlink" href="#then-create-additional-origins" title="Permanent link">&para;</a></h3>
 <p>So now that you have your default origin configured you can add additional ones.  And you can point to various url paths in your application to configure the cache timings and other behavoirs like compression and so on.</p>
                 
-                  
-                
               
               
                 
@@ -1250,85 +1229,85 @@ zappa deployments with only having to consider cache timeouts. </p>
             </article>
           </div>
         </div>
+        
       </main>
       
         
 <footer class="md-footer">
   
-    <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid">
-        
-          <a href="../walk_database/" title="Using a Database" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
-            </div>
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Previous
-                </span>
-                Using a Database
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../walk_database/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
               </span>
+              Using a Database
             </div>
-          </a>
-        
-        
-          <a href="../walk_app/" title="Application Adaptations" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                Application Adaptations
+          </div>
+        </a>
+      
+      
+        <a href="../walk_app/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
               </span>
+              Application Adaptations
             </div>
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
-          </a>
-        
-      </nav>
-    </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2016 - 2017 <a href="https://github.com/edgarroman">Edgar Roman</a>
+            Copyright &copy; <script>document.write(new Date().getFullYear())</script> <a href="https://github.com/edgarroman">Edgar Roman</a>
           </div>
         
-        powered by
-        <a href="http://www.mkdocs.org">MkDocs</a>
-        and
-        <a href="https://squidfunk.github.io/mkdocs-material/">
-          Material for MkDocs</a>
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
       </div>
       
-        
   <div class="md-footer-social">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
-      <a href="https://github.com/edgarroman" class="md-footer-social__link fa fa-github"></a>
+      
+      
+        
+        
+      
+      <a href="https://github.com/edgarroman" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
     
   </div>
 
-      
     </div>
   </div>
 </footer>
       
     </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.d351de03.min.js", "version": null}</script>
     
-      <script src="../assets/javascripts/application.b438e6c5.js"></script>
-      
-      <script>app.initialize({version:"0.17.3",url:{base:".."}})</script>
-      
     
-    
-      
-        <script>!function(e,a,t,n,o,c,i){e.GoogleAnalyticsObject=o,e.ga=e.ga||function(){(e.ga.q=e.ga.q||[]).push(arguments)},e.ga.l=1*new Date,c=a.createElement(t),i=a.getElementsByTagName(t)[0],c.async=1,c.src="https://www.google-analytics.com/analytics.js",i.parentNode.insertBefore(c,i)}(window,document,"script",0,"ga"),ga("create","UA-97437653-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview");var links=document.getElementsByTagName("a");if(Array.prototype.map.call(links,function(e){e.host!=document.location.host&&e.addEventListener("click",function(){var a=e.getAttribute("data-md-action")||"follow";ga("send","event","outbound",a,e.href)})}),document.forms.search){var query=document.forms.search.query;query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}</script>
+      <script src="../assets/javascripts/bundle.34eae1b6.min.js"></script>
       
     
   </body>

@@ -1,40 +1,18 @@
 
-
-
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="no-js">
   <head>
     
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
-      <meta http-equiv="x-ua-compatible" content="ie=edge">
       
         <meta name="description" content="A full featured walkthough of using Django on Zappa (powered by AWS Lambda in serverless environment)">
       
       
       
       
-        <meta name="lang:clipboard.copy" content="Copy to clipboard">
-      
-        <meta name="lang:clipboard.copied" content="Copied to clipboard">
-      
-        <meta name="lang:search.language" content="en">
-      
-        <meta name="lang:search.pipeline.stopwords" content="True">
-      
-        <meta name="lang:search.pipeline.trimmer" content="True">
-      
-        <meta name="lang:search.result.none" content="No matching documents">
-      
-        <meta name="lang:search.result.one" content="1 matching document">
-      
-        <meta name="lang:search.result.other" content="# matching documents">
-      
-        <meta name="lang:search.tokenizer" content="[\s\-]+">
-      
-      <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-0.17.3, mkdocs-material-2.7.3">
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.6">
     
     
       
@@ -42,107 +20,112 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.8d40d89b.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.875de78c.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.f1a3b89f.min.css">
+        
       
     
     
-      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
     
-    
-      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
       
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
-        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
       
-      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
+    
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-97437653-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
     
     
   </head>
   
-    <body dir="ltr">
   
-    <svg class="md-svg">
-      <defs>
-        
-        
-          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
-    viewBox="0 0 416 448" id="github">
-  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
-        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
-        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
-        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
-        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
-        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
-        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
-        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
-        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
-        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
-        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
-        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
-        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
-        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
-        99.5z" />
-</svg>
-        
-      </defs>
-    </svg>
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search" autocomplete="off">
-    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
     
-      <a href="#core-django-setup" tabindex="1" class="md-skip">
-        Skip to content
-      </a>
     
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#core-django-setup" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
     
       <header class="md-header" data-md-component="header">
-  <nav class="md-header-nav md-grid">
-    <div class="md-flex">
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <a href=".." title="Guide to using Django with Zappa" class="md-header-nav__button md-logo">
-          
-            <i class="md-icon"></i>
-          
-        </a>
-      </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
-      </div>
-      <div class="md-flex__cell md-flex__cell--stretch">
-        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Guide to using Django with Zappa" class="md-header__button md-logo" aria-label="Guide to using Django with Zappa" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Guide to using Django with Zappa
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
             
-              <span class="md-header-nav__topic">
-                Guide to using Django with Zappa
-              </span>
-              <span class="md-header-nav__topic">
-                Core Django Setup
-              </span>
+              Core Django Setup
             
-          
+          </span>
         </div>
       </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        
-          
-            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
-            
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
 <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="search"></label>
+  <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
-      <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
-        &#xE5CD;
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
       </button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result">
+        <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            Type to start searching
+            Initializing search
           </div>
           <ol class="md-search-result__list"></ol>
         </div>
@@ -150,80 +133,62 @@
     </div>
   </div>
 </div>
-          
+    
+    
+      <div class="md-header__source">
         
-      </div>
-      
-        <div class="md-flex__cell md-flex__cell--shrink">
-          <div class="md-header-nav__source">
-            
-
-
-  
-
-
-  <a href="https://github.com/edgarroman/zappa-django-guide/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/edgarroman/zappa-django-guide/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
     
-      <div class="md-source__icon">
-        <svg viewBox="0 0 24 24" width="24" height="24">
-          <use xlink:href="#github" width="24" height="24"></use>
-        </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    edgarroman/zappa-django-guide
+  </div>
+</a>
       </div>
     
-    <div class="md-source__repository">
-      edgarroman/zappa-django-guide
-    </div>
-  </a>
-
-          </div>
-        </div>
-      
-    </div>
   </nav>
 </header>
     
-    <div class="md-container">
+    <div class="md-container" data-md-component="container">
+      
       
         
       
-      
-      <main class="md-main">
-        <div class="md-main__inner md-grid" data-md-component="container">
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
           
             
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" data-md-level="0">
-  <label class="md-nav__title md-nav__title--site" for="drawer">
-    <span class="md-nav__button md-logo">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Guide to using Django with Zappa" class="md-nav__button md-logo" aria-label="Guide to using Django with Zappa" data-md-component="logo">
       
-        <i class="md-icon"></i>
-      
-    </span>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
     Guide to using Django with Zappa
   </label>
   
     <div class="md-nav__source">
       
-
-
-  
-
-
-  <a href="https://github.com/edgarroman/zappa-django-guide/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/edgarroman/zappa-django-guide/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
     
-      <div class="md-source__icon">
-        <svg viewBox="0 0 24 24" width="24" height="24">
-          <use xlink:href="#github" width="24" height="24"></use>
-        </svg>
-      </div>
-    
-    <div class="md-source__repository">
-      edgarroman/zappa-django-guide
-    </div>
-  </a>
-
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    edgarroman/zappa-django-guide
+  </div>
+</a>
     </div>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -232,12 +197,15 @@
       
       
 
-
-  <li class="md-nav__item">
-    <a href=".." title="Home" class="md-nav__link">
-      Home
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
 
     
       
@@ -245,97 +213,107 @@
       
 
   
-
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+  
+  
     
-    <label class="md-nav__link" for="nav-2">
-      Walkthroughs
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
         Walkthroughs
+        <span class="md-nav__icon md-icon"></span>
       </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+      <nav class="md-nav" aria-label="Walkthroughs" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Walkthroughs
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../setup/" title="Setup your Environment" class="md-nav__link">
-      Setup your Environment
-    </a>
-  </li>
-
-        
-          
-          
-          
-
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        Setup your Environment
+      </a>
+    </li>
   
 
-
-  <li class="md-nav__item md-nav__item--active">
+          
+            
+  
+  
     
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
       
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="toc">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Core Django Setup
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Core Django Setup
-      </label>
-    
-    <a href="./" title="Core Django Setup" class="md-nav__link md-nav__link--active">
-      Core Django Setup
-    </a>
-    
+      </a>
       
-<nav class="md-nav md-nav--secondary">
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
   
   
     
   
   
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#expectations-and-goals" title="Expectations and Goals" class="md-nav__link">
+  <a href="#expectations-and-goals" class="md-nav__link">
     Expectations and Goals
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#setup-aws-account-credentials" title="Setup AWS Account Credentials" class="md-nav__link">
+  <a href="#setup-aws-account-credentials" class="md-nav__link">
     Setup AWS Account Credentials
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-local-environment" title="Create local environment" class="md-nav__link">
+  <a href="#create-local-environment" class="md-nav__link">
     Create local environment
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-very-basic-django-project" title="Create very basic Django project" class="md-nav__link">
+  <a href="#create-very-basic-django-project" class="md-nav__link">
     Create very basic Django project
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Create very basic Django project">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#testing-the-basic-django-project" title="Testing the basic Django project" class="md-nav__link">
+  <a href="#testing-the-basic-django-project" class="md-nav__link">
     Testing the basic Django project
   </a>
   
@@ -347,15 +325,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#setup-zappa" title="Setup Zappa" class="md-nav__link">
+  <a href="#setup-zappa" class="md-nav__link">
     Setup Zappa
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Setup Zappa">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#testing-the-zappa-setup" title="Testing the Zappa Setup" class="md-nav__link">
+  <a href="#testing-the-zappa-setup" class="md-nav__link">
     Testing the Zappa Setup
   </a>
   
@@ -367,22 +345,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deploy-your-project-using-zappa" title="Deploy your project using Zappa" class="md-nav__link">
+  <a href="#deploy-your-project-using-zappa" class="md-nav__link">
     Deploy your project using Zappa
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-is-this-functional" title="How is this functional?" class="md-nav__link">
+  <a href="#how-is-this-functional" class="md-nav__link">
     How is this functional?
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="How is this functional?">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#why-is-the-url-path-appended-with-dev" title="Why is the URL path appended with 'dev'?" class="md-nav__link">
+  <a href="#why-is-the-url-path-appended-with-dev" class="md-nav__link">
     Why is the URL path appended with 'dev'?
   </a>
   
@@ -394,182 +372,189 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#checking-up-on-the-deployment" title="Checking up on the deployment" class="md-nav__link">
+  <a href="#checking-up-on-the-deployment" class="md-nav__link">
     Checking up on the deployment
   </a>
   
 </li>
       
-      
-      
-      
-      
     </ul>
   
 </nav>
-    
-  </li>
+      
+    </li>
+  
 
-        
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../walk_static/" class="md-nav__link">
+        Hosting Static Files
+      </a>
+    </li>
+  
+
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../walk_database/" class="md-nav__link">
+        Using a Database
+      </a>
+    </li>
+  
+
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../walk_domain/" class="md-nav__link">
+        Custom Domains
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../walk_static/" title="Hosting Static Files" class="md-nav__link">
-      Hosting Static Files
-    </a>
-  </li>
-
-        
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../walk_app/" class="md-nav__link">
+        Application Adaptations
+      </a>
+    </li>
+  
+
           
-          
-
-
-  <li class="md-nav__item">
-    <a href="../walk_database/" title="Using a Database" class="md-nav__link">
-      Using a Database
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../walk_domain/" title="Custom Domains" class="md-nav__link">
-      Custom Domains
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../walk_app/" title="Application Adaptations" class="md-nav__link">
-      Application Adaptations
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
+  
+  
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
-    
-    <label class="md-nav__link" for="nav-3">
-      AWS Setup
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
         AWS Setup
+        <span class="md-nav__icon md-icon"></span>
       </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+      <nav class="md-nav" aria-label="AWS Setup" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          AWS Setup
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws_credentials/" class="md-nav__link">
+        Managing Credentials
+      </a>
+    </li>
+  
+
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws_network_primer/" class="md-nav__link">
+        Primer on AWS VPC Networking
+      </a>
+    </li>
+  
+
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws_network/" class="md-nav__link">
+        Adventures in Networking
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../aws_credentials/" title="Managing Credentials" class="md-nav__link">
-      Managing Credentials
-    </a>
-  </li>
-
-        
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws_database/" class="md-nav__link">
+        Creating an RDS Database
+      </a>
+    </li>
+  
+
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws_route53/" class="md-nav__link">
+        Working with Route53
+      </a>
+    </li>
+  
+
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws_acm/" class="md-nav__link">
+        AWS Certificate Manager (ACM)
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../aws_network_primer/" title="Primer on AWS VPC Networking" class="md-nav__link">
-      Primer on AWS VPC Networking
-    </a>
-  </li>
-
-        
           
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../aws_network/" title="Adventures in Networking" class="md-nav__link">
-      Adventures in Networking
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../aws_database/" title="Creating an RDS Database" class="md-nav__link">
-      Creating an RDS Database
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../aws_route53/" title="Working with Route53" class="md-nav__link">
-      Working with Route53
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../aws_acm/" title="AWS Certificate Manager (ACM)" class="md-nav__link">
-      AWS Certificate Manager (ACM)
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../additional/" title="Additional" class="md-nav__link">
-      Additional
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../additional/" class="md-nav__link">
+        Additional
+      </a>
+    </li>
+  
 
     
   </ul>
@@ -579,50 +564,55 @@
               </div>
             
             
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
-<nav class="md-nav md-nav--secondary">
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
   
   
     
   
   
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#expectations-and-goals" title="Expectations and Goals" class="md-nav__link">
+  <a href="#expectations-and-goals" class="md-nav__link">
     Expectations and Goals
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#setup-aws-account-credentials" title="Setup AWS Account Credentials" class="md-nav__link">
+  <a href="#setup-aws-account-credentials" class="md-nav__link">
     Setup AWS Account Credentials
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-local-environment" title="Create local environment" class="md-nav__link">
+  <a href="#create-local-environment" class="md-nav__link">
     Create local environment
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-very-basic-django-project" title="Create very basic Django project" class="md-nav__link">
+  <a href="#create-very-basic-django-project" class="md-nav__link">
     Create very basic Django project
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Create very basic Django project">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#testing-the-basic-django-project" title="Testing the basic Django project" class="md-nav__link">
+  <a href="#testing-the-basic-django-project" class="md-nav__link">
     Testing the basic Django project
   </a>
   
@@ -634,15 +624,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#setup-zappa" title="Setup Zappa" class="md-nav__link">
+  <a href="#setup-zappa" class="md-nav__link">
     Setup Zappa
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Setup Zappa">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#testing-the-zappa-setup" title="Testing the Zappa Setup" class="md-nav__link">
+  <a href="#testing-the-zappa-setup" class="md-nav__link">
     Testing the Zappa Setup
   </a>
   
@@ -654,22 +644,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deploy-your-project-using-zappa" title="Deploy your project using Zappa" class="md-nav__link">
+  <a href="#deploy-your-project-using-zappa" class="md-nav__link">
     Deploy your project using Zappa
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-is-this-functional" title="How is this functional?" class="md-nav__link">
+  <a href="#how-is-this-functional" class="md-nav__link">
     How is this functional?
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="How is this functional?">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#why-is-the-url-path-appended-with-dev" title="Why is the URL path appended with 'dev'?" class="md-nav__link">
+  <a href="#why-is-the-url-path-appended-with-dev" class="md-nav__link">
     Why is the URL path appended with 'dev'?
   </a>
   
@@ -681,15 +671,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#checking-up-on-the-deployment" title="Checking up on the deployment" class="md-nav__link">
+  <a href="#checking-up-on-the-deployment" class="md-nav__link">
     Checking up on the deployment
   </a>
   
 </li>
-      
-      
-      
-      
       
     </ul>
   
@@ -699,11 +685,13 @@
               </div>
             
           
-          <div class="md-content">
+          <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/edgarroman/zappa-django-guide/edit/master/docs/walk_core.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/edgarroman/zappa-django-guide/edit/master/docs/walk_core.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
                 
                 
                 <h1 id="core-django-setup">Core Django Setup<a class="headerlink" href="#core-django-setup" title="Permanent link">&para;</a></h1>
@@ -727,18 +715,17 @@
 <p>See <a href="../setup/">Setup your Environment</a></p>
 <h2 id="create-very-basic-django-project">Create very basic Django project<a class="headerlink" href="#create-very-basic-django-project" title="Permanent link">&para;</a></h2>
 <p>For the purposes of this walkthrough we are taking the most basic Django project.  From within your project working directory type the following.  We are creating a fictional Django project called 'frankie'</p>
-<div class="codehilite"><pre><span></span>django-admin startproject frankie .
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>django-admin startproject frankie .
+</code></pre></div>
 <h3 id="testing-the-basic-django-project">Testing the basic Django project<a class="headerlink" href="#testing-the-basic-django-project" title="Permanent link">&para;</a></h3>
 <p>At this point if you run 
-<div class="codehilite"><pre><span></span>python manage.py runserver
-</pre></div></p>
+<div class="highlight"><pre><span></span><code>python manage.py runserver
+</code></pre></div></p>
 <p>And visit http://127.0.0.1:8000 with your browser you should see the standard Django 'It Worked!' page</p>
 <p>Now quit the server using Control-C.  You should be back at the console prompt</p>
 <h2 id="setup-zappa">Setup Zappa<a class="headerlink" href="#setup-zappa" title="Permanent link">&para;</a></h2>
-<p><div class="codehilite"><pre><span></span>zappa init
-</pre></div>
+<p><div class="highlight"><pre><span></span><code>zappa init
+</code></pre></div>
 You will encounter a series of prompts:</p>
 <ul>
 <li>Name of environment - just accept the default 'dev'</li>
@@ -748,7 +735,7 @@ You will encounter a series of prompts:</p>
 <li>If everything looks ok, then accept the info</li>
 </ul>
 <p>Here's a transcript of what you should see:</p>
-<div class="codehilite"><pre><span></span>(ve) $ zappa init
+<div class="highlight"><pre><span></span><code>(ve) $ zappa init
 
 ███████╗ █████╗ ██████╗ ██████╗  █████╗
 ╚══███╔╝██╔══██╗██╔══██╗██╔══██╗██╔══██╗
@@ -804,15 +791,13 @@ and stop by our Slack channel here: http://bit.do/zappa
 Enjoy!,
  ~ Team Zappa!
 (ve) $
-</pre></div>
-
+</code></pre></div>
 <h3 id="testing-the-zappa-setup">Testing the Zappa Setup<a class="headerlink" href="#testing-the-zappa-setup" title="Permanent link">&para;</a></h3>
 <p>So now if we run</p>
-<div class="codehilite"><pre><span></span>zappa deploy dev
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>zappa deploy dev
+</code></pre></div>
 <p>But unfortunately we encounter an error: </p>
-<p><div class="codehilite"><pre><span></span>(ve) $ zappa deploy dev
+<p><div class="highlight"><pre><span></span><code>(ve) $ zappa deploy dev
 Calling deploy for environment dev..
 Warning! AWS Lambda may not be available in this AWS Region!
 Warning! AWS API Gateway may not be available in this AWS Region!
@@ -832,49 +817,45 @@ And join our Slack channel here: https://slack.zappa.io
 Love!,
  ~ Team Zappa!
 (ve) $
-</pre></div>
+</code></pre></div>
 Aw man, the error <strong>NoRegionError: You must specify a region.</strong> is holding us back.  Zappa is complaining that no AWS region is specified.  So we need to specify a region.  In this walkthrough we are leveraging <code>us-east-1</code> which corresponds to the same region we used above for the S3 bucket.</p>
 <p>You have options:</p>
 <ol>
 <li>
 <p>Specify a default region using environment variables</p>
 <p>Again, the drawback here is this must be set for every console</p>
-<div class="codehilite"><pre><span></span>export AWS_DEFAULT_REGION=us-east-1
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>export AWS_DEFAULT_REGION=us-east-1
+</code></pre></div>
 </li>
 <li>
 <p>Add default region in your <code>~/.aws/credentials</code> file</p>
 <p>Better but this will affect all AWS scripts and programs on your machine.</p>
-<div class="codehilite"><pre><span></span><span class="k">[default]</span>
-<span class="na">aws_access_key_id</span> <span class="o">=</span> <span class="s">your_access_key_id</span>
-<span class="na">aws_secret_access_key</span> <span class="o">=</span> <span class="s">your_secret_access_key</span>
-<span class="na">region</span><span class="o">=</span><span class="s">us-east-1</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>[default]
+aws_access_key_id = your_access_key_id
+aws_secret_access_key = your_secret_access_key
+region=us-east-1
+</code></pre></div>
 </li>
 <li>
 <p>Edit the <code>zappa_settings.json</code> file to have an AWS region.</p>
 <p>Probably best option because now the zappa configuration has minimal dependencies on external user environment.</p>
-<div class="codehilite"><pre><span></span>{
+<div class="highlight"><pre><span></span><code>{
  &quot;dev&quot;: {
 <span class="hll">     &quot;aws_region&quot;: &quot;us-east-1&quot;,
 </span>     &quot;django_settings&quot;: &quot;frankie.settings&quot;,
      &quot;s3_bucket&quot;: &quot;zappatest-code&quot;
         } 
 }
-</pre></div>
-
+</code></pre></div>
 <p>Don't forget to put commas in the proper place - JSON is fiddly!</p>
 </li>
 </ol>
 <h2 id="deploy-your-project-using-zappa">Deploy your project using Zappa<a class="headerlink" href="#deploy-your-project-using-zappa" title="Permanent link">&para;</a></h2>
 <p>Now it's easy to do the initial deployment</p>
-<div class="codehilite"><pre><span></span>zappa deploy dev
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>zappa deploy dev
+</code></pre></div>
 <p>Zappa will automatically create an AWS API gateway that will route HTTP requests to your lambda Django project.  You should see something like:</p>
-<div class="codehilite"><pre><span></span>(ve) $ zappa deploy dev
+<div class="highlight"><pre><span></span><code>(ve) $ zappa deploy dev
 Calling deploy for environment dev..
 Downloading and installing dependencies..
 100%|███████████████████████████████████████████████████████████████████████████████████████████| 27/27 [00:07&lt;00:00,  3.91pkg/s]
@@ -889,24 +870,21 @@ Waiting for stack zappatest-dev to create (this can take a bit)..
 100%|█████████████████████████████████████████████████████████████████████████████████████████████| 4/4 [00:18&lt;00:00,  4.69s/res]
 Deploying API Gateway..
 Deployment complete!: https://x6kb437rh.execute-api.us-east-1.amazonaws.com/dev
-</pre></div>
-
+</code></pre></div>
 <p>Brilliant!  We should be able to use a browser to visit the URL provided at the end of the script.</p>
 <p>Once we do, however, we get:</p>
-<div class="codehilite"><pre><span></span>DisallowedHost at /
+<div class="highlight"><pre><span></span><code>DisallowedHost at /
 Invalid HTTP_HOST header: &#39;x6kb437rh.execute-api.us-east-1.amazonaws.com&#39;. 
 You may need to add x6kb437rh.execute-api.us-east-1.amazonaws.com&#39; to ALLOWED_HOSTS.
-</pre></div>
-
+</code></pre></div>
 <p>The built-in <a href="https://docs.djangoproject.com/en/1.10/topics/security/#host-header-validation">Django security settings</a> are kicking in and preventing bad stuff from happening.  So we need to modify our Django settings file to accommodate the <a href="http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html">default hostname that AWS API Gateway uses</a>.  Note that the AWS region is part of the hostname and thus should match your selected region.</p>
 <p>Now edit <code>frankie/settings.py</code> and change ALLOWED_HOSTS to;</p>
-<p><div class="codehilite"><pre><span></span>ALLOWED_HOSTS = [ &#39;127.0.0.1&#39;, &#39;x6kb437rh.execute-api.us-east-1.amazonaws.com&#39;, ]
-</pre></div>
+<p><div class="highlight"><pre><span></span><code>ALLOWED_HOSTS = [ &#39;127.0.0.1&#39;, &#39;x6kb437rh.execute-api.us-east-1.amazonaws.com&#39;, ]
+</code></pre></div>
 As an aside, for best security practices, put the full domain of the API Gateway here.  Less secure would be to use just <code>.execute-api.us-east-1.amazonaws.com</code>.  </p>
 <p>Once done, we can again deploy to AWS Lambda.  But this time, since we've already pushed the initial deploy, we use the <strong>update</strong> action on the zappa command line.</p>
-<div class="codehilite"><pre><span></span>zappa update dev
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>zappa update dev
+</code></pre></div>
 <p>After this completes, you should be able to see your Django site in action.  Note that you will actually get a Page not found (404) response.  This indicates that your Django site is functional and working.   </p>
 <p><img alt="404" src="../images/core_404.png" /></p>
 <h2 id="how-is-this-functional">How is this functional?<a class="headerlink" href="#how-is-this-functional" title="Permanent link">&para;</a></h2>
@@ -918,19 +896,17 @@ As an aside, for best security practices, put the full domain of the API Gateway
 </ul>
 <h3 id="why-is-the-url-path-appended-with-dev">Why is the URL path appended with 'dev'?<a class="headerlink" href="#why-is-the-url-path-appended-with-dev" title="Permanent link">&para;</a></h3>
 <p>Astute readers will notice that the url in the image shown above indeed has the root domain with the suffix of 'dev' which happens to be the name of the zappa environment.  Indeed, the url domain is based on the generated API Gateway and the path of the URL is the 'Stage Name' of the API Gateway - it matches the name of the Zappa environment you chose above.</p>
-<div class="codehilite"><pre><span></span>https://bnu0zcwezd.execute-api.us-east-1.amazonaws.com/dev/
+<div class="highlight"><pre><span></span><code>https://bnu0zcwezd.execute-api.us-east-1.amazonaws.com/dev/
         ^^^^^^^^^^^^^^^^^^^^^^                         ^^^
       Auto Generated API Gateway              Your Zappa Environment
-</pre></div>
-
+</code></pre></div>
 <p>While this url may be considered functional, most would regard it as extremely unfriendly to users. To improve this and use your own custom domain name see the section on <a href="../walk_domain/">using a Custom Domain</a>.</p>
 <h2 id="checking-up-on-the-deployment">Checking up on the deployment<a class="headerlink" href="#checking-up-on-the-deployment" title="Permanent link">&para;</a></h2>
 <p>If, at any time, you would like to get information on the deployment, the command to run is</p>
-<div class="codehilite"><pre><span></span>zappa status dev
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>zappa status dev
+</code></pre></div>
 <p>And you will get a plethora of data about your deployment:
-<div class="codehilite"><pre><span></span>    Lambda Versions:      2
+<div class="highlight"><pre><span></span><code>    Lambda Versions:      2
     Lambda Name:          zappatest2-dev
     Lambda ARN:           arn:aws:lambda:us-east-1:738351236015:function:zappatest2-dev
     Lambda Role ARN:      arn:aws:iam::738351236015:role/ZappaLambdaExecution
@@ -952,10 +928,8 @@ As an aside, for best security practices, put the full domain of the API Gateway
     Event Rule Name:      zappatest2-dev-zappa-keep-warm-handler.keep_warm_callback
     Event Rule State:     Enabled
     Event Rule Schedule:  rate(4 minutes)
-</pre></div>
+</code></pre></div>
 It includes the API Gateway URL which is important in case you ever forget the URL</p>
-                
-                  
                 
               
               
@@ -966,85 +940,85 @@ It includes the API Gateway URL which is important in case you ever forget the U
             </article>
           </div>
         </div>
+        
       </main>
       
         
 <footer class="md-footer">
   
-    <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid">
-        
-          <a href="../setup/" title="Setup your Environment" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
-            </div>
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Previous
-                </span>
-                Setup your Environment
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../setup/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
               </span>
+              Setup your Environment
             </div>
-          </a>
-        
-        
-          <a href="../walk_static/" title="Hosting Static Files" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                Hosting Static Files
+          </div>
+        </a>
+      
+      
+        <a href="../walk_static/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
               </span>
+              Hosting Static Files
             </div>
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
-          </a>
-        
-      </nav>
-    </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2016 - 2017 <a href="https://github.com/edgarroman">Edgar Roman</a>
+            Copyright &copy; <script>document.write(new Date().getFullYear())</script> <a href="https://github.com/edgarroman">Edgar Roman</a>
           </div>
         
-        powered by
-        <a href="http://www.mkdocs.org">MkDocs</a>
-        and
-        <a href="https://squidfunk.github.io/mkdocs-material/">
-          Material for MkDocs</a>
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
       </div>
       
-        
   <div class="md-footer-social">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
-      <a href="https://github.com/edgarroman" class="md-footer-social__link fa fa-github"></a>
+      
+      
+        
+        
+      
+      <a href="https://github.com/edgarroman" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
     
   </div>
 
-      
     </div>
   </div>
 </footer>
       
     </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.d351de03.min.js", "version": null}</script>
     
-      <script src="../assets/javascripts/application.b438e6c5.js"></script>
-      
-      <script>app.initialize({version:"0.17.3",url:{base:".."}})</script>
-      
     
-    
-      
-        <script>!function(e,a,t,n,o,c,i){e.GoogleAnalyticsObject=o,e.ga=e.ga||function(){(e.ga.q=e.ga.q||[]).push(arguments)},e.ga.l=1*new Date,c=a.createElement(t),i=a.getElementsByTagName(t)[0],c.async=1,c.src="https://www.google-analytics.com/analytics.js",i.parentNode.insertBefore(c,i)}(window,document,"script",0,"ga"),ga("create","UA-97437653-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview");var links=document.getElementsByTagName("a");if(Array.prototype.map.call(links,function(e){e.host!=document.location.host&&e.addEventListener("click",function(){var a=e.getAttribute("data-md-action")||"follow";ga("send","event","outbound",a,e.href)})}),document.forms.search){var query=document.forms.search.query;query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}</script>
+      <script src="../assets/javascripts/bundle.34eae1b6.min.js"></script>
       
     
   </body>
