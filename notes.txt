@@ -9,6 +9,8 @@ topics:
 - how to login users?
 https://github.com/capless/warrant
 
+- rds with IAM
+- SQS with vpc
 
 
 - What about only python processing functions?  
@@ -72,3 +74,28 @@ oh, and based on the last 48h of data... (i'm outside the "free tier" of lambda 
 [7:36] 
 in our server costs
 =================================================================================================
+
+
+I was able to find it out by doing a search on github issues..
+
+
+joelwilson [7:00 PM] 
+added this Plain Text snippet
+      "event_source": {
+         "arn": "arn:aws:s3:::ops",
+         "events": [
+          "s3:ObjectCreated:*" 
+          ],
+         "key_filters": [
+          {
+           "type": "prefix",
+           "value": "dev/input"
+          }
+         ]
+        }
+Add Comment Collapse
+
+
+
+joelwilson [7:00 PM] 
+you can use the key_filters for this purpose.

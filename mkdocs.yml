@@ -24,7 +24,9 @@ nav:
           - 'Working with Route53': 'aws_route53.md'
           - 'AWS Certificate Manager (ACM)': 'aws_acm.md'
     - Additional: 'additional.md'
-theme: 'material'
+theme:
+    name: 'material'
+    custom_dir: overrides
 extra:
     palette:
         primary: 'deep purple'
