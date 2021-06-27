@@ -1,7 +1,15 @@
 # Guide to using Django with Zappa
 
 This repo exists to document the process of getting a standard Django project running live in AWS Lambda using the
-[zappa project](https://github.com/Miserlou/Zappa). We will explore various configurations in a building-block fashion in the hopes that folks can leverage only the relevant parts for their needs.
+[zappa project](https://github.com/zappa/Zappa). We will explore various configurations in a building-block fashion in the hopes that folks can leverage only the relevant parts for their needs.
+
+## Video Tutorials
+
+I've written a course about using Zappa with Django with complete video tutorials. It's called [Newline's Serverless Django with Zappa](https://www.newline.co/courses/serverless-django-with-zappa/) and it's available now.
+
+!!! tip
+
+    All the content here is the same, but in the video course, we do a complete walk-through step-by-step to show all the details.  Including, but not limited to: guide through the AWS Console and setting up your system to use Docker to create a repeatable, robust environment.
 
 ## Setup your Environment
 

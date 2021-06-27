@@ -1,24 +1,24 @@
 # Core Django Setup
 
-This section documents setting up a Django project with only core Python functionality responding to HTTP calls.  The value of this core walkthrough could be to power an API driven compute engine or a event-driven data processing tool without the need to provide a UI.
+This section documents setting up a Django project with only core Python functionality responding to HTTP calls. The value of this core walkthrough could be to power an API driven compute engine or a event-driven data processing tool without the need to provide a UI.
 
 ### Expectations and Goals
 
 After going through this section the following will work:
 
-* URL Routes in your Django projects
-* Views can produce html / json / data output
-* Management Commands
+-   URL Routes in your Django projects
+-   Views can produce html / json / data output
+-   Management Commands
 
 What will not work (yet - see other walkthroughs for this functionality)
 
-* Static Files will not be served (More on that [here](walk_static.md))
-* There is no database connection available (not even SQLite)
-* Custom domain names (More on that [here](walk_domain.md))
+-   Static Files will not be served (More on that [here](walk_static.md))
+-   There is no database connection available (not even SQLite)
+-   Custom domain names (More on that [here](walk_domain.md))
 
 ## Setup AWS Account Credentials
 
-Make sure you setup access to your AWS account from your local command line.  See: [Setup Local Account Credentials](aws_credentials.md#setup-local-account-credentials)
+Make sure you setup access to your AWS account from your local command line. See: [Setup Local Account Credentials](aws_credentials.md#setup-local-account-credentials)
 
 ## Create local environment
 
@@ -26,34 +26,37 @@ See [Setup your Environment](setup.md)
 
 ## Create very basic Django project
 
-For the purposes of this walkthrough we are taking the most basic Django project.  From within your project working directory type the following.  We are creating a fictional Django project called 'frankie'
+For the purposes of this walkthrough we are taking the most basic Django project. From within your project working directory type the following. We are creating a fictional Django project called 'frankie'
 
 ```
 django-admin startproject frankie .
 ```
 
 ### Testing the basic Django project
-At this point if you run 
+
+At this point if you run
+
 ```
 python manage.py runserver
 ```
 
 And visit http://127.0.0.1:8000 with your browser you should see the standard Django 'It Worked!' page
 
-Now quit the server using Control-C.  You should be back at the console prompt
+Now quit the server using Control-C. You should be back at the console prompt
 
 ## Setup Zappa
 
 ```
 zappa init
 ```
+
 You will encounter a series of prompts:
 
-* Name of environment - just accept the default 'dev'
-* S3 bucket for deployments.  If the bucket does not exist, zappa will create it for you.  You can use an existing bucket name if you'd like.  Note that this bucket just holds the zappa package temporarily while it is being transferred to AWS lambda.  The zappa package is then removed after deployment.  For the purposes of the walkthrough we are using `zappatest-code`
-* Zappa should automatically find the correct Django settings file so accept the default
-* Say 'no' to deploying globally
-* If everything looks ok, then accept the info
+-   Name of environment - just accept the default 'dev'
+-   S3 bucket for deployments. If the bucket does not exist, zappa will create it for you. You can use an existing bucket name if you'd like. Note that this bucket just holds the zappa package temporarily while it is being transferred to AWS lambda. The zappa package is then removed after deployment. For the purposes of the walkthrough we are using `zappatest-code`
+-   Zappa should automatically find the correct Django settings file so accept the default
+-   Say 'no' to deploying globally
+-   If everything looks ok, then accept the info
 
 Here's a transcript of what you should see:
 
@@ -108,7 +111,7 @@ After that, you can update your application code with:
 
 	$ zappa update dev
 
-To learn more, check out our project page on GitHub here: https://github.com/Miserlou/Zappa
+To learn more, check out our project page on GitHub here: https://github.com/zappa/Zappa
 and stop by our Slack channel here: http://bit.do/zappa
 
 Enjoy!,
@@ -124,8 +127,7 @@ So now if we run
 zappa deploy dev
 ```
 
-But unfortunately we encounter an error: 
-
+But unfortunately we encounter an error:
 
 ```
 (ve) $ zappa deploy dev
@@ -143,49 +145,50 @@ NoRegionError: You must specify a region.
 ==============
 
 Need help? Found a bug? Let us know! :D
-File bug reports on GitHub here: https://github.com/Miserlou/Zappa
+File bug reports on GitHub here: https://github.com/zappa/Zappa
 And join our Slack channel here: https://slack.zappa.io
 Love!,
  ~ Team Zappa!
 (ve) $
 ```
-Aw man, the error **NoRegionError: You must specify a region.** is holding us back.  Zappa is complaining that no AWS region is specified.  So we need to specify a region.  In this walkthrough we are leveraging `us-east-1` which corresponds to the same region we used above for the S3 bucket.
+
+Aw man, the error **NoRegionError: You must specify a region.** is holding us back. Zappa is complaining that no AWS region is specified. So we need to specify a region. In this walkthrough we are leveraging `us-east-1` which corresponds to the same region we used above for the S3 bucket.
 
 You have options:
 
 1. Specify a default region using environment variables
- 
+
     Again, the drawback here is this must be set for every console
-   
+
     ```
     export AWS_DEFAULT_REGION=us-east-1
     ```
-   
+
 2. Add default region in your `~/.aws/credentials` file
 
-	 Better but this will affect all AWS scripts and programs on your machine.
-	
-	 ```
-	 [default]
-	 aws_access_key_id = your_access_key_id
-	 aws_secret_access_key = your_secret_access_key
-	 region=us-east-1
-	 ```
+    Better but this will affect all AWS scripts and programs on your machine.
 
-2. Edit the `zappa_settings.json` file to have an AWS region.
+    ```
+    [default]
+    aws_access_key_id = your_access_key_id
+    aws_secret_access_key = your_secret_access_key
+    region=us-east-1
+    ```
+
+3. Edit the `zappa_settings.json` file to have an AWS region.
 
     Probably best option because now the zappa configuration has minimal dependencies on external user environment.
-   
-    ``` hl_lines="3"
+
+    ```hl_lines="3"
     {
      "dev": {
          "aws_region": "us-east-1",
          "django_settings": "frankie.settings",
          "s3_bucket": "zappatest-code"
-    		} 
+    		}
     }
     ```
-   
+
     Don't forget to put commas in the proper place - JSON is fiddly!
 
 ## Deploy your project using Zappa
@@ -196,7 +199,7 @@ Now it's easy to do the initial deployment
 zappa deploy dev
 ```
 
-Zappa will automatically create an AWS API gateway that will route HTTP requests to your lambda Django project.  You should see something like:
+Zappa will automatically create an AWS API gateway that will route HTTP requests to your lambda Django project. You should see something like:
 
 ```
 (ve) $ zappa deploy dev
@@ -216,47 +219,48 @@ Deploying API Gateway..
 Deployment complete!: https://x6kb437rh.execute-api.us-east-1.amazonaws.com/dev
 ```
 
-Brilliant!  We should be able to use a browser to visit the URL provided at the end of the script.
+Brilliant! We should be able to use a browser to visit the URL provided at the end of the script.
 
 Once we do, however, we get:
 
 ```
 DisallowedHost at /
-Invalid HTTP_HOST header: 'x6kb437rh.execute-api.us-east-1.amazonaws.com'. 
+Invalid HTTP_HOST header: 'x6kb437rh.execute-api.us-east-1.amazonaws.com'.
 You may need to add x6kb437rh.execute-api.us-east-1.amazonaws.com' to ALLOWED_HOSTS.
 ```
 
-The built-in [Django security settings](https://docs.djangoproject.com/en/1.10/topics/security/#host-header-validation) are kicking in and preventing bad stuff from happening.  So we need to modify our Django settings file to accommodate the [default hostname that AWS API Gateway uses](http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html).  Note that the AWS region is part of the hostname and thus should match your selected region.
+The built-in [Django security settings](https://docs.djangoproject.com/en/1.10/topics/security/#host-header-validation) are kicking in and preventing bad stuff from happening. So we need to modify our Django settings file to accommodate the [default hostname that AWS API Gateway uses](http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html). Note that the AWS region is part of the hostname and thus should match your selected region.
 
 Now edit `frankie/settings.py` and change ALLOWED_HOSTS to;
 
 ```
 ALLOWED_HOSTS = [ '127.0.0.1', 'x6kb437rh.execute-api.us-east-1.amazonaws.com', ]
 ```
-As an aside, for best security practices, put the full domain of the API Gateway here.  Less secure would be to use just `.execute-api.us-east-1.amazonaws.com`.  
 
-Once done, we can again deploy to AWS Lambda.  But this time, since we've already pushed the initial deploy, we use the **update** action on the zappa command line.
+As an aside, for best security practices, put the full domain of the API Gateway here. Less secure would be to use just `.execute-api.us-east-1.amazonaws.com`.
+
+Once done, we can again deploy to AWS Lambda. But this time, since we've already pushed the initial deploy, we use the **update** action on the zappa command line.
 
 ```
 zappa update dev
 ```
 
-After this completes, you should be able to see your Django site in action.  Note that you will actually get a Page not found (404) response.  This indicates that your Django site is functional and working.   
+After this completes, you should be able to see your Django site in action. Note that you will actually get a Page not found (404) response. This indicates that your Django site is functional and working.
 
 ![404](images/core_404.png)
 
 ## How is this functional?
 
-Wait, what?  A 404 page is functional?  Well yes, it is.  The Lambda function is working fine.  A whole series of AWS systems are working in concert to load your python Django code and running the view.  Because we've cut to the bare minimum Django project, there is no application ready to handle the url paths.  The only thing we see is the admin application.
+Wait, what? A 404 page is functional? Well yes, it is. The Lambda function is working fine. A whole series of AWS systems are working in concert to load your python Django code and running the view. Because we've cut to the bare minimum Django project, there is no application ready to handle the url paths. The only thing we see is the admin application.
 
-So from here we are ready to start working on views and providing data.  However, if you wish to host a website with static files and databases, continue onward to the subsequent walkthroughs:
+So from here we are ready to start working on views and providing data. However, if you wish to host a website with static files and databases, continue onward to the subsequent walkthroughs:
 
- * [Hosting Static Files](walk_static.md)
- * [Using a Database](walk_database.md)
+-   [Hosting Static Files](walk_static.md)
+-   [Using a Database](walk_database.md)
 
 ### Why is the URL path appended with 'dev'?
 
-Astute readers will notice that the url in the image shown above indeed has the root domain with the suffix of 'dev' which happens to be the name of the zappa environment.  Indeed, the url domain is based on the generated API Gateway and the path of the URL is the 'Stage Name' of the API Gateway - it matches the name of the Zappa environment you chose above.
+Astute readers will notice that the url in the image shown above indeed has the root domain with the suffix of 'dev' which happens to be the name of the zappa environment. Indeed, the url domain is based on the generated API Gateway and the path of the URL is the 'Stage Name' of the API Gateway - it matches the name of the Zappa environment you chose above.
 
 ```
 https://bnu0zcwezd.execute-api.us-east-1.amazonaws.com/dev/
@@ -275,6 +279,7 @@ zappa status dev
 ```
 
 And you will get a plethora of data about your deployment:
+
 ```
 	Lambda Versions:      2
 	Lambda Name:          zappatest2-dev
@@ -298,5 +303,6 @@ And you will get a plethora of data about your deployment:
 	Event Rule Name:      zappatest2-dev-zappa-keep-warm-handler.keep_warm_callback
 	Event Rule State:     Enabled
 	Event Rule Schedule:  rate(4 minutes)
-``` 
+```
+
 It includes the API Gateway URL which is important in case you ever forget the URL
