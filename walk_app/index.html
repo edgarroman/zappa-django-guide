@@ -610,14 +610,14 @@ Now Available! Complete video tutorials with my new course: <a
                 
                 <h1 id="adapting-your-application-to-zappa-lambda">Adapting your Application to Zappa / Lambda<a class="headerlink" href="#adapting-your-application-to-zappa-lambda" title="Permanent link">&para;</a></h1>
 <p>If you've done the walkthroughs thus far, they have allowed you to seamlessly get your existing application
-(or allowed you to create a new one) in AWS Lambda using <a href="https://github.com/Miserlou/Zappa">Zappa</a>.  </p>
+(or allowed you to create a new one) in AWS Lambda using <a href="https://github.com/zappa/Zappa">Zappa</a>.</p>
 <p>But running code in AWS Lambda is not the same as running code on a dedicated virtual server.<br />
 This document describes differences in the AWS Lambda environment and outlines many of the possible
 adaptations you may need to apply to your Application.</p>
 <h2 id="minimal-disk-storage-might-be-persistent">Minimal disk storage might be persistent<a class="headerlink" href="#minimal-disk-storage-might-be-persistent" title="Permanent link">&para;</a></h2>
 <p>When your code runs, whether it was trigged from an HTTP request or other event, the only disk storage
-available to write files is in <code>/tmp</code>.  And that storage is limited to 500MB.  Always check the <a href="http://docs.aws.amazon.com/lambda/latest/dg/limits.html#limits-list">AWS Lambda Limits</a> page because this limitation could change over time.</p>
-<p>Interestingly, once your code runs and is complete, the AWS Lamda service 'freezes' your container and if trigged again, <a href="http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html">could 'unfreeze' the container for reuse</a>.  What this means from a
+available to write files is in <code>/tmp</code>. And that storage is limited to 500MB. Always check the <a href="http://docs.aws.amazon.com/lambda/latest/dg/limits.html#limits-list">AWS Lambda Limits</a> page because this limitation could change over time.</p>
+<p>Interestingly, once your code runs and is complete, the AWS Lamda service 'freezes' your container and if trigged again, <a href="http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html">could 'unfreeze' the container for reuse</a>. What this means from a
 practical standpoint is that if you need to write out files to <code>/tmp</code> your code could both find files
 from previous runs and also run out of disk space.</p>
 <p>The obivous adaptations when writing out files:</p>
@@ -626,15 +626,15 @@ from previous runs and also run out of disk space.</p>
 <li>If the temp files are of significant size, it would be better to clean them up on exit to avoid future code invocations from running out of space</li>
 <li>Any content uploaded via HTTP (or downloaded/created during invocation) must be persisted elsewhere such as in S3</li>
 <li>If you need unique files on disk for each invocation, be sure the space required per invocation
-multipied by the number of possible invocations is less than 500MB.</li>
+    multipied by the number of possible invocations is less than 500MB.</li>
 </ul>
 <p>Some additional use cases:</p>
 <h3 id="poor-mans-search-engline">Poor Man's Search Engline<a class="headerlink" href="#poor-mans-search-engline" title="Permanent link">&para;</a></h3>
-<p>You could use the temp space to power file-based tools such as the <a href="http://whoosh.readthedocs.io/en/latest/">Whoosh Search Engine</a> by downloading the search index from S3.  This may work for small indexes.</p>
+<p>You could use the temp space to power file-based tools such as the <a href="http://whoosh.readthedocs.io/en/latest/">Whoosh Search Engine</a> by downloading the search index from S3. This may work for small indexes.</p>
 <h2 id="passing-environment-variables-to-your-application">Passing Environment Variables to your Application<a class="headerlink" href="#passing-environment-variables-to-your-application" title="Permanent link">&para;</a></h2>
 <p>There are a number of ways to pass information to your application</p>
 <h3 id="environment-variables-in-zappa-settings">Environment Variables in Zappa Settings<a class="headerlink" href="#environment-variables-in-zappa-settings" title="Permanent link">&para;</a></h3>
-<p>You can include variables in the zappa settings file directly.  These variables are easy to set and are included in each deployment.  Great for variables that do not change often or are not sensitive (e.g. credentials).</p>
+<p>You can include variables in the zappa settings file directly. These variables are easy to set and are included in each deployment. Great for variables that do not change often or are not sensitive (e.g. credentials).</p>
 <div class="highlight"><pre><span></span><code>{
     &quot;dev&quot;: {
         ...
@@ -650,9 +650,9 @@ multipied by the number of possible invocations is less than 500MB.</li>
 <span class="n">some_value</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;some_key&#39;</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="lambda-environment-variables">Lambda Environment Variables<a class="headerlink" href="#lambda-environment-variables" title="Permanent link">&para;</a></h3>
-<p>Your code can pull information from the execution environment by using the built-in AWS Lambda environment variables.  There is also a method for adding custom variables via the AWS Console.
+<p>Your code can pull information from the execution environment by using the built-in AWS Lambda environment variables. There is also a method for adding custom variables via the AWS Console.
 This method is generally only useful for system-generated variables since custom variables can more easily be configured in zappa settings (see above).</p>
-<p>First, there are the <a href="http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html">standard environment variables</a> such as path to code, region, and python path.  These values are automatically calculated and driven by AWS.  </p>
+<p>First, there are the <a href="http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html">standard environment variables</a> such as path to code, region, and python path. These values are automatically calculated and driven by AWS.</p>
 <p>In addition to these system variables, you can set <a href="http://docs.aws.amazon.com/lambda/latest/dg/env_variables.html">custom environment variables in the AWS Console</a>.<br />
 So you could add <code>SOME_LAMBDA_KEY</code> in the AWS console and retrieve it in your code:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
@@ -660,17 +660,19 @@ So you could add <code>SOME_LAMBDA_KEY</code> in the AWS console and retrieve it
 <span class="c1"># or get system values</span>
 <span class="n">aws_lambda_function_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;AWS_LAMBDA_FUNCTION_NAME&#39;</span><span class="p">)</span>
 </code></pre></div>
-<p>While on the topic of system-generated information, your code can also pull important information from 
+<p>While on the topic of system-generated information, your code can also pull important information from
 the <a href="http://docs.aws.amazon.com/lambda/latest/dg/python-context-object.html">Python execution context</a>:</p>
 <blockquote>
 <p>While a Lambda function is executing, it can interact with the AWS Lambda service to get useful runtime information such as:</p>
 <ul>
 <li>How much time is remaining before AWS Lambda terminates your Lambda function (timeout is one of the Lambda function configuration properties).</li>
+</ul>
+</blockquote>
+<ul>
 <li>The CloudWatch log group and log stream associated with the Lambda function that is executing.</li>
 <li>The AWS request ID returned to the client that invoked the Lambda function. You can use the request ID for any follow up inquiry with AWS support.</li>
 <li>If the Lambda function is invoked through AWS Mobile SDK, you can learn more about the mobile application calling the Lambda function.</li>
 </ul>
-</blockquote>
                 
               
               
