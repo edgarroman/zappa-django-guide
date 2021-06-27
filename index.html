@@ -72,6 +72,16 @@
     </div>
     <div data-md-component="announce">
       
+        <aside class="md-announce">
+          <div class="md-announce__inner md-grid md-typeset">
+            
+Now Available! Complete video tutorials with my new course: <a
+    href="https://www.newline.co/courses/serverless-django-with-zappa/" style="color: #0ee7ff">Newline's Serverless
+    Django with Zappa</a>
+
+          </div>
+        </aside>
+      
     </div>
     
       <header class="md-header" data-md-component="header">
@@ -613,19 +623,19 @@
                 
                 
                 <h1 id="guide-to-using-django-with-zappa">Guide to using Django with Zappa<a class="headerlink" href="#guide-to-using-django-with-zappa" title="Permanent link">&para;</a></h1>
-<p>This repo exists to document the process of getting a standard Django project running live in AWS Lambda using the 
-<a href="https://github.com/Miserlou/Zappa">zappa project</a>.  We will explore various configurations in a building-block fashion in the hopes that folks can leverage only the relevant parts for their needs.</p>
+<p>This repo exists to document the process of getting a standard Django project running live in AWS Lambda using the
+<a href="https://github.com/Miserlou/Zappa">zappa project</a>. We will explore various configurations in a building-block fashion in the hopes that folks can leverage only the relevant parts for their needs.</p>
 <h2 id="setup-your-environment">Setup your Environment<a class="headerlink" href="#setup-your-environment" title="Permanent link">&para;</a></h2>
 <p>It is important to read this section in order to establish your working environment: <a href="setup/">Setup your Environment</a></p>
 <h2 id="walkthroughs">Walkthroughs<a class="headerlink" href="#walkthroughs" title="Permanent link">&para;</a></h2>
 <h3 id="core-django-setup"><a href="walk_core/">Core Django Setup</a><a class="headerlink" href="#core-django-setup" title="Permanent link">&para;</a></h3>
-<p>This section documents setting up a Django project with only core Python functionality responding to HTTP calls.  The value of this core walkthrough could be to power an API driven compute engine or a event-driven data processing tool without the need to provide a UI.</p>
+<p>This section documents setting up a Django project with only core Python functionality responding to HTTP calls. The value of this core walkthrough could be to power an API driven compute engine or a event-driven data processing tool without the need to provide a UI.</p>
 <h3 id="hosting-static-files"><a href="walk_static/">Hosting Static Files</a><a class="headerlink" href="#hosting-static-files" title="Permanent link">&para;</a></h3>
-<p>Generally if you'd like to use your Django project to present a User Interface (UI) then you'll need to display Images and CSS and serve Javascript files.  These are known as static files and to deliver them using Zappa is unlike the traditional method of hosting the static files on a Linux or Windows box.  This walkthrough documents one way of hosting the files on AWS S3.</p>
+<p>Generally if you'd like to use your Django project to present a User Interface (UI) then you'll need to display Images and CSS and serve Javascript files. These are known as static files and to deliver them using Zappa is unlike the traditional method of hosting the static files on a Linux or Windows box. This walkthrough documents one way of hosting the files on AWS S3.</p>
 <h3 id="using-a-database"><a href="walk_database/">Using a Database</a><a class="headerlink" href="#using-a-database" title="Permanent link">&para;</a></h3>
 <p>This walkthough documents the steps necessary to connect your application to a hosted database.</p>
 <h3 id="using-a-custom-domain-name"><a href="walk_domain/">Using a Custom Domain Name</a><a class="headerlink" href="#using-a-custom-domain-name" title="Permanent link">&para;</a></h3>
-<p>Let's face it, the default urls provided by Zappa via API Gateway are ugly.  Read this walkthrough to get a sense of what it takes to make the urls much more user friendly without a dedicated proxy service.</p>
+<p>Let's face it, the default urls provided by Zappa via API Gateway are ugly. Read this walkthrough to get a sense of what it takes to make the urls much more user friendly without a dedicated proxy service.</p>
 <h3 id="application-adaptations"><a href="walk_app/">Application Adaptations</a><a class="headerlink" href="#application-adaptations" title="Permanent link">&para;</a></h3>
 <p>Running code in AWS Lambda is not the same as running code on a dedicated virtual server.<br />
 This document describes differences in the AWS Lambda environment and outlines many of the possible
