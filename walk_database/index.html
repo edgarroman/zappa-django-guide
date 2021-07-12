@@ -876,6 +876,12 @@ But basically you will need the private subnet or subnets which can access the d
 <li>The endpoint (hostname) of the database and the port</li>
 <li>The username and password for the root user</li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>It's strongly recommended that you create your database at the same time you create the RDS instance because it's very easy.
+In older versions of the AWS console, you could not do this step. If you forget or choose not to, then you'll
+need to <a href="#create-your-database">create your database</a> later.</p>
+</div>
 <h3 id="configure-rds-security-group">Configure RDS security group<a class="headerlink" href="#configure-rds-security-group" title="Permanent link">&para;</a></h3>
 <p>By default newly created RDS Security Groups <a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html">have no inbound access</a>. So you need
 to make sure your RDS Security group has open TCP connections from your subnets associated with the lambdas.</p>
@@ -976,26 +982,22 @@ in the subnet range.</p>
 </code></pre></div>
 <h2 id="create-your-database">Create your Database<a class="headerlink" href="#create-your-database" title="Permanent link">&para;</a></h2>
 <p>Ok, easy so far? Yes! All we had to do up to this point was carefully click a mouse in the AWS console and
-edit some text files. Well fun time is over - now we run into some bootstrapping problems. Fortunately, we only have to do this once each time we need a new database.</p>
-<p>Turns out that when AWS creates a PostGreSQL RDS instance for you, it doesn't create a database. So you have to do it yourself. There are many options, but two methods could be:</p>
+edit some text files. If you've already used the AWS console to create your database when the RDS instance
+was created, you may skip this section.</p>
+<p>However, there are many cases where you may have an existing RDS instance and you'll need to create the database not using the
+AWS console.</p>
+<p>You have a few options:</p>
 <ol>
-<li>Use a db tool on your local machine via a bastion host</li>
-<li>Use the AWS command line tool</li>
-<li>Write some code to setup the database using zappa</li>
-<li>Use the utility library <a href="https://github.com/Miserlou/zappa-django-utils">zappa-django-utils</a></li>
+<li>Use a database tool or GUI on your <a href="https://aws.amazon.com/premiumsupport/knowledge-center/rds-connect-using-bastion-host-linux/">local machine via a bastion host</a></li>
+<li>Use the <a href="#using-aws-command-line-tool">AWS command line tool</a></li>
+<li>Write some code to <a href="#setup-the-database-using-zappa">setup the database using zappa and Django</a></li>
 </ol>
-<p>Option 1 is easy if you have the db tool and the bastion host setup. Option 4 is the easiest and quickest. But let's explore how to do options two and three.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>The quickest and easiest path is to use <a href="https://github.com/Miserlou/zappa-django-utils">zappa-django-utils</a> - especially if you are using a PostGres database.</p>
-<p>Many of the functions here are implemented without having to write any of your own code.</p>
-</div>
+<p>Option 1 is easy if you have the db tool and the bastion host already setup. Let's explore some of these options:</p>
 <h3 id="using-aws-command-line-tool">Using AWS command line tool<a class="headerlink" href="#using-aws-command-line-tool" title="Permanent link">&para;</a></h3>
-<p>You can only use the AWS command line tool to create the database if you are also creating the entire RDS instance. Be sure to identify the database name to create with '<a href="http://docs.aws.amazon.com/cli/latest/reference/rds/create-db-instance.html#options">db-name</a>'</p>
-<p>Simply use the <code>aws</code> command tool using syntax similar to
-<a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateInstance.html#USER_CreateInstance.CLI">http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateInstance.html#USER_CreateInstance.CLI</a></p>
+<p>Run the <code>aws</code> command tool with the <a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/rds/create-db-instance.html">proper options</a></p>
 <h3 id="setup-the-database-using-zappa">Setup the Database using zappa<a class="headerlink" href="#setup-the-database-using-zappa" title="Permanent link">&para;</a></h3>
-<p>Well, there is no easy way to get this done but here is a possible option: create a management command that can be run in the zappa environment.</p>
+<p>A more complex way of doing this is to create a management command that can be run in the zappa environment. Then you can have your Django project itself create
+the database.</p>
 <h4 id="create-a-management-command-in-your-django-project">Create a management command in your Django Project<a class="headerlink" href="#create-a-management-command-in-your-django-project" title="Permanent link">&para;</a></h4>
 <p>Follow these steps to create a management command environment (make sure your virtualenv is fired up)</p>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span> frankie
@@ -1008,7 +1010,9 @@ mkdir commands
 <span class="nb">cd</span> commands
 touch __init__.py
 </code></pre></div>
-<p>Then create a file called <code>create_db.py</code></p>
+<p>Then create a file called <code>create_db.py</code>. Put the following code in the file. This
+management command will connect to the special admin <code>postgres</code> database and create a new
+database specified by <code>dbname</code> specified in your Django settings file.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">psycopg2</span> <span class="kn">import</span> <span class="n">connect</span>
 <span class="kn">from</span> <span class="nn">psycopg2.extensions</span> <span class="kn">import</span> <span class="n">ISOLATION_LEVEL_AUTOCOMMIT</span>
 <span class="kn">from</span> <span class="nn">django.core.management.base</span> <span class="kn">import</span> <span class="n">BaseCommand</span><span class="p">,</span> <span class="n">CommandError</span>
@@ -1035,11 +1039,17 @@ touch __init__.py
 
         <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">SUCCESS</span><span class="p">(</span><span class="s1">&#39;All Done&#39;</span><span class="p">))</span>
 </code></pre></div>
-<p>Then register app axe to settings.py and update files in aws using this command: zappa update dev.</p>
+<p>Then register app axe to settings.py and update files in aws using this command:</p>
+<div class="highlight"><pre><span></span><code>zappa update dev
+</code></pre></div>
 <h4 id="run-the-management-command">Run the management command<a class="headerlink" href="#run-the-management-command" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>zappa manage dev create_db
 </code></pre></div>
 <p>If all goes well, then your database should be created.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>There used to be a github project called <a href="https://github.com/Miserlou/zappa-django-utils">zappa-django-utils</a> that had a couple more commands, but it's archived now.</p>
+</div>
 <h2 id="init-the-database">Init the Database<a class="headerlink" href="#init-the-database" title="Permanent link">&para;</a></h2>
 <p>At this point you should have an empty database ready for your Django application to fill up with schema. If this were a traditional server, you would merely run the <code>migrate</code> command. But you can't because there is no command line. Thus we have to modify them to adjust to the new environment.</p>
 <p>So create your migrations and push the updated code.</p>
@@ -1053,7 +1063,7 @@ zappa update dev
 <h2 id="create-your-django-superuser">Create your Django superuser<a class="headerlink" href="#create-your-django-superuser" title="Permanent link">&para;</a></h2>
 <p>The Django management commands were meant to be run interactively on a command line on a traditional server. Because there is no command line with lambda, we must do some trickery to get around the input needed for the Django createsuperuser management command.</p>
 <p>Essentially we will use the <code>raw</code> flag on the invoke command to just run raw python. The following command creates a new superuser named 'admin' with email 'admin@yourdomain.com' and password of 'horse battery stapler'</p>
-<div class="highlight"><pre><span></span><code>zappa invoke --raw dev <span class="s2">&quot;from django.contrib.auth.models import User; User.objects.create_superuser(&#39;admin&#39;, &#39;admin@yourdomain.com&#39;, &#39;horse battery stapler&#39;)&quot;</span>
+<div class="highlight"><pre><span></span><code>zappa invoke --raw dev <span class="s2">&quot;from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser(&#39;admin&#39;, &#39;admin@yourdomain.com&#39;, &#39;horse battery stapler&#39;)&quot;</span>
 </code></pre></div>
 <p>Additional superusers can be added via this method or the Django admin console.</p>
 <h2 id="test-and-profit">Test and profit<a class="headerlink" href="#test-and-profit" title="Permanent link">&para;</a></h2>
