@@ -25,7 +25,7 @@ In addition, zappa _requires_ a virtual environment in which to function. So all
 
 ## Approach #1 - Local Machine
 
-You can easily set up your working environment on your local machine. For simple projects, this is very easy to manage and maintain. All you need is Python 2.7, pip, and virtualenv installed. This works for Windows, MacOS, and Linux machines.
+You can easily set up your working environment on your local machine. For simple projects, this is very easy to manage and maintain. All you need is Python 3, pip, and virtualenv installed. This works for Windows, MacOS, and Linux machines.
 
 Here we setup a working environment named 'zappatest'
 
