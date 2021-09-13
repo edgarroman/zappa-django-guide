@@ -34,6 +34,12 @@ So zip on over to [Creating an RDS Database](aws_database.md) and set up one. Yo
 -   The endpoint (hostname) of the database and the port
 -   The username and password for the root user
 
+!!! tip
+
+    It's strongly recommended that you create your database at the same time you create the RDS instance because it's very easy.
+    In older versions of the AWS console, you could not do this step. If you forget or choose not to, then you'll
+    need to [create your database](#create-your-database) later.
+
 ### Configure RDS security group
 
 By default newly created RDS Security Groups [have no inbound access](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html). So you need
@@ -120,33 +126,28 @@ Now we add the VPC configuration to our Zappa settings file so that the lambda f
 ## Create your Database
 
 Ok, easy so far? Yes! All we had to do up to this point was carefully click a mouse in the AWS console and
-edit some text files. Well fun time is over - now we run into some bootstrapping problems. Fortunately, we only have to do this once each time we need a new database.
+edit some text files. If you've already used the AWS console to create your database when the RDS instance
+was created, you may skip this section.
 
-Turns out that when AWS creates a PostGreSQL RDS instance for you, it doesn't create a database. So you have to do it yourself. There are many options, but two methods could be:
+However, there are many cases where you may have an existing RDS instance and you'll need to create the database not using the
+AWS console.
 
-1. Use a db tool on your local machine via a bastion host
-2. Use the AWS command line tool
-3. Write some code to setup the database using zappa
-4. Use the utility library [zappa-django-utils](https://github.com/Miserlou/zappa-django-utils)
+You have a few options:
 
-Option 1 is easy if you have the db tool and the bastion host setup. Option 4 is the easiest and quickest. But let's explore how to do options two and three.
+1. Use a database tool or GUI on your [local machine via a bastion host](https://aws.amazon.com/premiumsupport/knowledge-center/rds-connect-using-bastion-host-linux/)
+2. Use the [AWS command line tool](#using-aws-command-line-tool)
+3. Write some code to [setup the database using zappa and Django](#setup-the-database-using-zappa)
 
-!!! tip
-
-    The quickest and easiest path is to use [zappa-django-utils](https://github.com/Miserlou/zappa-django-utils) - especially if you are using a PostGres database.
-
-    Many of the functions here are implemented without having to write any of your own code.
+Option 1 is easy if you have the db tool and the bastion host already setup. Let's explore some of these options:
 
 ### Using AWS command line tool
 
-You can only use the AWS command line tool to create the database if you are also creating the entire RDS instance. Be sure to identify the database name to create with '[db-name](http://docs.aws.amazon.com/cli/latest/reference/rds/create-db-instance.html#options)'
-
-Simply use the `aws` command tool using syntax similar to
-[http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateInstance.html#USER_CreateInstance.CLI](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateInstance.html#USER_CreateInstance.CLI)
+Run the `aws` command tool with the [proper options](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/rds/create-db-instance.html)
 
 ### Setup the Database using zappa
 
-Well, there is no easy way to get this done but here is a possible option: create a management command that can be run in the zappa environment.
+A more complex way of doing this is to create a management command that can be run in the zappa environment. Then you can have your Django project itself create
+the database.
 
 #### Create a management command in your Django Project
 
@@ -164,7 +165,9 @@ cd commands
 touch __init__.py
 ```
 
-Then create a file called `create_db.py`
+Then create a file called `create_db.py`. Put the following code in the file. This
+management command will connect to the special admin `postgres` database and create a new
+database specified by `dbname` specified in your Django settings file.
 
 ```python
 from psycopg2 import connect
@@ -194,7 +197,11 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('All Done'))
 ```
 
-Then register app axe to settings.py and update files in aws using this command: zappa update dev.
+Then register app axe to settings.py and update files in aws using this command:
+
+```sh
+zappa update dev
+```
 
 #### Run the management command
 
@@ -203,6 +210,10 @@ zappa manage dev create_db
 ```
 
 If all goes well, then your database should be created.
+
+!!! info
+
+    There used to be a github project called [zappa-django-utils](https://github.com/Miserlou/zappa-django-utils) that had a couple more commands, but it's archived now.
 
 ## Init the Database
 
@@ -230,7 +241,7 @@ The Django management commands were meant to be run interactively on a command l
 Essentially we will use the `raw` flag on the invoke command to just run raw python. The following command creates a new superuser named 'admin' with email 'admin@yourdomain.com' and password of 'horse battery stapler'
 
 ```sh
-zappa invoke --raw dev "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@yourdomain.com', 'horse battery stapler')"
+zappa invoke --raw dev "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@yourdomain.com', 'horse battery stapler')"
 ```
 
 Additional superusers can be added via this method or the Django admin console.
