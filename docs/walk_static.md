@@ -14,6 +14,12 @@ The situation where one does not have access to the web server software configur
 
 There are ways to leverage the WSGI application (Django for us) and instruct it to serve static files.  Normally, Django treats URL requests as an opportunity to run python code.  And the python code may have complex logic.  But there is a model called [WhiteNoise](https://github.com/evansd/whitenoise).  It is an app that will minimize the python code processing to more efficiently serve static files.  Thus no external web server software configuration is required.  While perhaps not as optimal as having the web server hosting the files, this method has been used in production effectively.  
 
+However, you must run the `manage.py collectstatic` command locally before deploying the app. You will also need to set the `STATIC_URL` and `WHITENOISE_STATIC_PREFIX` in `settings.py` to account for the URL that Zappa provides.
+```
+STATIC_URL = '/production/static/'       # Use the name of your staging environment (e.g. production)
+WHITENOISE_STATIC_PREFIX = '/static/'
+```
+
 ### Using external services to serve files
 
 Finally, there is an option to use an [external service to serve static files](https://docs.djangoproject.com/en/1.10/howto/static-files/deployment/#serving-static-files-from-a-cloud-service-or-cdn).  This is the option that is the subject of this walkthrough.
