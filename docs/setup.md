@@ -62,7 +62,11 @@ We will leverage the work others have done to enable such an environment. First 
 For the purposes of this walkthrough we will focus only on the 'build' image that provides a very nice interactive working environment for zappa. Further research into how to use the 'run' image is left as an exercise for the reader.
 
 -   Multiple Python version support
-    -   Python 3.8 ([lambci/lambda:build-python3.8](https://hub.docker.com/r/lambci/lambda/tags/))
+    -   Python 3.6  (x86) ([lambci/lambda:build-python3.6](https://hub.docker.com/r/lambci/lambda/tags/))
+    -   Python 3.7 (x86) ([lambci/lambda:build-python3.7](https://hub.docker.com/r/lambci/lambda/tags/))
+    -   Python 3.8 (x86) ([lambci/lambda:build-python3.8](https://hub.docker.com/r/lambci/lambda/tags/))
+    -   Python 3.8 (ARM & x86) ([mlupin/docker-lambda:python3.8-build](https://hub.docker.com/r/mlupin/docker-lambda/tags))
+    -   Python 3.9 (ARM & x86) ([mlupin/docker-lambda:python3.9-build](https://hub.docker.com/r/mlupin/docker-lambda/tags))
 
 Note that this work was originally inspired from [danielwhatmuff/zappa](https://github.com/danielwhatmuff/zappa) but has been enhanced to illustrate support for Python 3
 
