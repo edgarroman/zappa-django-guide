@@ -78,7 +78,7 @@ These steps need to be performed once for a new system
 -   Pull the zappa docker image from Docker github
 
     ```sh
-    # For Python 3.6 projects
+    # For Python 3.8 projects
     docker pull lambci/lambda:build-python3.8
     ```
 
