@@ -62,7 +62,11 @@ We will leverage the work others have done to enable such an environment. First 
 For the purposes of this walkthrough we will focus only on the 'build' image that provides a very nice interactive working environment for zappa. Further research into how to use the 'run' image is left as an exercise for the reader.
 
 -   Multiple Python version support
-    -   Python 3.8 ([lambci/lambda:build-python3.8](https://hub.docker.com/r/lambci/lambda/tags/))
+    -   Python 3.6  (x86) ([lambci/lambda:build-python3.6](https://hub.docker.com/r/lambci/lambda/tags/))
+    -   Python 3.7 (x86) ([lambci/lambda:build-python3.7](https://hub.docker.com/r/lambci/lambda/tags/))
+    -   Python 3.8 (x86) ([lambci/lambda:build-python3.8](https://hub.docker.com/r/lambci/lambda/tags/))
+    -   Python 3.8 (ARM & x86) ([mlupin/docker-lambda:python3.8-build](https://hub.docker.com/r/mlupin/docker-lambda/tags))
+    -   Python 3.9 (ARM & x86) ([mlupin/docker-lambda:python3.9-build](https://hub.docker.com/r/mlupin/docker-lambda/tags))
 
 Note that this work was originally inspired from [danielwhatmuff/zappa](https://github.com/danielwhatmuff/zappa) but has been enhanced to illustrate support for Python 3
 
@@ -74,7 +78,7 @@ These steps need to be performed once for a new system
 -   Pull the zappa docker image from Docker github
 
     ```sh
-    # For Python 3.6 projects
+    # For Python 3.8 projects
     docker pull lambci/lambda:build-python3.8
     ```
 
@@ -152,6 +156,10 @@ WORKDIR /var/task
 # Fancy prompt to remind you are in zappashell
 RUN echo 'export PS1="\[\e[36m\]zappashell>\[\e[m\] "' >> /root/.bashrc
 
+# Create and Activate the virtual environment 
+RUN echo 'virtualenv -p python3 ./ve >/dev/null' >> /root/.bashrc
+RUN echo 'source ./ve/bin/activate >/dev/null' >> /root/.bashrc
+
 # Additional RUN commands here
 # RUN yum clean all && \
 #    yum -y install <stuff>
@@ -177,19 +185,6 @@ alias zappashell='docker run -ti -e AWS_PROFILE=zappa -v "$(pwd):/var/task" -v ~
 alias zappashell >> ~/.bash_profile
 ```
 
-#### Create the Virtual Environment
-
-Create the _required_ virtual environment, activate it, and install needed dependencies
-
-```sh
-$ zappashell
-zappashell> python -m venv ve
-zappashell> source ve/bin/activate
-(ve) zappa> pip install -r requirements.txt
-```
-
-Since the virtual environment is contained in the current directory, and the current directory is mapped to your local machine, any changes you make will be persisted between Docker container instances. But if you depend on libraries that are installed in the system (essentially anything out of the current directory and virtual environment), they will be lost when the container exits. The solution for this is to add these installations as RUN commands in the Dockerfile.
-
 ### Using your environment
 
 Each time you are working on your project, merely fire up the container:
@@ -197,12 +192,15 @@ Each time you are working on your project, merely fire up the container:
 ```sh
 $ cd /your_zappa_project
 $ zappashell
-zappashell> source ve/bin/activate
 (ve) zappashell>
 ```
+Since the virtual environment is contained in the current directory, and the current directory is mapped to your local machine, any changes you make will be persisted between Docker container instances. But if you depend on libraries that are installed in the system (essentially anything out of the current directory and virtual environment), they will be lost when the container exits. The solution for this is to add these installations as RUN commands in the Dockerfile.  
 
 All zappa commands can be used to deploy your project:
 
 ```sh
 (ve) zappashell> zappa status dev
 ```
+
+#### ZappaDock
+There is a simple tool that automates the above proccess called [ZappaDock](https://github.com/dickermoshe/zappadock). It make all of the above work with just one command. 
