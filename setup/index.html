@@ -353,13 +353,6 @@ Now Available! Complete video tutorials with my new course: <a
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#create-the-virtual-environment" class="md-nav__link">
-    Create the Virtual Environment
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -369,6 +362,19 @@ Now Available! Complete video tutorials with my new course: <a
   <a href="#using-your-environment" class="md-nav__link">
     Using your environment
   </a>
+  
+    <nav class="md-nav" aria-label="Using your environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zappadock" class="md-nav__link">
+    ZappaDock
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -665,13 +671,6 @@ Now Available! Complete video tutorials with my new course: <a
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#create-the-virtual-environment" class="md-nav__link">
-    Create the Virtual Environment
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -681,6 +680,19 @@ Now Available! Complete video tutorials with my new course: <a
   <a href="#using-your-environment" class="md-nav__link">
     Using your environment
   </a>
+  
+    <nav class="md-nav" aria-label="Using your environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zappadock" class="md-nav__link">
+    ZappaDock
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -755,7 +767,11 @@ pip install django zappa
 <p>For the purposes of this walkthrough we will focus only on the 'build' image that provides a very nice interactive working environment for zappa. Further research into how to use the 'run' image is left as an exercise for the reader.</p>
 <ul>
 <li>Multiple Python version support<ul>
-<li>Python 3.8 (<a href="https://hub.docker.com/r/lambci/lambda/tags/">lambci/lambda:build-python3.8</a>)</li>
+<li>Python 3.6  (x86) (<a href="https://hub.docker.com/r/lambci/lambda/tags/">lambci/lambda:build-python3.6</a>)</li>
+<li>Python 3.7 (x86) (<a href="https://hub.docker.com/r/lambci/lambda/tags/">lambci/lambda:build-python3.7</a>)</li>
+<li>Python 3.8 (x86) (<a href="https://hub.docker.com/r/lambci/lambda/tags/">lambci/lambda:build-python3.8</a>)</li>
+<li>Python 3.8 (ARM &amp; x86) (<a href="https://hub.docker.com/r/mlupin/docker-lambda/tags">mlupin/docker-lambda:python3.8-build</a>)</li>
+<li>Python 3.9 (ARM &amp; x86) (<a href="https://hub.docker.com/r/mlupin/docker-lambda/tags">mlupin/docker-lambda:python3.9-build</a>)</li>
 </ul>
 </li>
 </ul>
@@ -766,7 +782,7 @@ pip install django zappa
 <li><a href="https://docs.docker.com/engine/installation/">Install Docker</a></li>
 <li>
 <p>Pull the zappa docker image from Docker github</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># For Python 3.6 projects</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># For Python 3.8 projects</span>
 docker pull lambci/lambda:build-python3.8
 </code></pre></div>
 </li>
@@ -823,6 +839,10 @@ bash-4.2# <span class="nb">source</span> ve/bin/activate
 <span class="c"># Fancy prompt to remind you are in zappashell</span>
 <span class="k">RUN</span> <span class="nb">echo</span> <span class="s1">&#39;export PS1=&quot;\[\e[36m\]zappashell&gt;\[\e[m\] &quot;&#39;</span> &gt;&gt; /root/.bashrc
 
+<span class="c"># Create and Activate the virtual environment </span>
+<span class="k">RUN</span> <span class="nb">echo</span> <span class="s1">&#39;virtualenv -p python3 ./ve &gt;/dev/null&#39;</span> &gt;&gt; /root/.bashrc
+<span class="k">RUN</span> <span class="nb">echo</span> <span class="s1">&#39;source ./ve/bin/activate &gt;/dev/null&#39;</span> &gt;&gt; /root/.bashrc
+
 <span class="c"># Additional RUN commands here</span>
 <span class="c"># RUN yum clean all &amp;&amp; \</span>
 <span class="c">#    yum -y install &lt;stuff&gt;</span>
@@ -839,24 +859,18 @@ $ docker build -t myzappa .
 <div class="highlight"><pre><span></span><code><span class="nb">alias</span> <span class="nv">zappashell</span><span class="o">=</span><span class="s1">&#39;docker run -ti -e AWS_PROFILE=zappa -v &quot;$(pwd):/var/task&quot; -v ~/.aws/:/root/.aws  --rm myzappa&#39;</span>
 <span class="nb">alias</span> zappashell &gt;&gt; ~/.bash_profile
 </code></pre></div>
-<h4 id="create-the-virtual-environment">Create the Virtual Environment<a class="headerlink" href="#create-the-virtual-environment" title="Permanent link">&para;</a></h4>
-<p>Create the <em>required</em> virtual environment, activate it, and install needed dependencies</p>
-<div class="highlight"><pre><span></span><code>$ zappashell
-zappashell&gt; python -m venv ve
-zappashell&gt; <span class="nb">source</span> ve/bin/activate
-<span class="o">(</span>ve<span class="o">)</span> zappa&gt; pip install -r requirements.txt
-</code></pre></div>
-<p>Since the virtual environment is contained in the current directory, and the current directory is mapped to your local machine, any changes you make will be persisted between Docker container instances. But if you depend on libraries that are installed in the system (essentially anything out of the current directory and virtual environment), they will be lost when the container exits. The solution for this is to add these installations as RUN commands in the Dockerfile.</p>
 <h3 id="using-your-environment">Using your environment<a class="headerlink" href="#using-your-environment" title="Permanent link">&para;</a></h3>
 <p>Each time you are working on your project, merely fire up the container:</p>
-<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> /your_zappa_project
+<p><div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> /your_zappa_project
 $ zappashell
-zappashell&gt; <span class="nb">source</span> ve/bin/activate
 <span class="o">(</span>ve<span class="o">)</span> zappashell&gt;
 </code></pre></div>
+Since the virtual environment is contained in the current directory, and the current directory is mapped to your local machine, any changes you make will be persisted between Docker container instances. But if you depend on libraries that are installed in the system (essentially anything out of the current directory and virtual environment), they will be lost when the container exits. The solution for this is to add these installations as RUN commands in the Dockerfile.  </p>
 <p>All zappa commands can be used to deploy your project:</p>
 <div class="highlight"><pre><span></span><code><span class="o">(</span>ve<span class="o">)</span> zappashell&gt; zappa status dev
 </code></pre></div>
+<h4 id="zappadock">ZappaDock<a class="headerlink" href="#zappadock" title="Permanent link">&para;</a></h4>
+<p>There is a simple tool that automates the above proccess called <a href="https://github.com/dickermoshe/zappadock">ZappaDock</a>. It make all of the above work with just one command. </p>
                 
               
               
